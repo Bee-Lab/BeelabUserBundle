@@ -1,0 +1,68 @@
+{% extends "BeelabUserBundle::layout.html.twig" %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table table-hover record_properties">
+        <tbody>
+            <tr>
+                <th scope="row">Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Roles</th>
+                <td>{{ user.roles|join(', ') }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Active</th>
+                <td>{% if user.isActive %}<i class="icon-ok"></i>{% endif %}</td>
+            </tr>
+            <tr>
+                <th scope="row">Last login</th>
+                <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form id="delete" action="{{ path('user_delete', {id: user.id}) }}" method="post">
+        {{ form_widget(delete_form) }}
+
+        <div class="btn-group record_actions">
+            <a class="btn btn-info" href="{{ path('user') }}">
+                <i class="icon-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+            </a>
+
+            <a class="btn btn-primary" href="{{ path('user_edit', {id: user.id}) }}">
+                <i class="icon-edit"></i> {{ 'Edit'|trans({}, 'admin') }}
+            </a>
+
+            <button class="btn btn-danger" type="submit">
+                <i class="icon-trash"></i> {{ 'Delete'|trans({}, 'admin') }}
+            </button>
+         </div>
+
+        <input name="modal" type="hidden" value="0">
+    </form>
+
+    <div id="delete_confirm" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>{{ 'Confirm delete'|trans({}, 'admin') }}</h3>
+        </div>
+        <div class="modal-body">
+            <p>{{ 'You are about to delete an item'|trans({}, 'admin') }}, {{ 'this procedure is irreversible'|trans({}, 'admin') }}.</p>
+            <p>{{ 'Do you want to proceed?'|trans({}, 'admin') }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger">{{ 'Yes'|trans({}, 'admin') }}</button>
+            <button class="btn btn-secondary" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
+        </div>
+    </div>
+
+{% endblock %}

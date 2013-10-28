@@ -1,0 +1,55 @@
+{% extends "BeelabUserBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'User'}, 'admin') }}{% endblock %}
+
+{% block body %}
+    <h1>{{ '%entity% list'|trans({'%entity%': 'User'}, 'admin') }}</h1>
+
+    <table class="table table-striped table-hover table-bordered records_list">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Email</th>
+                <th scope="col">Active</th>
+                <th scope="col">Last login</th>
+                <th scope="col">{{ 'Actions'|trans({}, 'admin') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in paginator %}
+                <tr>
+                    <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
+                    <td>{{ user.email }}</td>
+                    <td>{% if user.active %}<i class="icon-ok"></i>{% endif %}</td>
+                    <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-small" href="{{ path('user_show', {'id': user.id}) }}">
+                                <i class="icon-file"></i> {{ 'show'|trans({}, 'admin') }}
+                            </a>
+                            <a class="btn btn-small" href="{{ path('user_edit', {'id': user.id}) }}">
+                                <i class="icon-edit"></i> {{ 'edit'|trans({}, 'admin') }}
+                            </a>
+                            {% if is_granted('ROLE_SUPER_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
+                                <a class="btn btn-small" href="{{ path('admin', {_switch_user: user.email}) }}">
+                                    <i class="icon-exchange"></i> impersonate
+                                </a>
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {{ knp_pagination_render(paginator) }}
+
+    <ul class="new_entry unstyled">
+        <li>
+            <a class="btn btn-info" href="{{ path('user_new') }}">
+                <i class="icon-plus"></i> {{ 'Create a new entry'|trans({}, 'admin') }}
+            </a>
+        </li>
+    </ul>
+
+{% endblock %}

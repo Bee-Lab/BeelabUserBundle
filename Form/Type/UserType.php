@@ -1,0 +1,52 @@
+<?php
+
+namespace Beelab\UserBundle\Form\Type;
+
+use Beelab\UserBundle\Entity\User;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class UserType extends AbstractType
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $isNew = true;
+        if (isset($options['data']) && !is_null($options['data']->getId())) {
+            $isNew = false;
+        }
+
+        $builder
+            ->add('email')
+            ->add('plainPassword', 'repeated', array(
+                'first_name'  => 'password',
+                'second_name' => 'confirm',
+                'type'        => 'password',
+                'required'    => $isNew,
+            ))
+            ->add('roles', 'choice', array('choices' => User::getRoleLabels(), 'multiple' => true))
+            ->add('active', 'checkbox', array('required' => false))
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Beelab\UserBundle\Entity\User',
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return 'beelab_user';
+    }
+}

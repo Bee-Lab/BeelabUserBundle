@@ -1,0 +1,47 @@
+{% extends "BeelabUserBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% edit'|trans({'%entity%': 'User'}, 'admin') }}{% endblock %}
+
+{% block body %}
+    <h1>{{ '%entity% edit'|trans({'%entity%': 'User'}, 'admin') }}</h1>
+
+    <form action="{{ path('user_edit', {id: user.id}) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }} %}
+        
+        <p>
+            <button class="btn btn-primary" type="submit"><i class="icon-edit"></i> {{ 'Edit'|trans({}, 'admin') }}</button>
+        </p>
+    </form>
+
+    <form id="delete" action="{{ path('user_delete', {id: user.id}) }}" method="post">
+        {{ form_widget(delete_form) }}
+
+        <div class="btn-group record_actions">
+
+            <a class="btn btn-info" href="{{ path('user') }}">
+                <i class="icon-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+            </a>
+
+            <button class="btn btn-danger" type="submit"><i class="icon-trash"></i> {{ 'Delete'|trans({}, 'admin') }}</button>
+
+        </div>
+
+        <input name="modal" type="hidden" value="0">
+    </form>
+
+    <div id="delete_confirm" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>{{ 'Confirm delete'|trans({}, 'admin') }}</h3>
+        </div>
+        <div class="modal-body">
+            <p>{{ 'You are about to delete an item'|trans({}, 'admin') }}, {{ 'this procedure is irreversible'|trans({}, 'admin') }}.</p>
+            <p>{{ 'Do you want to proceed?'|trans({}, 'admin') }}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger">{{ 'Yes'|trans({}, 'admin') }}</button>
+            <button class="btn btn-secondary" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
+        </div>
+    </div>
+
+{% endblock %}

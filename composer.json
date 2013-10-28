@@ -1,0 +1,26 @@
+{
+    "name": "beelab/user-bundle",
+    "type": "symfony-bundle",
+    "description": "Simple user provider for Symfony2",
+    "keywords": ["User management"],
+    "homepage": "http://bee-lab.it",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Massimiliano Arione ",
+            "email": "massimiliano.arione@bee-lab.it"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": "2.3.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "sensio/framework-extra-bundle": "2.3.*",
+        "knplabs/knp-paginator-bundle": "2.3.*"
+    },
+    "autoload": {
+        "psr-0": { "Beelab\\UserBundle": "" }
+    },
+    "target-dir": "Beelab/UserBundle"
+}
