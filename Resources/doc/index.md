@@ -85,14 +85,14 @@ Enable security:
 
 security:
     encoders:
-        Beelab\UserBundle\Entity\User:
+        Acme\DemoBundle\Entity\User:
             algorithm:        sha1
             encode_as_base64: false
             iterations:       1
 
     providers:
         administrators:
-            entity: { class: BeelabUserBundle:User }
+            entity: { class: AcmeDemoBundle:User }
 
 
     firewalls:
