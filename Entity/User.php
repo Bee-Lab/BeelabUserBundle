@@ -415,8 +415,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getRolesWithLabel($glue = ', ')
     {
         $labels = array();
-        foreach ($this->getRoles() as $role) {
-            $labels[] = $this->getRoleLabel($role);
+        foreach (self::$roleLabels as $label) {
+            $labels[] = $label;
         }
 
         return implode($glue, $labels);

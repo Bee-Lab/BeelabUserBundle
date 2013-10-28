@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class AuthController extends Controller
@@ -28,8 +29,8 @@ class AuthController extends Controller
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
-        if ($error instanceof \Symfony\Component\Security\Core\Exception\BadCredentialsException) {
-        } elseif ($error instanceof \Exception) {
+        if ($error instanceof \Exception && !$error instanceof BadCredentialsException) {
+            $this->get('logger')->log('error', $error->getMessage());
             $error = array('message' => 'Unexpected error.');
         }
 

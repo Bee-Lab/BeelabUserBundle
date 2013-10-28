@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->scalarNode('user_class')
-                    ->cannotBeEmpty()
+                    ->isRequired()
                 ->end()
                 ->scalarNode('user_manager_class')
                     ->cannotBeEmpty()

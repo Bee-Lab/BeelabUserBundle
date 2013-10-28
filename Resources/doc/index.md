@@ -29,7 +29,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Beelab\UserBundle,
+        new Beelab\UserBundle\BeelabUserBundle(),
         // ...
     );
 }
@@ -61,11 +61,86 @@ class User extends BaseUser
 
 Insert in your configuration:
 ``` yaml
+# app/config/config.yml
+
 # BeelabUser Configuration
 beelab_user:
     user_class: Acme\DemoBundle\Entity\User
 ```
 
-### 3. Usage
+Add routes:
+``` yaml
+# app/config/routing.yml
 
-To be written... (TODO)
+beelab_user:
+    resource: "@BeelabUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+```
+
+Enable security:
+``` yaml
+# app/config/security.yml
+
+security:
+    encoders:
+        Beelab\UserBundle\Entity\User:
+            algorithm:        sha1
+            encode_as_base64: false
+            iterations:       1
+
+    providers:
+        administrators:
+            entity: { class: BeelabUserBundle:User }
+
+
+    firewalls:
+        main:
+            pattern:    ^/
+            form_login:
+                use_referer: true
+            logout: true
+            anonymous: true
+            switch_user: true
+
+```
+
+### 3. Customizations
+
+Templates
+---------
+
+You can customize templates as explained in official documentation:
+http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
+
+Controllers
+-----------
+
+You can customize controllers by extending bundle, like explained in official documentation:
+http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers
+
+UserManager
+-----------
+
+You can creete you own UserManager, extending the one you can find in this bundle.
+Then, add to your configuration:
+``` yaml
+# aoo/config/config.yml
+
+beelab_user:
+    user_manager_class: Acme\DemoBundle\Manager\UserManager 
+```
+
+Forms
+-----
+
+You can extends bundle forms, then add in you configuration:
+``` yaml
+# aoo/config/config.yml
+
+beelab_user:
+    password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
+    user_form_type:     Acme\DemoBundle\Form\Type\UserFormType
+ 
+```
