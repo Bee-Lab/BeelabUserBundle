@@ -1,27 +1,26 @@
 BeelabUserBundle Documentation
 ==============================
 
-This version of the bundle requires Symfony 2.3.
-
 ## Installation
 
 1. [Download BeelabUserBundle](#1-download-beelabuserbundle)
-2. [Enable the Bundle](#2-enable-the-bundle)
-3. [Usage](#3-usage)
-4. [Layout](#4-layout)
+2. [Enable the bundle](#2-enable-the-bundle)
+3. [Configuration](#3-configuration)
+4. [Customizations](#4-customizations)
 
 ### 1. Download BeelabUserBundle
 
 Run from terminal:
-``` bash
+
+```bash
 $ php composer.phar require beelab/user-bundle:1.*
 ```
 
 ### 2. Enable the bundle
 
-Enable the bundle in the kernel:
+Enable bundle in the kernel:
 
-``` php
+```php
 <?php
 // app/AppKernel.php
 
@@ -30,14 +29,14 @@ public function registerBundles()
     $bundles = array(
         // ...
         new Beelab\UserBundle\BeelabUserBundle(),
-        // ...
     );
 }
 ```
 
-Create a User entity class.
+Create a ``User`` entity class.
 Example:
-``` php
+
+```php
 <?php
 // src/Acme/DemoBundle/Entity
 
@@ -54,13 +53,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
-    // your properties and methods...
+    // add your properties and methods, if any...
 }
-
 ```
 
-Insert in your configuration:
-``` yaml
+### 3. Configuration
+
+Insert in main configuration:
+
+```yaml
 # app/config/config.yml
 
 # BeelabUser Configuration
@@ -69,18 +70,19 @@ beelab_user:
 ```
 
 Add routes:
-``` yaml
+
+```yaml
 # app/config/routing.yml
 
 beelab_user:
     resource: "@BeelabUserBundle/Controller/"
     type:     annotation
     prefix:   /
-
 ```
 
 Enable security:
-``` yaml
+
+```yaml
 # app/config/security.yml
 
 security:
@@ -103,40 +105,37 @@ security:
             logout: true
             anonymous: true
             switch_user: true
-
 ```
 
-### 3. Customizations
+### 4. Customizations
 
-Templates
----------
+#### Templates
 
 You can customize templates as explained in official documentation:
 http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
 
-Controllers
------------
+#### Controllers
 
 You can customize controllers by extending bundle, like explained in official documentation:
 http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers
 
-UserManager
------------
+#### UserManager
 
-You can creete you own UserManager, extending the one you can find in this bundle.
-Then, add to your configuration:
-``` yaml
+You can creete you own UserManager, extending the one included in this bundle.
+Then, add to configuration:
+
+```yaml
 # aoo/config/config.yml
 
 beelab_user:
     user_manager_class: Acme\DemoBundle\Manager\UserManager 
 ```
 
-Forms
------
+#### Forms
 
-You can extends bundle forms, then add in you configuration:
-``` yaml
+You can extends bundle forms, then add to configuration:
+
+```yaml
 # aoo/config/config.yml
 
 beelab_user:
