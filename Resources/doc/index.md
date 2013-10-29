@@ -3,20 +3,18 @@ BeelabUserBundle Documentation
 
 ## Installation
 
-1. [Download BeelabUserBundle](#1-download-beelabuserbundle)
-2. [Enable the bundle](#2-enable-the-bundle)
-3. [Configuration](#3-configuration)
-4. [Customizations](#4-customizations)
+1. [Install BeelabUserBundle](#1-install-beelabuserbundle)
+2. [Configuration](#3-configuration)
+3. [Customizations](#4-customizations)
+4. [Commands](#5-commands)
 
-### 1. Download BeelabUserBundle
+### 1. Install BeelabUserBundle
 
 Run from terminal:
 
 ```bash
 $ php composer.phar require beelab/user-bundle:1.*
 ```
-
-### 2. Enable the bundle
 
 Enable bundle in the kernel:
 
@@ -32,6 +30,8 @@ public function registerBundles()
     );
 }
 ```
+
+### 2. Configuration
 
 Create a ``User`` entity class.
 Example:
@@ -56,8 +56,6 @@ class User extends BaseUser
     // add your properties and methods, if any...
 }
 ```
-
-### 3. Configuration
 
 Insert in main configuration:
 
@@ -107,21 +105,24 @@ security:
             switch_user: true
 ```
 
-### 4. Customizations
+This is just an example, your real security configuration may vary.
+It's important here to use the name of your entity in ``encoders`` and ``providers``.
+
+### 3. Customizations
 
 #### Templates
 
-You can customize templates as explained in official documentation:
-http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates
+You can customize templates as explained in
+[official documentation](http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates).
 
 #### Controllers
 
-You can customize controllers by extending bundle, like explained in official documentation:
-http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers
+You can customize controllers by extending bundle, like explained in
+[official documentation](http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers).
 
 #### UserManager
 
-You can creete you own UserManager, extending the one included in this bundle.
+You can create you own UserManager, extending the one included in the bundle.
 Then, add to configuration:
 
 ```yaml
@@ -142,4 +143,25 @@ beelab_user:
     password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
     user_form_type:     Acme\DemoBundle\Form\Type\UserFormType
  
+```
+
+#### Validation
+
+Constraints are in ``User`` entity, so you can ovverride them in your entity.
+See [Doctrine docs](http://docs.doctrine-project.org/en/latest/tutorials/override-field-association-mappings-in-subclasses.html).
+Controllers use three validations groups: "create", "update", and "password".
+First two groups are for creating and editing a user, the last one is for password change.
+You can override which group is used in each form just by overriding actions in controllers (see above).
+
+#### Routes
+
+Routes are annotated in controllers, so you can override them just by overriding controllers (see above).
+
+### 4. Commands
+
+Two commands are available, to create a new user and to promote an existing user.
+You can see them by typing:
+
+```bash
+$ php app/console list beelab
 ```
