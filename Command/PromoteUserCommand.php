@@ -2,7 +2,6 @@
 
 namespace Beelab\UserBundle\Command;
 
-use Beelab\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;

@@ -2,7 +2,6 @@
 
 namespace Beelab\UserBundle\Command;
 
-use Beelab\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -59,8 +58,9 @@ EOT
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
 
-        $user = new User();
-        $user->setEmail($email)->setActive(!$inactive);
+        $userClass = $this->getContainer()->getParameter('beelab_user.user_class');
+        $user = new $userClass;
+        $user->setEmail($email)->setPlainPassword($password)->setActive(!$inactive);
 
         try {
             $this->getContainer()->get('beelab_user.manager')->create($user);
