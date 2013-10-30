@@ -6,6 +6,11 @@ BeelabUserBundle
 
 This bundle is a simple implementation of a Symfony2 user provider.
 
+It provides a ``User`` entity with minimal fields (e.g. no "username", no "canonical" stuff), login funcionality
+and basic CRUD actions. Impersonation and password change are supported. Nothing more (no registration, no lost password).
+
+Only Doctrine ORM is supported (no ODM, no Propel).
+
 Documentation
 -------------
 
