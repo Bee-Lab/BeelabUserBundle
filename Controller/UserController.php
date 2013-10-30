@@ -2,8 +2,6 @@
 
 namespace Beelab\UserBundle\Controller;
 
-use Beelab\UserBundle\Form\Type\PasswordType;
-use Beelab\UserBundle\Form\Type\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
