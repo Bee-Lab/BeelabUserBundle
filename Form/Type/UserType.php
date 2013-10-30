@@ -15,8 +15,14 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $isNew = true;
-        if (isset($options['data']) && !is_null($options['data']->getId())) {
-            $isNew = false;
+        if (isset($options['data'])) {
+            if (!is_null($options['data']->getId())) {
+                $isNew = false;
+            }
+            $user = $options['data'];
+            $roles = $user::getRoleLabels();
+        } else {
+            $roles = User::getRoleLabels();
         }
 
         $builder
@@ -27,7 +33,7 @@ class UserType extends AbstractType
                 'type'        => 'password',
                 'required'    => $isNew,
             ))
-            ->add('roles', 'choice', array('choices' => User::getRoleLabels(), 'multiple' => true))
+            ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('active', 'checkbox', array('required' => false))
         ;
     }
