@@ -392,7 +392,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public static function getRoleLabels()
     {
-        return self::$roleLabels;
+        return static::$roleLabels;
     }
 
     /**
@@ -403,7 +403,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getRoleLabel($role)
     {
-        return $role == 'ROLE_SUPER_ADMIN' ? 'super admin' : self::$roleLabels[$role];
+        return $role == 'ROLE_SUPER_ADMIN' ? 'super admin' : static::$roleLabels[$role];
     }
 
     /**
@@ -415,8 +415,8 @@ class User implements UserInterface, EquatableInterface, \Serializable
     public function getRolesWithLabel($glue = ', ')
     {
         $labels = array();
-        foreach (self::$roleLabels as $label) {
-            $labels[] = $label;
+        foreach ($this->roles as $role) {
+            $labels[] = $this->getRoleLabel($role);
         }
 
         return implode($glue, $labels);
