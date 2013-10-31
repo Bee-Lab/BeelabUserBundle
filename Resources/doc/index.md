@@ -40,7 +40,7 @@ Example:
 <?php
 // src/Acme/DemoBundle/Entity
 
-namespace Acme\DemoBundle\Entity
+namespace Acme\DemoBundle\Entity;
 
 use Beelab\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
