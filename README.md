@@ -5,6 +5,8 @@ BeelabUserBundle
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e4f35c31-3c00-4646-a23c-03476ccd64c2/big.png)](https://insight.sensiolabs.com/projects/e4f35c31-3c00-4646-a23c-03476ccd64c2)
 
+[![knpbundles.com](http://knpbundles.com/Bee-Lab/BeelabUserBundle/badge)](http://knpbundles.com/Bee-Lab/BeelabUserBundle)
+
 This bundle is a simple implementation of a Symfony2 user provider.
 
 It provides a ``User`` entity with minimal fields (e.g. no "username", no "canonical" stuff), login funcionality
