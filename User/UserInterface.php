@@ -34,5 +34,4 @@ interface UserInterface extends AdvancedUserInterface
      * @param string
      */
     public function setPassword($password);
-    
 }

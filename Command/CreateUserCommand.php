@@ -79,7 +79,7 @@ EOT
             $email = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an email:',
-                function($email) {
+                function ($email) {
                     if (empty($email) || false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
                         throw new \InvalidArgumentException('Invalid email');
                     }
@@ -94,7 +94,7 @@ EOT
             $password = $this->getHelper('dialog')->askHiddenResponseAndValidate(
                 $output,
                 'Please choose a password:',
-                function($password) {
+                function ($password) {
                     if (empty($password)) {
                         throw new \InvalidArgumentException('Password can not be empty');
                     }

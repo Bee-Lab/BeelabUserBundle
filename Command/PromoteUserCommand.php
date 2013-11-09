@@ -67,7 +67,7 @@ EOT
             $email = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose an email:',
-                function($email) {
+                function ($email) {
                     if (empty($email)) {
                         throw new \InvalidArgumentException('Email can not be empty');
                     }
@@ -81,7 +81,7 @@ EOT
             $role = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please choose a role:',
-                function($role) {
+                function ($role) {
                     if (empty($role)) {
                         throw new \InvalidArgumentException('Role can not be empty');
                     }

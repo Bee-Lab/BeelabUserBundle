@@ -54,7 +54,7 @@ class AuthController extends Controller
      * Get possible authentication error
      *
      * @param  Request $request
-     * @return mixed            Exception or array
+     * @return mixed   Exception or array
      */
     protected function getLoginError(Request $request)
     {

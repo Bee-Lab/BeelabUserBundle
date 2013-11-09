@@ -133,7 +133,7 @@ class UserController extends Controller
     /**
      * Create Delete form
      *
-     * @param integer $id
+     * @param  integer $id
      * @return Form
      */
     protected function createDeleteForm($id)

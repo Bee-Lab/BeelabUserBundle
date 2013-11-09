@@ -51,7 +51,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * Plain password
-     * 
+     *
      * @Assert\NotBlank(groups={"create"})
      * @Assert\Length(min=6, max=100, groups={"create", "update", "password"})
      */
@@ -116,7 +116,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param array $roles
+     * @param  array $roles
      * @return User
      */
     public function setRoles(array $roles)
@@ -144,7 +144,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param string $role
+     * @param  string $role
      * @return User
      */
     public function addRole($role)
@@ -162,7 +162,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
      * Use the SecurityContext, or an implementation of AccessDecisionManager
      * instead, e.g. $securityContext->isGranted('ROLE_USER');
      *
-     * @param string $role
+     * @param  string  $role
      * @return boolean
      */
     public function hasRole($role)
@@ -171,7 +171,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param string $role
+     * @param  string $role
      * @return User
      */
     public function removeRole($role)
@@ -222,7 +222,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Set email
      *
-     * @param string $email
+     * @param  string $email
      * @return User
      */
     public function setEmail($email)
@@ -245,7 +245,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Set salt
      *
-     * @param string $salt
+     * @param  string $salt
      * @return User
      */
     public function setSalt($salt)
@@ -258,7 +258,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Set password
      *
-     * @param string $password
+     * @param  string $password
      * @return User
      */
     public function setPassword($password)
@@ -271,7 +271,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Set active
      *
-     * @param boolean $active
+     * @param  boolean $active
      * @return User
      */
     public function setActive($active)
@@ -292,7 +292,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param DateTime $time
+     * @param  DateTime $time
      * @return User
      */
     public function setLastLogin(\DateTime $time = null)
