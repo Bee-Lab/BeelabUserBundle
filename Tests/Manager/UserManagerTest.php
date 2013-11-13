@@ -15,7 +15,8 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $repository,
         $encoder,
         $security,
-        $paginator;
+        $paginator,
+        $dispatcher;
 
     public function setUp()
     {
@@ -25,9 +26,10 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
         $this->paginator = $this->getMockBuilder('Knp\Component\Pager\Paginator')->disableOriginalConstructor()->getMock();
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
+        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->disableOriginalConstructor()->getMock();
         $this->em->expects($this->any())->method('getRepository')->will($this->returnValue($this->repository));
 
-        $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator);
+        $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator, $this->dispatcher);
     }
 
     public function testList()
@@ -121,5 +123,17 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->em->expects($this->once())->method('remove');
 
         $this->manager->delete($user);
+    }
+
+    public function testAuthenticate()
+    {
+        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
+        $user->expects($this->once())->method('getPassword')->will($this->returnValue('foo'));
+        $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
+        $this->security->expects($this->once())->method('setToken');
+        $this->dispatcher->expects($this->once())->method('dispatch');
+
+        $this->manager->authenticate($user, $request);
     }
 }

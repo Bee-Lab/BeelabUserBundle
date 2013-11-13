@@ -5,17 +5,21 @@ namespace Beelab\UserBundle\Manager;
 use Beelab\UserBundle\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Knp\Component\Pager\Paginator;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
  * User manager
  */
 class UserManager
 {
-    protected $repository, $em, $encoder, $security, $paginator;
+    protected $repository, $em, $encoder, $security, $paginator, $dispatcher;
 
     /**
      * @param string                   $class
@@ -23,14 +27,16 @@ class UserManager
      * @param EncoderFactoryInterface  $encoder
      * @param SecurityContextInterface $security
      * @param Paginator                $paginator
+     * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, Paginator $paginator)
+    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, Paginator $paginator, EventDispatcherInterface $dispatcher)
     {
         $this->em = $em;
         $this->encoder = $encoder;
         $this->security = $security;
         $this->paginator = $paginator;
         $this->repository = $em->getRepository($class);
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -124,6 +130,26 @@ class UserManager
             $this->em->flush();
         }
     }
+
+    /**
+     * Manual authentication
+     *
+     * @param UserInterface $user
+     * @param Request       $request
+     * @param string        $firewall firewall name (see your security.yml config file)
+     * @param boolean       $logout   wether to logout before login
+     */
+    public function authenticate(UserInterface $user, Request $request, $firewall = 'main', $logout = false)
+    {
+        $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
+        if ($logout) {
+            $request->getSession()->invalidate();
+        }
+        $this->security->setToken($token);
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->dispatcher->dispatch('security.interactive_login', $event);
+    }
+
 
     /**
      * Password update
