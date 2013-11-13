@@ -37,6 +37,7 @@ class AuthController extends Controller
      */
     public function logoutAction()
     {
+        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 
     /**
