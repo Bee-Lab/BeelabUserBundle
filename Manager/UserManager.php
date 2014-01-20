@@ -4,7 +4,7 @@ namespace Beelab\UserBundle\Manager;
 
 use Beelab\UserBundle\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Knp\Component\Pager\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -26,10 +26,10 @@ class UserManager
      * @param ObjectManager            $em
      * @param EncoderFactoryInterface  $encoder
      * @param SecurityContextInterface $security
-     * @param Paginator                $paginator
+     * @param PaginatorInterface       $paginator
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, Paginator $paginator, EventDispatcherInterface $dispatcher)
+    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator, EventDispatcherInterface $dispatcher)
     {
         $this->em = $em;
         $this->encoder = $encoder;

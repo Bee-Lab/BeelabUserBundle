@@ -24,9 +24,9 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->encoder = $this->getMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
         $this->security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        $this->paginator = $this->getMockBuilder('Knp\Component\Pager\Paginator')->disableOriginalConstructor()->getMock();
+        $this->paginator = $this->getMock('Knp\Component\Pager\PaginatorInterface');
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
-        $this->dispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')->disableOriginalConstructor()->getMock();
+        $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
         $this->em->expects($this->any())->method('getRepository')->will($this->returnValue($this->repository));
 
         $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator, $this->dispatcher);
