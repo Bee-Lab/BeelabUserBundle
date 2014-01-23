@@ -126,7 +126,7 @@ You can create you own UserManager, extending the one included in the bundle.
 Then, add to configuration:
 
 ```yaml
-# aoo/config/config.yml
+# app/config/config.yml
 
 beelab_user:
     user_manager_class: Acme\DemoBundle\Manager\UserManager 
@@ -137,7 +137,7 @@ beelab_user:
 You can extends bundle forms, then add to configuration:
 
 ```yaml
-# aoo/config/config.yml
+# app/config/config.yml
 
 beelab_user:
     password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
