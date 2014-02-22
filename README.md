@@ -3,6 +3,8 @@ BeelabUserBundle
 
 [![Total Downloads](https://poser.pugx.org/beelab/user-bundle/downloads.png)](https://packagist.org/packages/beelab/user-bundle)
 
+[![travis build](https://api.travis-ci.org/Bee-Lab/BeelabUserBundle)](https://travis-ci.org/Bee-Lab/BeelabUserBundle)
+
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e4f35c31-3c00-4646-a23c-03476ccd64c2/big.png)](https://insight.sensiolabs.com/projects/e4f35c31-3c00-4646-a23c-03476ccd64c2)
 
 [![knpbundles.com](http://knpbundles.com/Bee-Lab/BeelabUserBundle/badge)](http://knpbundles.com/Bee-Lab/BeelabUserBundle)
