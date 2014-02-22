@@ -56,8 +56,8 @@ class UserManager
     /**
      * Find user by email
      *
-     * @param  string $email
-     * @return User
+     * @param  string        $email
+     * @return UserInterface
      */
     public function find($email)
     {
@@ -67,8 +67,8 @@ class UserManager
     /**
      * Find user by id
      *
-     * @param  integer $id
-     * @return User
+     * @param  integer       $id
+     * @return UserInterface
      */
     public function get($id)
     {
@@ -149,7 +149,6 @@ class UserManager
         $event = new InteractiveLoginEvent($request, $token);
         $this->dispatcher->dispatch('security.interactive_login', $event);
     }
-
 
     /**
      * Password update

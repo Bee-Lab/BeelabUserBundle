@@ -27,7 +27,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->paginator = $this->getMock('Knp\Component\Pager\PaginatorInterface');
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->em->expects($this->any())->method('getRepository')->will($this->returnValue($this->repository));
+        $this->em->expects($this->once())->method('getRepository')->with($class)->will($this->returnValue($this->repository));
 
         $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator, $this->dispatcher);
     }
@@ -38,15 +38,15 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->repository->expects($this->once())->method('createQueryBuilder')->will($this->returnValue($qb));
         $this->paginator->expects($this->once())->method('paginate')->with($qb, 1, 20)->will($this->returnValue(array()));
 
-        $this->manager->getList();
+        $this->assertEquals(array(), $this->manager->getList());
     }
 
     public function testFind()
     {
-        // TODO dovrebbe andare con once() ma invece non viene richiamato :-|
-        $this->repository->expects($this->never())->method('findOneByEmail')->will($this->returnValue(null));
+        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', array('pippo@example.org'))->will($this->returnValue($user));
 
-        $this->assertNull($this->manager->find('pippo'));
+        $this->assertEquals($user, $this->manager->find('pippo@example.org'));
     }
 
     public function testCreate()
