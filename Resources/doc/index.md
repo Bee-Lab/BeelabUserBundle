@@ -13,7 +13,7 @@ BeelabUserBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/user-bundle:1.*
+$ php composer.phar require beelab/user-bundle:1.1.*
 ```
 
 Enable bundle in the kernel:
