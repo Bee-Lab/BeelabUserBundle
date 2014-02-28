@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th scope="row">Active</th>
-                <td>{% if user.isActive %}<i class="icon-ok"></i>{% endif %}</td>
+                <td>{% if user.isActive %}<i class="fa fa-ok"></i>{% endif %}</td>
             </tr>
             <tr>
                 <th scope="row">Last login</th>
@@ -35,15 +35,15 @@
 
         <div class="btn-group record_actions">
             <a class="btn btn-info" href="{{ path('user') }}">
-                <i class="icon-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+                <i class="fa fa-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
             </a>
 
             <a class="btn btn-primary" href="{{ path('user_edit', {id: user.id}) }}">
-                <i class="icon-edit"></i> {{ 'Edit'|trans({}, 'admin') }}
+                <i class="fa fa-edit"></i> {{ 'Edit'|trans({}, 'admin') }}
             </a>
 
             <button class="btn btn-danger" type="submit">
-                <i class="icon-trash"></i> {{ 'Delete'|trans({}, 'admin') }}
+                <i class="fa fa-trash"></i> {{ 'Delete'|trans({}, 'admin') }}
             </button>
          </div>
 

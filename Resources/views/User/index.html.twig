@@ -20,19 +20,19 @@
                 <tr>
                     <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
                     <td>{{ user.email }}</td>
-                    <td>{% if user.active %}<i class="icon-ok"></i>{% endif %}</td>
+                    <td>{% if user.active %}<i class="fa fa-ok"></i>{% endif %}</td>
                     <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
                         <div class="btn-group">
                             <a class="btn btn-small" href="{{ path('user_show', {'id': user.id}) }}">
-                                <i class="icon-file"></i> {{ 'show'|trans({}, 'admin') }}
+                                <i class="fa fa-file"></i> {{ 'show'|trans({}, 'admin') }}
                             </a>
                             <a class="btn btn-small" href="{{ path('user_edit', {'id': user.id}) }}">
-                                <i class="icon-edit"></i> {{ 'edit'|trans({}, 'admin') }}
+                                <i class="fa fa-edit"></i> {{ 'edit'|trans({}, 'admin') }}
                             </a>
                             {% if is_granted('ROLE_SUPER_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
                                 <a class="btn btn-small" href="{{ path('admin', {_switch_user: user.email}) }}">
-                                    <i class="icon-exchange"></i> impersonate
+                                    <i class="fa fa-exchange"></i> impersonate
                                 </a>
                             {% endif %}
                         </div>
@@ -47,7 +47,7 @@
     <ul class="new_entry unstyled">
         <li>
             <a class="btn btn-info" href="{{ path('user_new') }}">
-                <i class="icon-plus"></i> {{ 'Create a new entry'|trans({}, 'admin') }}
+                <i class="fa fa-plus"></i> {{ 'Create a new entry'|trans({}, 'admin') }}
             </a>
         </li>
     </ul>

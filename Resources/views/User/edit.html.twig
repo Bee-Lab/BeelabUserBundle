@@ -9,7 +9,7 @@
         {{ form_widget(edit_form) }} %}
 
         <p>
-            <button class="btn btn-primary" type="submit"><i class="icon-edit"></i> {{ 'Edit'|trans({}, 'admin') }}</button>
+            <button class="btn btn-primary" type="submit"><i class="fa fa-edit"></i> {{ 'Edit'|trans({}, 'admin') }}</button>
         </p>
     </form>
 
@@ -19,10 +19,10 @@
         <div class="btn-group record_actions">
 
             <a class="btn btn-info" href="{{ path('user') }}">
-                <i class="icon-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
+                <i class="fa fa-list"></i> {{ 'Back to the list'|trans({}, 'admin') }}
             </a>
 
-            <button class="btn btn-danger" type="submit"><i class="icon-trash"></i> {{ 'Delete'|trans({}, 'admin') }}</button>
+            <button class="btn btn-danger" type="submit"><i class="fa fa-trash"></i> {{ 'Delete'|trans({}, 'admin') }}</button>
 
         </div>
 
