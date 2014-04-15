@@ -53,8 +53,7 @@ class UserController extends Controller
      */
     public function newAction(Request $request)
     {
-        $userClass = $this->container->getParameter('beelab_user.user_class');
-        $user = new $userClass;
+        $user = $this->get('beelab_user.manager')->getInstance();
         $form = $this->createForm('beelab_user', $user, array('validation_groups' => array('create')));
         if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);

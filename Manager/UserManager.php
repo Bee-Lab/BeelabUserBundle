@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
  */
 class UserManager
 {
-    protected $repository, $em, $encoder, $security, $paginator, $dispatcher;
+    protected $className, $repository, $em, $encoder, $security, $paginator, $dispatcher;
 
     /**
      * @param string                   $class
@@ -31,6 +31,7 @@ class UserManager
      */
     public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator, EventDispatcherInterface $dispatcher)
     {
+        $this->className = $class;
         $this->em = $em;
         $this->encoder = $encoder;
         $this->security = $security;
@@ -78,6 +79,16 @@ class UserManager
         }
 
         return $user;
+    }
+
+    /**
+     * Get a new instance of user
+     *
+     * @return UserInterface
+     */
+    public function getInstance()
+    {
+        return new $this->className;
     }
 
     /**

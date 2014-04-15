@@ -49,6 +49,30 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user, $this->manager->find('pippo@example.org'));
     }
 
+    public function testGet()
+    {
+        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $this->repository->expects($this->any())->method('find')->will($this->returnValue($user));
+
+        $this->assertEquals($user, $this->manager->get(123));
+    }
+
+    /**
+     * @expectedException Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     */
+    public function testGetUserNotFound()
+    {
+        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $this->repository->expects($this->any())->method('find')->will($this->returnValue(null));
+
+        $this->manager->get(123);
+    }
+
+    public function testGetInstance()
+    {
+        $this->assertInstanceOf('Beelab\UserBundle\User\UserInterface', $this->manager->getInstance());
+    }
+
     public function testCreate()
     {
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
@@ -135,5 +159,20 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $this->dispatcher->expects($this->once())->method('dispatch');
 
         $this->manager->authenticate($user, $request);
+    }
+
+    public function testAuthenticateLogout()
+    {
+        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()->getMock();
+        $session = $this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $user->expects($this->once())->method('getPassword')->will($this->returnValue('foo'));
+        $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
+        $request->expects($this->once())->method('getSession')->will($this->returnValue($session));
+        $session->expects($this->once())->method('invalidate');
+        $this->security->expects($this->once())->method('setToken');
+        $this->dispatcher->expects($this->once())->method('dispatch');
+
+        $this->manager->authenticate($user, $request, 'main', true);
     }
 }
