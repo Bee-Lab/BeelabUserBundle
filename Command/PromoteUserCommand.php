@@ -24,9 +24,9 @@ class PromoteUserCommand extends ContainerAwareCommand
             ->setName('beelab:user:promote')
             ->setDescription('Promotes a user by adding a role')
             ->setHelp(<<<EOT
-The <info>beelab:user:promote</info> command promotes a user by adding a role
+The <info>%command.name%</info> command promotes a user by adding a role
 
-  <info>php app/console beelab:user:promote garak@example.com ROLE_CUSTOM</info>
+  <info>%command.full_name% garak@example.com ROLE_CUSTOM</info>
 EOT
             )->setDefinition(array(
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
@@ -60,6 +60,8 @@ EOT
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {

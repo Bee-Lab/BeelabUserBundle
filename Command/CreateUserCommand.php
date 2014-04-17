@@ -28,19 +28,19 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ))
             ->setHelp(<<<EOT
-The <info>beelab:user:create</info> command creates a user:
+The <info>%command.name%</info> command creates a user:
 
-  <info>php app/console beelab:user:create garak@example.org</info>
+  <info>%command.full_name% garak@example.org</info>
 
 This interactive shell will ask you for an email and then a password.
 
 You can alternatively specify the email and password as arguments:
 
-  <info>php app/console beelab:user:create garak@example.com mypassword</info>
+  <info>%command.full_name% garak@example.com mypassword</info>
 
 You can create an inactive user (will not be able to log in):
 
-  <info>php app/console beelab:user:create inactive@example.com --inactive</info>
+  <info>%command.full_name% inactive@example.com --inactive</info>
 
 EOT
             );
@@ -58,8 +58,7 @@ EOT
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
 
-        $userClass = $this->getContainer()->getParameter('beelab_user.user_class');
-        $user = new $userClass;
+        $user = $this->getContainer()->get('beelab_user.manager')->getInstance();
         $user->setEmail($email)->setPlainPassword($password)->setActive(!$inactive);
 
         try {
@@ -72,6 +71,8 @@ EOT
 
     /**
      * {@inheritdoc}
+     *
+     * @codeCoverageIgnore
      */
     protected function interact(InputInterface $input, OutputInterface $output)
     {

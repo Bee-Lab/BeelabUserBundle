@@ -51,7 +51,9 @@ class UserTypeTest extends TypeTestCase
 
         $type = new UserType();
 
-        $user = new User();
+        #$user = new User();
+        $user = $this->getMock('Beelab\UserBundle\Entity\User');
+        $user->expects($this->once())->method('getId')->will($this->returnValue(123));
         $user->setEmail($formData['email']);
 
         $form = $this->factory->create($type, null, array('data' => $user));
