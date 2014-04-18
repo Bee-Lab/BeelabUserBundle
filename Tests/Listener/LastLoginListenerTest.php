@@ -3,21 +3,22 @@
 namespace Beelab\UserBundle\Tests\Listner;
 
 use Beelab\UserBundle\Listener\LastLoginListener;
+use PHPUnit_Framework_TestCase;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * @group unit
  */
-class LastLoginListenerTestTest extends \PHPUnit_Framework_TestCase
+class LastLoginListenerTestTest extends PHPUnit_Framework_TestCase
 {
     protected
         $listener,
-        $em;
+        $userManager;
 
     public function setUp()
     {
-        $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->listener = new LastLoginListener($this->em);
+        $this->userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\UserManager')->disableOriginalConstructor()->getMock();
+        $this->listener = new LastLoginListener($this->userManager);
     }
 
     public function testGetSubscribedEvents()
@@ -33,7 +34,7 @@ class LastLoginListenerTestTest extends \PHPUnit_Framework_TestCase
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $token->expects($this->once())->method('getUser')->will($this->returnValue($user));
         $user->expects($this->once())->method('setLastLogin');
-        $this->em->expects($this->once())->method('flush');
+        $this->userManager->expects($this->once())->method('update');
 
         $this->listener->onSecurityInteractiveLogin($event);
     }

@@ -2,6 +2,9 @@
 
 namespace Beelab\UserBundle\Listener;
 
+use Beelab\UserBundle\Manager\UserManager;
+use Beelab\UserBundle\User\UserInterface;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -12,14 +15,14 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class LastLoginListener implements EventSubscriberInterface
 {
-    protected $em;
+    protected $userManager;
 
     /**
-     * @param ObjectManager $em
+     * @param UserManager $userManager
      */
-    public function __construct(ObjectManager $em)
+    public function __construct(UserManager $userManager)
     {
-        $this->em = $em;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -38,7 +41,9 @@ class LastLoginListener implements EventSubscriberInterface
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
-        $user->setLastLogin(new \DateTime());
-        $this->em->flush();
+        if ($user instanceof UserInterface) {
+            $user->setLastLogin(new DateTime());
+            $this->userManager->update($user);
+        }
     }
 }
