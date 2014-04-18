@@ -17,9 +17,9 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 /**
  * User manager
  */
-class UserManager
+class UserManager extends LightUserManager
 {
-    protected $className, $repository, $em, $encoder, $security, $paginator, $dispatcher;
+    protected $security, $paginator, $dispatcher;
 
     /**
      * @param string                   $class
@@ -31,12 +31,9 @@ class UserManager
      */
     public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator, EventDispatcherInterface $dispatcher)
     {
-        $this->className = $class;
-        $this->em = $em;
-        $this->encoder = $encoder;
+        parent::__construct($class, $em, $encoder);
         $this->security = $security;
         $this->paginator = $paginator;
-        $this->repository = $em->getRepository($class);
         $this->dispatcher = $dispatcher;
     }
 
@@ -82,47 +79,6 @@ class UserManager
     }
 
     /**
-     * Get a new instance of user
-     *
-     * @return UserInterface
-     */
-    public function getInstance()
-    {
-        return new $this->className;
-    }
-
-    /**
-     * Create new user
-     *
-     * @param UserInterface $user
-     * @param boolean       $flush
-     */
-    public function create(UserInterface $user, $flush = true)
-    {
-        $this->updatePassword($user);
-        $this->em->persist($user);
-        if ($flush) {
-            $this->em->flush();
-        }
-    }
-
-    /**
-     * Update user
-     *
-     * @param UserInterface $user
-     * @param boolean       $flush
-     */
-    public function update(UserInterface $user, $flush = true)
-    {
-        if (!is_null($user->getPlainPassword())) {
-            $this->updatePassword($user);
-        }
-        if ($flush) {
-            $this->em->flush();
-        }
-    }
-
-    /**
      * Delete user
      *
      * @param UserInterface $user
@@ -159,17 +115,5 @@ class UserManager
         $this->security->setToken($token);
         $event = new InteractiveLoginEvent($request, $token);
         $this->dispatcher->dispatch('security.interactive_login', $event);
-    }
-
-    /**
-     * Password update
-     *
-     * @param UserInterface $user
-     */
-    protected function updatePassword(UserInterface $user)
-    {
-        $passwordEncoder = $this->encoder->getEncoder($user);
-        $password = $passwordEncoder->encodePassword($user->getPlainPassword(), $user->getSalt());
-        $user->setPassword($password);
     }
 }

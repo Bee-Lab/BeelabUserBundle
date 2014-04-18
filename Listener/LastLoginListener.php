@@ -2,7 +2,7 @@
 
 namespace Beelab\UserBundle\Listener;
 
-use Beelab\UserBundle\Manager\UserManager;
+use Beelab\UserBundle\Manager\LightUserManager;
 use Beelab\UserBundle\User\UserInterface;
 use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,9 +18,9 @@ class LastLoginListener implements EventSubscriberInterface
     protected $userManager;
 
     /**
-     * @param UserManager $userManager
+     * @param LightUserManager $userManager
      */
-    public function __construct(UserManager $userManager)
+    public function __construct(LightUserManager $userManager)
     {
         $this->userManager = $userManager;
     }

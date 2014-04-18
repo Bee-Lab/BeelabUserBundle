@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $paginator = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
 
-        return compact('paginator');
+        return array('paginator' => $paginator);
     }
 
     /**

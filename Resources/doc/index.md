@@ -129,7 +129,19 @@ Then, add to configuration:
 # app/config/config.yml
 
 beelab_user:
-    user_manager_class: Acme\DemoBundle\Manager\UserManager 
+    user_manager_class: Acme\DemoBundle\Manager\UserManager
+```
+
+If you need a lighter UserManager, you can use ``LightUserManager``, that has less
+dependencies than UserManager. For example, you can use it for Facebook integration with
+[FOSFacebookBundle](https://github.com/FriendsOfSymfony/FOSFacebookBundle).
+Add to configuration:
+
+```yaml
+# app/config/config.yml
+
+beelab_user:
+    light_user_manager_class: Acme\DemoBundle\Manager\LightUserManager
 ```
 
 #### Forms
@@ -142,7 +154,7 @@ You can extends bundle forms, then add to configuration:
 beelab_user:
     password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
     user_form_type:     Acme\DemoBundle\Form\Type\UserFormType
- 
+
 ```
 
 #### Validation

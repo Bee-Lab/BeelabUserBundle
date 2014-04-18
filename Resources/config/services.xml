@@ -9,6 +9,11 @@
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="beelab_user.manager" />
         </service>
+        <service id="beelab_user.light_manager" class="%beelab_user.light_user_manager_class%">
+            <argument>%beelab_user.user_class%</argument>
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.encoder_factory" />
+        </service>
         <service id="beelab_user.manager" class="%beelab_user.user_manager_class%">
             <argument>%beelab_user.user_class%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
