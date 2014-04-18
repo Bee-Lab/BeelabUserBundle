@@ -86,9 +86,8 @@ Enable security:
 security:
     encoders:
         Acme\DemoBundle\Entity\User:
-            algorithm:        sha1
-            encode_as_base64: false
-            iterations:       1
+            algorithm:  bcrypt
+            cost:       14
 
     providers:
         administrators:
