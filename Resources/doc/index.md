@@ -135,7 +135,7 @@ beelab_user:
 If you need a lighter UserManager, you can use ``LightUserManager``, that has less
 dependencies than UserManager. For example, you can use it for Facebook integration with
 [FOSFacebookBundle](https://github.com/FriendsOfSymfony/FOSFacebookBundle).
-Add to configuration:
+You can extend it, and add to configuration:
 
 ```yaml
 # app/config/config.yml

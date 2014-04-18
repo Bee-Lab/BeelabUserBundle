@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th scope="row">Active</th>
-                <td>{% if user.isActive %}<i class="fa fa-ok"></i>{% endif %}</td>
+                <td>{% if user.isActive %}<i class="fa fa-check"></i>{% endif %}</td>
             </tr>
             <tr>
                 <th scope="row">Last login</th>
@@ -43,7 +43,7 @@
             </a>
 
             <button class="btn btn-danger" type="submit">
-                <i class="fa fa-trash"></i> {{ 'Delete'|trans({}, 'admin') }}
+                <i class="fa fa-trash-o"></i> {{ 'Delete'|trans({}, 'admin') }}
             </button>
          </div>
 
