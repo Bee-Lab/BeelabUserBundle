@@ -5,7 +5,6 @@ namespace Beelab\UserBundle\Listener;
 use Beelab\UserBundle\Manager\LightUserManager;
 use Beelab\UserBundle\User\UserInterface;
 use DateTime;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
