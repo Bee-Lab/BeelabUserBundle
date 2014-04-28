@@ -163,7 +163,16 @@ You can extends bundle forms, then add to configuration:
 beelab_user:
     password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
     user_form_type:     Acme\DemoBundle\Form\Type\UserFormType
+```
 
+Forms come with a sensible theme. If you want to use your custom theme,
+specify it in configuration:
+```yaml
+# app/config/config.yml
+
+# BeelabUser Configuration
+beelab_user:
+    theme: "::myCustomTheme.html.twig"
 ```
 
 #### Validation

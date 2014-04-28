@@ -1,12 +1,14 @@
 {% extends beelab_user_layout %}
 
+{% form_theme form beelab_user_theme %}
+
 {% block title %}{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }}{% endblock %}
 
 {% block body %}
     <h1>{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }}</h1>
 
     <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_widget(form) }} %}
+        {{ form_widget(form) }}
         <p>
             <button class="btn btn-primary" type="submit">{{ 'Create'|trans({}, 'admin') }}</button>
         </p>

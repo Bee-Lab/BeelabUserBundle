@@ -6,14 +6,16 @@ use Twig_Extension;
 
 class BeelabUserTwigExtension extends Twig_Extension
 {
-    protected $layout;
+    protected $layout, $theme;
 
     /**
      * @param string $layout
+     * @param string $theme
      */
-    public function __construct($layout)
+    public function __construct($layout, $theme)
     {
         $this->layout = $layout;
+        $this->theme = $theme;
     }
 
     /**
@@ -23,6 +25,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     {
         return array(
             'beelab_user_layout' => $this->layout,
+            'beelab_user_theme'  => $this->theme,
         );
     }
 
