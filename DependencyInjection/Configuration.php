@@ -41,6 +41,10 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('Beelab\UserBundle\Form\Type\UserType')
                 ->end()
+                ->scalarNode('layout')
+                    ->cannotBeEmpty()
+                    ->defaultValue('BeelabUserBundle::layout.html.twig')
+                ->end()
             ->end()
         ;
 

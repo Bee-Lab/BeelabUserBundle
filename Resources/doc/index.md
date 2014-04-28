@@ -114,6 +114,16 @@ It's important here to use the name of your entity in ``encoders`` and ``provide
 You can customize templates as explained in
 [official documentation](http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates).
 
+All template use a default layout. If you want to use your custom layout, you can
+specify it in configuration:
+```yaml
+# app/config/config.yml
+
+# BeelabUser Configuration
+beelab_user:
+    layout: "::myCustomLayout.html.twig"
+```
+
 #### Controllers
 
 You can customize controllers by extending bundle, like explained in

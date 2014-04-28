@@ -65,7 +65,7 @@ EOT
             $this->getContainer()->get('beelab_user.manager')->create($user);
             $output->writeln(sprintf('Created user <comment>%s</comment>', $email));
         } catch (\Exception $e) {
-            $output->writeln(sprintf('Error, user <comment>%s</comment> not created. %s', $email, $e->getMessage()));
+            $output->writeln(sprintf('<error>Error</error>, user <comment>%s</comment> not created. %s', $email, $e->getMessage()));
         }
     }
 

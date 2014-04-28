@@ -30,6 +30,7 @@ class BeelabUserExtensionTest extends PHPUnit_Framework_TestCase
             array('user_manager_class' => 'foo'),
             array('user_form_type' => 'foo'),
             array('password_form_type' => 'foo'),
+            array('layout' => 'bar'),
         );
         $extension->load($configs, $container);
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
 /**
  * @group unit
  */
-class LastLoginListenerTestTest extends PHPUnit_Framework_TestCase
+class LastLoginListenerTest extends PHPUnit_Framework_TestCase
 {
     protected
         $listener,

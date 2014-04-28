@@ -2,27 +2,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block title %}Beelab user admin{% endblock %}</title>
+        <title>{% block title 'Beelab user admin' %}</title>
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {% stylesheets
-            '//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css'
-            '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'
-        %}
-        <link rel="stylesheet" href="{{ asset_url }}">
-        {% endstylesheets %}
         {% block stylesheets %}
+            <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+            <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         {% endblock %}
     </head>
     <body>
         <div class="container">
-            {% block body %}{% endblock %}
+            {% block body '' %}
         </div>
-        <script src="http://code.jquery.com/jquery.min.js"></script>
-        {% javascripts
-            '//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js'
-        %}
-        <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
+        {% block javascripts %}
+            <script src="//code.jquery.com/jquery-2.1.0.js"></script>
+            <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        {% endblock %}
     </body>
 </html>
