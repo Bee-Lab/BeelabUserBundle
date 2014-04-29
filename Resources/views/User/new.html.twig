@@ -2,7 +2,7 @@
 
 {% form_theme form beelab_user_theme %}
 
-{% block title %}{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }}{% endblock %}
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }} - {{ parent() }}{% endblock %}
 
 {% block body %}
     <h1>{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }}</h1>

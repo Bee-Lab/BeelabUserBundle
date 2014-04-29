@@ -1,6 +1,6 @@
 {% extends beelab_user_layout %}
 
-{% block title %}User{% endblock %}
+{% block title %}User - {{ parent() }}{% endblock %}
 
 {% block body %}
     <h1>User</h1>
@@ -61,7 +61,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-danger">{{ 'Yes'|trans({}, 'admin') }}</button>
-            <button class="btn btn-secondary" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
+            <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'admin') }}</button>
         </div>
     </div>
 
