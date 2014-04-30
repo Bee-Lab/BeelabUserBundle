@@ -30,7 +30,7 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
         $session->expects($this->at(1))->method('get')->with('_security.last_error')->will($this->returnValue('user'));
         $session->expects($this->at(0))->method('get')->with('_security.last_username')->will($this->returnValue('user'));
 
-        $this->assertEquals(array('last_username' => 'user', 'error' => null), $this->controller->loginAction($request));
+        $this->assertEquals(array('last_username' => 'user', 'error' => 'user'), $this->controller->loginAction($request));
         // TODO ...
     }
 

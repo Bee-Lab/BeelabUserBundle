@@ -59,6 +59,7 @@ class AuthController extends Controller
      */
     protected function getLoginError(Request $request)
     {
+        $error = null;
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {
@@ -70,5 +71,7 @@ class AuthController extends Controller
             $this->get('logger')->log('error', $error->getMessage());
             $error = array('message' => 'Unexpected error.');
         }
+
+        return $error;
     }
 }

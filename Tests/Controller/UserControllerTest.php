@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserControllerTest extends PHPUnit_Framework_TestCase
 {
-    protected $controller, $container, $formBuilder;
+    protected $controller, $container, $formBuilder, $userManager;
 
     public function setUp()
     {

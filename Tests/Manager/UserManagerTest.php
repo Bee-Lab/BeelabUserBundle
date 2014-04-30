@@ -63,7 +63,6 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testGetUserNotFound()
     {
-        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $this->repository->expects($this->any())->method('find')->will($this->returnValue(null));
 
         $this->manager->get(123);
