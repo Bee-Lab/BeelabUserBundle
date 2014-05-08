@@ -3,7 +3,7 @@
 {% block title %}User - {{ parent() }}{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>{{ 'User'|trans({}, 'admin') }}</h1>
 
     <table class="table table-hover record_properties">
         <tbody>
@@ -12,19 +12,19 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th scope="row">Email</th>
+                <th scope="row">{{ 'Email'|trans({}, 'admin') }}</th>
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th scope="row">Roles</th>
+                <th scope="row">{{ 'Roles'|trans({}, 'admin') }}</th>
                 <td>{{ user.roles|join(', ') }}</td>
             </tr>
             <tr>
-                <th scope="row">Active</th>
+                <th scope="row">{{ 'Active'|trans({}, 'admin') }}</th>
                 <td>{% if user.isActive %}<i class="fa fa-check"></i>{% endif %}</td>
             </tr>
             <tr>
-                <th scope="row">Last login</th>
+                <th scope="row">{{ 'Last login'|trans({}, 'admin') }}</th>
                 <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>
