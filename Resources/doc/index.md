@@ -4,9 +4,9 @@ BeelabUserBundle Documentation
 ## Installation
 
 1. [Install BeelabUserBundle](#1-install-beelabuserbundle)
-2. [Configuration](#3-configuration)
-3. [Customizations](#4-customizations)
-4. [Commands](#5-commands)
+2. [Configuration](#2-configuration)
+3. [Customizations](#3-customizations)
+4. [Commands](#4-commands)
 
 ### 1. Install BeelabUserBundle
 
