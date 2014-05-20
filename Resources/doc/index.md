@@ -86,13 +86,13 @@ Enable security:
 security:
     encoders:
         Acme\DemoBundle\Entity\User:
-            algorithm:  bcrypt
-            cost:       14
+            # See http://symfony.com/doc/current/reference/configuration/security.html#using-the-bcrypt-password-encoder
+            algorithm: bcrypt
+            # Also, since bcrypt is a bit expensive, you likely want to override it in test env
 
     providers:
         administrators:
             entity: { class: AcmeDemoBundle:User }
-
 
     firewalls:
         main:
