@@ -20,7 +20,7 @@
                 <tr>
                     <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
                     <td>{{ user.email }}</td>
-                    <td>{% if user.active %}<i class="fa fa-ok"></i>{% endif %}</td>
+                    <td>{% if user.active %}<i class="fa fa-check"></i>{% endif %}</td>
                     <td>{% if user.lastLogin %}{{ user.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
                     <td>
                         <div class="btn-group">

@@ -3,7 +3,6 @@
 namespace Beelab\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\NoResultException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -14,19 +13,17 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     /**
      * @inheritDoc
      */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername($username)
     {
-        try {
-            $user = $this
-                ->createQueryBuilder('u')
-                ->where('u.email = :email')
-                ->setParameter('email', $email)
-                ->getQuery()
-                ->getSingleResult();
-            ;
-        } catch (NoResultException $e) {
-            $message = sprintf('Utente "%s" non trovato', $email);
-            throw new UsernameNotFoundException($message, 0, $e);
+        $user = $this
+            ->createQueryBuilder('u')
+            ->where('u.email = :email')
+            ->setParameter('email', $username)
+            ->getQuery()
+            ->getOneOrNullResult();
+        ;
+        if (empty($user)) {
+            throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
         }
 
         return $user;
@@ -40,7 +37,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
             throw new UnsupportedUserException(
-                sprintf('Istanze di "%s" non supportate.', $class)
+                sprintf('Istances of "%s" are not supported.', $class)
             );
         }
 
@@ -53,5 +50,22 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     public function supportsClass($class)
     {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
+    }
+
+    /**
+     * See http://stackoverflow.com/a/16692911/369194
+     *
+     * @param  string $role
+     * @return array
+     */
+    public function findByRole($role)
+    {
+        return $this
+            ->createQueryBuilder('u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"' . $role . '"%')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }
