@@ -40,9 +40,9 @@ class UserManager extends LightUserManager
     /**
      * List of users
      *
-     * @param  integer   $page
-     * @param  integer   $limit
-     * @return Paginator
+     * @param  int                                                 $page
+     * @param  int                                                 $limit
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
      */
     public function getList($page = 1, $limit = 20)
     {

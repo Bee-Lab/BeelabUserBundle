@@ -29,8 +29,9 @@ class PasswordType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'        => 'Beelab\UserBundle\Entity\User',
-            'validation_groups' => array('password'),
+            'data_class'         => 'Beelab\UserBundle\Entity\User',
+            'validation_groups'  => array('password'),
+            'translation_domain' => 'admin',
         ));
     }
 
