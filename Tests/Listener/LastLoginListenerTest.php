@@ -34,7 +34,7 @@ class LastLoginListenerTest extends PHPUnit_Framework_TestCase
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $token->expects($this->once())->method('getUser')->will($this->returnValue($user));
         $user->expects($this->once())->method('setLastLogin');
-        $this->userManager->expects($this->once())->method('update');
+        $this->userManager->expects($this->once())->method('update')->with($user);
 
         $this->listener->onSecurityInteractiveLogin($event);
     }

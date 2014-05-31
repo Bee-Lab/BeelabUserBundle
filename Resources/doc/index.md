@@ -187,6 +187,16 @@ You can override which group is used in each form just by overriding actions in 
 
 Routes are annotated in controllers, so you can override them just by overriding controllers (see above).
 
+There is a route, with default name "admin", that is used for user switching. It should point
+to your backend homepage, and you can customize it in configuration:
+```yaml
+# app/config/config.yml
+
+# BeelabUser Configuration
+beelab_user:
+    route: my_backend_route
+```
+
 ### 4. Commands
 
 Two commands are available, to create a new user and to promote an existing user.

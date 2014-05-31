@@ -35,7 +35,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($user->hasRole('ROLE_ADMIN'));
     }
 
-    public function testisEqualTo()
+    public function testIsEqualTo()
     {
         $user1 = new User();
         $user1->setEmail('user1@example.org');
@@ -72,5 +72,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($user->hasRole('ROLE_PLUTO'));
         $this->assertFalse($user->hasRole('ROLE_PIPPO'));
+    }
+
+    public function testToString()
+    {
+        $user = new User();
+        $user->setEmail('user@example.org');
+
+        $this->assertEquals('user@example.org', $user->__toString());
     }
 }

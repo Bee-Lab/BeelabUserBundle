@@ -31,7 +31,7 @@
                                 <i class="fa fa-edit"></i> {{ 'edit'|trans({}, 'admin') }}
                             </a>
                             {% if is_granted('ROLE_SUPER_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
-                                <a class="btn btn-default btn-small" href="{{ path('admin', {_switch_user: user.email}) }}">
+                                <a class="btn btn-default btn-small" href="{{ path(beelab_user_route, {_switch_user: user.email}) }}">
                                     <i class="fa fa-exchange"></i> {{ 'impersonate'|trans({}, 'admin') }}
                                 </a>
                             {% endif %}
