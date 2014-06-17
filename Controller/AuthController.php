@@ -59,7 +59,6 @@ class AuthController extends Controller
      */
     protected function getLoginError(Request $request)
     {
-        $error = null;
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } else {

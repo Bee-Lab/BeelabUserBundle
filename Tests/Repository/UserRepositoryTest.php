@@ -32,7 +32,7 @@ class UserRepositoryTest extends \PHPUnit_Framework_TestCase
         $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
         $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue(null));
 
-        $user = $this->repository->loadUserByUsername('foo');
+        $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface', $this->repository->loadUserByUsername('foo'));
     }
 
     public function testLoadUserByUsernameFound()
