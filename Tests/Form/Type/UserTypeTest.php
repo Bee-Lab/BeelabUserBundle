@@ -4,7 +4,9 @@ namespace Beelab\UserBundle\Tests\Form\Type;
 
 use Beelab\UserBundle\Entity\User;
 use Beelab\UserBundle\Form\Type\UserType;
+use Beelab\UserBundle\Test\UserStub;
 use Symfony\Component\Form\Test\TypeTestCase;
+
 
 /**
  * @group unit
@@ -25,9 +27,9 @@ class UserTypeTest extends TypeTestCase
         $user = new User();
         $user->setEmail($formData['email']);
 
-        // invia direttamente i dati al form
+        // send data directly to form
         $form->submit($formData);
-        // workaround: altrimenti i salt non saranno mai uguali!
+        // workaround: without this, salts would never match!
         $user->setSalt($form->getData()->getSalt());
 
         $this->assertTrue($form->isSynchronized());
@@ -51,15 +53,13 @@ class UserTypeTest extends TypeTestCase
 
         $type = new UserType();
 
-        $user = $this->getMock('Beelab\UserBundle\Entity\User');
-        $user->expects($this->once())->method('getId')->will($this->returnValue(123));
-        $user->setEmail($formData['email']);
+        $user = new UserStub();
 
         $form = $this->factory->create($type, null, array('data' => $user));
 
-        // invia direttamente i dati al form
+        // send data directly to form
         $form->submit($formData);
-        // workaround: altrimenti i salt non saranno mai uguali!
+        // workaround: without this, salts would never match!
         $user->setSalt($form->getData()->getSalt());
 
         $this->assertTrue($form->isSynchronized());
