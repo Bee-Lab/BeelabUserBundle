@@ -1,6 +1,6 @@
 <?php
 
-namespace Beelab\UserBundle\Tests\Listner;
+namespace Beelab\UserBundle\Tests\Twig;
 
 use Beelab\UserBundle\Twig\BeelabUserTwigExtension;
 use PHPUnit_Framework_TestCase;

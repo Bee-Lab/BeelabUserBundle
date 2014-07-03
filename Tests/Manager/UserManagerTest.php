@@ -1,6 +1,6 @@
 <?php
 
-namespace Beelab\UserBundle\Tests\Entity;
+namespace Beelab\UserBundle\Tests\Manager;
 
 use Beelab\UserBundle\Manager\UserManager;
 use PHPUnit_Framework_TestCase;
@@ -10,8 +10,7 @@ use PHPUnit_Framework_TestCase;
  */
 class UserManagerTest extends PHPUnit_Framework_TestCase
 {
-    protected
-        $manager,
+    protected $manager,
         $em,
         $repository,
         $encoder,

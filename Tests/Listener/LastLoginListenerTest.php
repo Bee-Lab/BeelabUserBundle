@@ -1,6 +1,6 @@
 <?php
 
-namespace Beelab\UserBundle\Tests\Listner;
+namespace Beelab\UserBundle\Tests\Listener;
 
 use Beelab\UserBundle\Listener\LastLoginListener;
 use PHPUnit_Framework_TestCase;
@@ -11,8 +11,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
  */
 class LastLoginListenerTest extends PHPUnit_Framework_TestCase
 {
-    protected
-        $listener,
+    protected $listener,
         $userManager;
 
     public function setUp()

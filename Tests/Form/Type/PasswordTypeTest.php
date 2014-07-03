@@ -9,7 +9,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 /**
  * @group unit
  */
-class PassowrdTypeTest extends TypeTestCase
+class PasswordTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
