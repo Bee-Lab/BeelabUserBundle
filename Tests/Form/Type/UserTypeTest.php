@@ -7,7 +7,6 @@ use Beelab\UserBundle\Form\Type\UserType;
 use Beelab\UserBundle\Test\UserStub;
 use Symfony\Component\Form\Test\TypeTestCase;
 
-
 /**
  * @group unit
  */
