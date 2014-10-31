@@ -24,7 +24,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getGlobals()
     {
@@ -36,7 +36,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {

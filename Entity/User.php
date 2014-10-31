@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\MappedSuperclass
  * @UniqueEntity(fields={"email"}, groups={"create", "update"})
  */
-class User implements UserInterface, EquatableInterface, \Serializable
+abstract class User implements UserInterface, EquatableInterface, \Serializable
 {
     /**
      * @var array
@@ -92,7 +92,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getUsername()
     {
@@ -100,7 +100,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getSalt()
     {
@@ -108,7 +108,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function getPassword()
     {
@@ -185,7 +185,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function eraseCredentials()
     {
@@ -342,7 +342,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function isAccountNonExpired()
     {
@@ -350,7 +350,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function isAccountNonLocked()
     {
@@ -358,7 +358,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function isCredentialsNonExpired()
     {
@@ -366,7 +366,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function isEnabled()
     {
@@ -374,7 +374,7 @@ class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function isEqualTo(SymfonyUserInterface $user)
     {

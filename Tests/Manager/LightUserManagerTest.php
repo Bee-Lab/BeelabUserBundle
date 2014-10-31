@@ -18,7 +18,7 @@ class LightUserManagerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $class = 'Beelab\UserBundle\Entity\User';
+        $class = 'Beelab\UserBundle\Test\UserStub';
         $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->encoder = $this->getMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();

@@ -3,15 +3,23 @@
 namespace Beelab\UserBundle\Tests\Repository;
 
 use Beelab\UserBundle\Repository\UserRepository;
+use PHPUnit_Framework_TestCase;
 
-class UserRepositoryTest extends \PHPUnit_Framework_TestCase
+/**
+ * @group unit
+ */
+class UserRepositoryTest extends PHPUnit_Framework_TestCase
 {
-    protected $repository, $em, $class;
+    protected $repository;
+    protected $em;
+    protected $class;
 
     public function setUp()
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
-        $this->class = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+        $this->class = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()
+            ->getMock();
+        $this->class->name = 'Beelab\UserBundle\Test\UserStub';
 
         $this->repository = new UserRepository($this->em, $this->class);
     }
@@ -22,7 +30,8 @@ class UserRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testLoadUserByUsernameNotFound()
     {
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))->disableOriginalConstructor()->getMockForAbstractClass();
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))
+            ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
@@ -32,14 +41,16 @@ class UserRepositoryTest extends \PHPUnit_Framework_TestCase
         $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
         $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue(null));
 
-        $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface', $this->repository->loadUserByUsername('foo'));
+        $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface',
+                                $this->repository->loadUserByUsername('foo'));
     }
 
     public function testLoadUserByUsernameFound()
     {
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))->disableOriginalConstructor()->getMockForAbstractClass();
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))
+            ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
@@ -49,26 +60,44 @@ class UserRepositoryTest extends \PHPUnit_Framework_TestCase
         $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
         $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue($user));
 
-        $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface', $this->repository->loadUserByUsername('baz'));
+        $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface',
+                                $this->repository->loadUserByUsername('baz'));
     }
 
+    /**
+     * @expectedException Symfony\Component\Security\Core\Exception\UnsupportedUserException
+     */
     public function testRefreshUserUnsupported()
     {
-        $this->markTestIncomplete();
+        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $this->repository->refreshUser($user);
     }
 
     public function testRefreshUserSupported()
     {
-        $this->markTestIncomplete();
+        $user = $this->getMock('Beelab\UserBundle\Test\UserStub');
+        $this->repository->refreshUser($user);
     }
 
     public function testSupportsClass()
     {
-        $this->markTestIncomplete();
+        $this->assertTrue($this->repository->supportsClass('Beelab\UserBundle\Test\UserStub'));
     }
 
-    public function testFindByRole()
+    public function testSupportsClassFalse()
     {
-        $this->markTestIncomplete();
+        $this->assertFalse($this->repository->supportsClass('Foo'));
+    }
+
+    public function testFilterByRole()
+    {
+        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
+        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
+
+        $this->assertEquals($queryBuilder, $this->repository->filterByRole('ROLE'));
     }
 }

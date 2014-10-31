@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function loadUserByUsername($username)
     {
@@ -30,22 +30,20 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function refreshUser(UserInterface $user)
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
-            throw new UnsupportedUserException(
-                sprintf('Istances of "%s" are not supported.', $class)
-            );
+            throw new UnsupportedUserException(sprintf('Istances of "%s" are not supported.', $class));
         }
 
         return $this->find($user->getId());
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function supportsClass($class)
     {

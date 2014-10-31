@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class BeelabUserExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -36,3 +36,4 @@ class BeelabUserExtension extends Extension
         $loader->load('services.xml');
     }
 }
+

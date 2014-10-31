@@ -2,8 +2,8 @@
 
 namespace Beelab\UserBundle\Tests\Form\Type;
 
-use Beelab\UserBundle\Entity\User;
 use Beelab\UserBundle\Form\Type\PasswordType;
+use Beelab\UserBundle\Test\UserStub as User;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
@@ -21,14 +21,14 @@ class PasswordTypeTest extends TypeTestCase
         );
 
         $type = new PasswordType();
-        $form = $this->factory->create($type);
+        $form = $this->factory->create($type, null, array('data_class' => 'Beelab\UserBundle\Test\UserStub'));
 
         $user = new User();
         $user->setPlainPassword(null);
 
-        // invia direttamente i dati al form
+        // send directly data to form
         $form->submit($formData);
-        // workaround: altrimenti i salt non saranno mai uguali!
+        // workaround: without this, salts will never match!
         $user->setSalt($form->getData()->getSalt());
 
         $this->assertTrue($form->isSynchronized());

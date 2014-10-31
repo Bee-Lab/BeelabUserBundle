@@ -2,9 +2,8 @@
 
 namespace Beelab\UserBundle\Tests\Form\Type;
 
-use Beelab\UserBundle\Entity\User;
 use Beelab\UserBundle\Form\Type\UserType;
-use Beelab\UserBundle\Test\UserStub;
+use Beelab\UserBundle\Test\UserStub as User;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
@@ -21,7 +20,7 @@ class UserTypeTest extends TypeTestCase
         );
 
         $type = new UserType();
-        $form = $this->factory->create($type);
+        $form = $this->factory->create($type, null, array('data_class' => 'Beelab\UserBundle\Test\UserStub'));
 
         $user = new User();
         $user->setEmail($formData['email']);
@@ -52,7 +51,7 @@ class UserTypeTest extends TypeTestCase
 
         $type = new UserType();
 
-        $user = new UserStub();
+        $user = new User();
 
         $form = $this->factory->create($type, null, array('data' => $user));
 

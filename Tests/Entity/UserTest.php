@@ -2,7 +2,7 @@
 
 namespace Beelab\UserBundle\Tests\Entity;
 
-use Beelab\UserBundle\Entity\User;
+use Beelab\UserBundle\Test\UserStub as User;
 
 /**
  * @group unit
@@ -53,7 +53,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $user->setEmail('user@example.org');
 
-        $this->assertEquals('a:2:{i:0;N;i:1;s:16:"user@example.org";}', $user->serialize());
+        $this->assertEquals('a:2:{i:0;i:42;i:1;s:16:"user@example.org";}', $user->serialize());
     }
 
     public function testUnserialize()
