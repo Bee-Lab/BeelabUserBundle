@@ -415,7 +415,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     public function getRolesWithLabel($glue = ', ')
     {
         $labels = array();
-        foreach ($this->roles as $role) {
+        $roles = $this->getRoles();
+        foreach ($roles as $role) {
             $labels[] = $this->getRoleLabel($role);
         }
 

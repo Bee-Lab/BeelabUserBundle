@@ -36,4 +36,3 @@ class BeelabUserExtension extends Extension
         $loader->load('services.xml');
     }
 }
-

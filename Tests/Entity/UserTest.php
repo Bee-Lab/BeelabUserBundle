@@ -26,6 +26,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('admin | user', $user->getRolesWithLabel(' | '));
     }
 
+    public function testGetRolesWithLabelForUser()
+    {
+        $user = new User();
+
+        $this->assertEquals('user', $user->getRolesWithLabel());
+    }
+
     public function testHasRole()
     {
         $user = new User();
