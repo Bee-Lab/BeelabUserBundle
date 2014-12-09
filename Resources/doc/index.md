@@ -38,17 +38,14 @@ Example:
 
 ```php
 <?php
-// src/Acme/DemoBundle/Entity
-
-namespace Acme\DemoBundle\Entity;
+// src/AppBundle/Entity
+namespace AppBundle\Entity;
 
 use Beelab\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * User
- *
- * @ORM\Table(name="user")
+ * @ORM\Table()
  * @ORM\Entity(repositoryClass="Beelab\UserBundle\Repository\UserRepository")
  */
 class User extends BaseUser
@@ -64,7 +61,7 @@ Insert in main configuration:
 
 # BeelabUser Configuration
 beelab_user:
-    user_class: Acme\DemoBundle\Entity\User
+    user_class: AppBundle\Entity\User
 ```
 
 Add routes:
@@ -85,14 +82,14 @@ Enable security:
 
 security:
     encoders:
-        Acme\DemoBundle\Entity\User:
+        AppBundle\Entity\User:
             # See http://symfony.com/doc/current/reference/configuration/security.html#using-the-bcrypt-password-encoder
             algorithm: bcrypt
             # Also, since bcrypt is a bit expensive, you likely want to override it in test env
 
     providers:
         administrators:
-            entity: { class: AcmeDemoBundle:User }
+            entity: { class: AppBundle:User }
 
     firewalls:
         main:
@@ -138,7 +135,7 @@ Then, add to configuration:
 # app/config/config.yml
 
 beelab_user:
-    user_manager_class: Acme\DemoBundle\Manager\UserManager
+    user_manager_class: AppBundle\Manager\UserManager
 ```
 
 If you need a lighter UserManager, you can use ``LightUserManager``, that has less
@@ -150,7 +147,7 @@ You can extend it, and add to configuration:
 # app/config/config.yml
 
 beelab_user:
-    light_user_manager_class: Acme\DemoBundle\Manager\LightUserManager
+    light_user_manager_class: AppBundle\Manager\LightUserManager
 ```
 
 #### Forms
@@ -161,8 +158,8 @@ You can extends bundle forms, then add to configuration:
 # app/config/config.yml
 
 beelab_user:
-    password_form_type: Acme\DemoBundle\Form\Type\PasswordFormType
-    user_form_type:     Acme\DemoBundle\Form\Type\UserFormType
+    password_form_type: AppBundle\Form\Type\PasswordFormType
+    user_form_type:     AppBundle\Form\Type\UserFormType
 ```
 
 Forms come with a sensible theme. If you want to use your custom theme,
@@ -195,6 +192,22 @@ to your backend homepage, and you can customize it in configuration:
 # BeelabUser Configuration
 beelab_user:
     route: my_backend_route
+```
+
+You need to separate authentication routes from administration route, maybe because you want all your administration
+under an ``/admin`` path, you can import routes like so:
+```yaml
+# app/config/routing.yml
+
+beelab_user_auth:
+    resource: "@BeelabUserBundle/Controller/AuthController.php"
+    type:     annotation
+    prefix:   /
+
+beelab_user_admin:
+    resource: "@BeelabUserBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /admin/
 ```
 
 ### 4. Commands
