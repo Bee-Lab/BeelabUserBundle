@@ -21,11 +21,25 @@ Enable bundle in the kernel:
 ```php
 <?php
 // app/AppKernel.php
-
 public function registerBundles()
 {
     $bundles = array(
         // ...
+        new Beelab\UserBundle\BeelabUserBundle(),
+    );
+}
+```
+
+If you didn't already use KnpPaginatorBundle, you need to enable it in the kernel, also:
+
+```php
+<?php
+// app/AppKernel.php
+public function registerBundles()
+{
+    $bundles = array(
+        // ...
+        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         new Beelab\UserBundle\BeelabUserBundle(),
     );
 }
