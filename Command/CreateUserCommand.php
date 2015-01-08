@@ -30,7 +30,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command creates a user:
 
-  <info>%command.full_name% garak@example.org</info>
+  <info>%command.full_name%</info>
 
 This interactive shell will ask you for an email and then a password.
 

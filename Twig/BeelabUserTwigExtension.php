@@ -9,17 +9,16 @@ use Twig_Extension;
  */
 class BeelabUserTwigExtension extends Twig_Extension
 {
-    protected $layout, $theme, $route;
+    protected $layout;
+    protected $route;
 
     /**
      * @param string $layout layout name (for "extends" statement)
-     * @param string $theme  theme name (for "form_theme" statement)
      * @param string $route  route used in index.html.twig
      */
-    public function __construct($layout, $theme, $route)
+    public function __construct($layout, $route)
     {
         $this->layout = $layout;
-        $this->theme = $theme;
         $this->route = $route;
     }
 
@@ -30,7 +29,6 @@ class BeelabUserTwigExtension extends Twig_Extension
     {
         return array(
             'beelab_user_layout' => $this->layout,
-            'beelab_user_theme'  => $this->theme,
             'beelab_user_route'  => $this->route,
         );
     }

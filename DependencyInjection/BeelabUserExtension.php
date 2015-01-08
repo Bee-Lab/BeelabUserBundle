@@ -28,7 +28,6 @@ class BeelabUserExtension extends Extension
         $container->setParameter('beelab_user.user_form_type', $config['user_form_type']);
         $container->setParameter('beelab_user.password_form_type', $config['password_form_type']);
         $container->setParameter('beelab_user.layout', $config['layout']);
-        $container->setParameter('beelab_user.theme', $config['theme']);
         $container->setParameter('beelab_user.route', $config['route']);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));

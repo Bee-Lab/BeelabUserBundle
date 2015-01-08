@@ -7,7 +7,6 @@
     <services>
         <service id="beelab_user.twig_extension" class="Beelab\UserBundle\Twig\BeelabUserTwigExtension" public="false">
             <argument>%beelab_user.layout%</argument>
-            <argument>%beelab_user.theme%</argument>
             <argument>%beelab_user.route%</argument>
             <tag name="twig.extension" />
         </service>

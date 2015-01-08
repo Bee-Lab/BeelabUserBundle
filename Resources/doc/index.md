@@ -13,7 +13,7 @@ BeelabUserBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/user-bundle:1.1.*
+$ php composer.phar require beelab/user-bundle:1.2.*
 ```
 
 Enable bundle in the kernel:
@@ -174,16 +174,6 @@ You can extends bundle forms, then add to configuration:
 beelab_user:
     password_form_type: AppBundle\Form\Type\PasswordFormType
     user_form_type:     AppBundle\Form\Type\UserFormType
-```
-
-Forms come with a sensible theme. If you want to use your custom theme,
-specify it in configuration:
-```yaml
-# app/config/config.yml
-
-# BeelabUser Configuration
-beelab_user:
-    theme: "::myCustomTheme.html.twig"
 ```
 
 #### Validation

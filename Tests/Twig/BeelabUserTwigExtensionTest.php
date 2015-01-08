@@ -12,10 +12,9 @@ class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
 {
     public function testGetGlobals()
     {
-        $extension = new BeelabUserTwigExtension('fooLayout', 'barTheme', 'bazRoute');
+        $extension = new BeelabUserTwigExtension('fooLayout', 'bazRoute');
         $expected = array(
             'beelab_user_layout' => 'fooLayout',
-            'beelab_user_theme'  => 'barTheme',
             'beelab_user_route'  => 'bazRoute',
         );
         $this->assertEquals($expected, $extension->getGlobals());
@@ -23,7 +22,7 @@ class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
 
     public function testGetName()
     {
-        $extension = new BeelabUserTwigExtension('foo', 'bar', 'barRoute');
+        $extension = new BeelabUserTwigExtension('foo', 'barRoute');
         $this->assertEquals('beelab_user_twig_extension', $extension->getName());
     }
 }
