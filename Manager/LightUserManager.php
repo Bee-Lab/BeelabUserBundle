@@ -11,7 +11,10 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
  */
 class LightUserManager
 {
-    protected $className, $em, $repository, $encoder;
+    protected $className;
+    protected $em;
+    protected $repository;
+    protected $encoder;
 
     /**
      * @param string                  $class

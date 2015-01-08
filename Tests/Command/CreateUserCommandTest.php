@@ -52,11 +52,11 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
 
     private function getMockContainer($success = true)
     {
-        $userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\UserManager')->disableOriginalConstructor()->getMock();
+        $userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\LightUserManager')->disableOriginalConstructor()->getMock();
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')->disableOriginalConstructor()->getMock();
         $user = $this->getMock('Beelab\UserBundle\Entity\User');
 
-        $container->expects($this->any())->method('get')->with('beelab_user.manager')->will($this->returnValue($userManager));
+        $container->expects($this->any())->method('get')->with('beelab_user.light_manager')->will($this->returnValue($userManager));
         $userManager->expects($this->at(0))->method('getInstance')->will($this->returnValue($user));
         $user->expects($this->at(0))->method('setEmail')->will($this->returnSelf());
         $user->expects($this->at(1))->method('setPlainPassword')->will($this->returnSelf());

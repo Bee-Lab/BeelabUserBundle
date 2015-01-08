@@ -313,16 +313,6 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
      * @param string
      * @return User
      */
@@ -370,7 +360,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function isEnabled()
     {
-        return $this->isActive();
+        return $this->active;
     }
 
     /**

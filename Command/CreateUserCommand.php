@@ -4,8 +4,8 @@ namespace Beelab\UserBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -57,12 +57,13 @@ EOT
         }
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
+        $manager = $this->getContainer()->get('beelab_user.light_manager');
 
-        $user = $this->getContainer()->get('beelab_user.manager')->getInstance();
+        $user = $manager->getInstance();
         $user->setEmail($email)->setPlainPassword($password)->setActive(!$inactive);
 
         try {
-            $this->getContainer()->get('beelab_user.manager')->create($user);
+            $manager->create($user);
             $output->writeln(sprintf('Created user <comment>%s</comment>', $email));
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>Error</error>, user <comment>%s</comment> not created. %s', $email, $e->getMessage()));

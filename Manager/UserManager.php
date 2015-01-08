@@ -19,7 +19,9 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
  */
 class UserManager extends LightUserManager
 {
-    protected $security, $paginator, $dispatcher;
+    protected $security;
+    protected $paginator;
+    protected $dispatcher;
 
     /**
      * @param string                   $class
