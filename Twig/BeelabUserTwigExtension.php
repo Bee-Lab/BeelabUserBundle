@@ -45,7 +45,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     public function getFunctions()
     {
         return array(
-            new Twig_SimpleFunction('has_paginator', [$this, 'hasPaginator']),
+            new Twig_SimpleFunction('has_paginator', array($this, 'hasPaginator')),
         );
     }
 
