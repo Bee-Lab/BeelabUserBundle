@@ -34,7 +34,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->userManager));
         $this->userManager->expects($this->once())->method('getList')->with(1, 20)
             ->will($this->returnValue(array('foo', 'bar')));
-        $this->assertEquals(array('paginator' => array('foo', 'bar')), $this->controller->indexAction(new Request()));
+        $this->assertEquals(array('users' => array('foo', 'bar')), $this->controller->indexAction(new Request()));
     }
 
     public function testShow()

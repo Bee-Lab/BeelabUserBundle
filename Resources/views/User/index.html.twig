@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for user in paginator %}
+            {% for user in users %}
                 <tr>
                     <td><a href="{{ path('user_show', {id: user.id}) }}">{{ user.id }}</a></td>
                     <td>{{ user.email }}</td>
@@ -42,7 +42,9 @@
         </tbody>
     </table>
 
-    {{ knp_pagination_render(paginator) }}
+    {% if has_paginator %}
+        {{ knp_pagination_render(users) }}
+    {% endif %}
 
     <ul class="new_entry list-unstyled">
         <li>
@@ -51,5 +53,4 @@
             </a>
         </li>
     </ul>
-
 {% endblock %}

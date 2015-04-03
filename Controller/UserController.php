@@ -23,9 +23,9 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $paginator = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
+        $users = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
 
-        return array('paginator' => $paginator);
+        return array('users' => $users);
     }
 
     /**

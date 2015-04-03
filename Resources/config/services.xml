@@ -8,6 +8,7 @@
         <service id="beelab_user.twig_extension" class="Beelab\UserBundle\Twig\BeelabUserTwigExtension" public="false">
             <argument>%beelab_user.layout%</argument>
             <argument>%beelab_user.route%</argument>
+            <argument type="service" id="knp_paginator" on-invalid="ignore" />
             <tag name="twig.extension" />
         </service>
         <service id="beelab_user.login_listener" class="Beelab\UserBundle\Listener\LastLoginListener">
