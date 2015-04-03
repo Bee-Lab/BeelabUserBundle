@@ -42,8 +42,8 @@
         </tbody>
     </table>
 
-    {% if has_paginator %}
-        {{ knp_pagination_render(users) }}
+    {% if has_paginator() %}
+        {% include 'BeelabUserBundle:User:_paginator.html.twig' with {users: users} %}
     {% endif %}
 
     <ul class="new_entry list-unstyled">
