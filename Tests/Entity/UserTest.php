@@ -88,4 +88,21 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('user@example.org', $user->__toString());
     }
+
+    public function testPassword()
+    {
+        $user = new User();
+        $user->setPassword('astring');
+
+        $this->assertEquals('astring', $user->getPassword());
+    }
+
+    public function testLastLogin()
+    {
+        $datetime = new \DateTime();
+        $user = new User();
+        $user->setLastLogin($datetime);
+
+        $this->assertEquals($datetime, $user->getLastLogin());
+    }
 }

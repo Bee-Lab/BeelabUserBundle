@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function loadUserByUsername($username)
     {
@@ -20,7 +20,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->where('u.email = :email')
             ->setParameter('email', $username)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
         ;
         if (empty($user)) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
@@ -30,7 +30,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function refreshUser(UserInterface $user)
     {
@@ -43,7 +43,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {

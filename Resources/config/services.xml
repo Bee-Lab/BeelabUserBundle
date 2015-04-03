@@ -24,7 +24,7 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.encoder_factory" />
             <argument type="service" id="security.context" />
-            <argument type="service" id="knp_paginator" />
+            <argument type="service" id="knp_paginator" on-invalid="ignore" />
             <argument type="service" id="event_dispatcher" />
         </service>
     </services>

@@ -31,7 +31,7 @@ class UserManager extends LightUserManager
      * @param PaginatorInterface       $paginator
      * @param EventDispatcherInterface $dispatcher
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator, EventDispatcherInterface $dispatcher)
+    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator = null, EventDispatcherInterface $dispatcher)
     {
         parent::__construct($class, $em, $encoder);
         $this->security = $security;
@@ -40,17 +40,20 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * List of users
+     * List of users (can be paginated)
      *
-     * @param  int                                                 $page
-     * @param  int                                                 $limit
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @param  int   $page
+     * @param  int   $limit
+     * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
     public function getList($page = 1, $limit = 20)
     {
         $qb = $this->repository->createQueryBuilder('u');
+        if (!is_null($this->paginator)) {
+            return $this->paginator->paginate($qb, $page, $limit);
+        }
 
-        return $this->paginator->paginate($qb, $page, $limit);
+        return $qb->getQuery()->execute();
     }
 
     /**

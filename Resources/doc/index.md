@@ -13,7 +13,7 @@ BeelabUserBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/user-bundle:1.2.*
+$ composer require beelab/user-bundle
 ```
 
 Enable bundle in the kernel:
@@ -30,20 +30,7 @@ public function registerBundles()
 }
 ```
 
-If you didn't already use KnpPaginatorBundle, you need to enable it in the kernel, also:
-
-```php
-<?php
-// app/AppKernel.php
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
-        new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-        new Beelab\UserBundle\BeelabUserBundle(),
-    );
-}
-```
+If you want pagination in users' administration, install also [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle).
 
 ### 2. Configuration
 

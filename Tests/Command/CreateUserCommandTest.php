@@ -64,7 +64,6 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
 
         if ($success) {
             $userManager->expects($this->at(1))->method('create')->with($user);
-
         } else {
             $userManager->expects($this->at(1))->method('create')->will($this->throwException(new \Exception('Generic error')));
         }

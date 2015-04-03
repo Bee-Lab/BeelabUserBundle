@@ -18,7 +18,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     protected $paginator;
     protected $dispatcher;
 
-    public function setUp()
+    protected function setUp()
     {
         $class = 'Beelab\UserBundle\Test\UserStub';
         $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
@@ -28,10 +28,14 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()
             ->getMock();
         $this->dispatcher = $this->getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this->em->expects($this->once())->method('getRepository')->with($class)
+        $this->em->expects($this->any())->method('getRepository')->with($class)
             ->will($this->returnValue($this->repository));
 
         $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator, $this->dispatcher);
+    }
+
+    protected function getManager($withPaginator = true)
+    {
     }
 
     public function testList()
@@ -42,6 +46,20 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue(array()));
 
         $this->assertEquals(array(), $this->manager->getList());
+    }
+
+    public function testListWithoutPaginator()
+    {
+        $class = 'Beelab\UserBundle\Test\UserStub';
+        $manager = new UserManager($class, $this->em, $this->encoder, $this->security, null, $this->dispatcher);
+        $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('execute'))
+            ->disableOriginalConstructor()->getMockForAbstractClass();
+        $this->repository->expects($this->once())->method('createQueryBuilder')->will($this->returnValue($qb));
+        $qb->expects($this->once())->method('getQuery')->will($this->returnValue($query));
+        $query->expects($this->once())->method('execute')->will($this->returnValue(array()));
+
+        $this->assertEquals(array(), $manager->getList());
     }
 
     public function testFind()

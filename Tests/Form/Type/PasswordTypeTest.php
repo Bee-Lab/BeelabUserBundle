@@ -17,7 +17,7 @@ class PasswordTypeTest extends TypeTestCase
             'plainPassowrd' => array(
                 'new_password'        => 'paperino',
                 'repeat_new_password' => 'paperino',
-            )
+            ),
         );
 
         $type = new PasswordType();

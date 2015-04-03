@@ -10,11 +10,10 @@ use PHPUnit_Framework_TestCase;
  */
 class LightUserManagerTest extends PHPUnit_Framework_TestCase
 {
-    protected $manager,
-        $em,
-        $repository,
-        $encoder
-    ;
+    protected $manager;
+    protected $em;
+    protected $repository;
+    protected $encoder;
 
     public function setUp()
     {

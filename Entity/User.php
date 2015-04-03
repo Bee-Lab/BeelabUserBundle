@@ -92,7 +92,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -100,7 +100,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getSalt()
     {
@@ -108,7 +108,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getPassword()
     {
@@ -185,7 +185,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -332,7 +332,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAccountNonExpired()
     {
@@ -340,7 +340,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isAccountNonLocked()
     {
@@ -348,7 +348,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isCredentialsNonExpired()
     {
@@ -356,7 +356,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isEnabled()
     {
@@ -364,7 +364,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isEqualTo(SymfonyUserInterface $user)
     {
