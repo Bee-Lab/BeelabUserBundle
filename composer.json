@@ -16,13 +16,13 @@
         "symfony/symfony": "~2.3",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
-        "sensio/framework-extra-bundle": ">=2.3.0,<4",
+        "sensio/framework-extra-bundle": ">=2.3.0,<4"
     },
     "require-dev": {
         "phpunit/phpunit": "4.*"
     },
     "suggest": {
-        "knplabs/knp-paginator-bundle": "Needed for optional pagination",
+        "knplabs/knp-paginator-bundle": "Needed for optional pagination"
     },
     "autoload": {
         "psr-4": { "Beelab\\UserBundle\\": "" }
