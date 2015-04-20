@@ -105,6 +105,10 @@ security:
 This is just an example, your real security configuration may vary.
 It's important here to use the name of your entity in ``encoders`` and ``providers``.
 
+> **Warning**: if you customize the route prefix, don't forget to explicit ``login_path`` and other options in your
+> firewall. See [security reference](http://symfony.com/doc/current/reference/configuration/security.html#the-login-form-and-process) for more details.
+>
+
 ### 3. Customizations
 
 #### Templates
