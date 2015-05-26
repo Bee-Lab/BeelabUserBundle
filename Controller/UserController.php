@@ -117,8 +117,8 @@ class UserController extends Controller
     public function passwordAction(Request $request)
     {
         $user = $this->getUser();
-        $form = $this->createForm('beelab_password', $user, array('validation_groups' => array('password')));
-        if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
+        $form = $this->createForm('beelab_password', $user);
+        if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
             return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));

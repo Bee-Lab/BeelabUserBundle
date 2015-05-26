@@ -313,7 +313,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param string
+     * @param  string
      * @return User
      */
     public function setPlainPassword($password)
