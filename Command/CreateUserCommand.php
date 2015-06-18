@@ -51,7 +51,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $email    = $input->getArgument('email');
+        $email = $input->getArgument('email');
         if (empty($email) || false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('Invalid email');
         }

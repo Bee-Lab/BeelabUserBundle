@@ -8,10 +8,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
@@ -19,22 +20,25 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
  */
 class UserManager extends LightUserManager
 {
-    protected $security;
+    protected $authChecker;
+    protected $tokenStorage;
     protected $paginator;
     protected $dispatcher;
 
     /**
-     * @param string                   $class
-     * @param ObjectManager            $em
-     * @param EncoderFactoryInterface  $encoder
-     * @param SecurityContextInterface $security
-     * @param PaginatorInterface       $paginator
-     * @param EventDispatcherInterface $dispatcher
+     * @param string                        $class
+     * @param ObjectManager                 $em
+     * @param EncoderFactoryInterface       $encoder
+     * @param AuthorizationCheckerInterface $authChecker
+     * @param TokenStorageInterface         $tokenStorage
+     * @param PaginatorInterface            $paginator
+     * @param EventDispatcherInterface      $dispatcher
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, SecurityContextInterface $security, PaginatorInterface $paginator = null, EventDispatcherInterface $dispatcher)
+    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage, PaginatorInterface $paginator = null, EventDispatcherInterface $dispatcher)
     {
         parent::__construct($class, $em, $encoder);
-        $this->security = $security;
+        $this->authChecker = $authChecker;
+        $this->tokenStorage = $tokenStorage;
         $this->paginator = $paginator;
         $this->dispatcher = $dispatcher;
     }
@@ -91,10 +95,10 @@ class UserManager extends LightUserManager
      */
     public function delete(UserInterface $user, $flush = true)
     {
-        if ($user->hasRole('ROLE_SUPER_ADMIN') && !$this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($user->hasRole('ROLE_SUPER_ADMIN') && !$this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException('You cannot delete a super admin user.');
         }
-        if ($this->security->getToken()->getUser() == $user) {
+        if ($this->tokenStorage->getToken()->getUser() == $user) {
             throw new AccessDeniedException('You cannot delete your user.');
         }
         $this->em->remove($user);
@@ -117,7 +121,7 @@ class UserManager extends LightUserManager
         if ($logout) {
             $request->getSession()->invalidate();
         }
-        $this->security->setToken($token);
+        $this->tokenStorage->setToken($token);
         $event = new InteractiveLoginEvent($request, $token);
         $this->dispatcher->dispatch('security.interactive_login', $event);
     }

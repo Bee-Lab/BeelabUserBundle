@@ -24,7 +24,8 @@
             <argument>%beelab_user.user_class%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.encoder_factory" />
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.authorization_checker" />
+            <argument type="service" id="security.token_storage" />
             <argument type="service" id="knp_paginator" on-invalid="ignore" />
             <argument type="service" id="event_dispatcher" />
         </service>

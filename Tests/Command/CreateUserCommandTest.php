@@ -11,7 +11,7 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
 {
     protected $command;
 
-    public function setUp()
+    protected function setUp()
     {
         $application = new Application();
         $application->add(new CreateUserCommand());

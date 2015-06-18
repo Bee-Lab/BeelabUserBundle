@@ -14,7 +14,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     protected $em;
     protected $repository;
     protected $encoder;
-    protected $security;
+    protected $authChecker;
+    protected $tokenStorage;
     protected $paginator;
     protected $dispatcher;
 
@@ -23,7 +24,8 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $class = 'Beelab\UserBundle\Test\UserStub';
         $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
         $this->encoder = $this->getMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
-        $this->security = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $this->authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $this->tokenStorage = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
         $this->paginator = $this->getMock('Knp\Component\Pager\PaginatorInterface');
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()
             ->getMock();
@@ -31,7 +33,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())->method('getRepository')->with($class)
             ->will($this->returnValue($this->repository));
 
-        $this->manager = new UserManager($class, $this->em, $this->encoder, $this->security, $this->paginator, $this->dispatcher);
+        $this->manager = new UserManager($class, $this->em, $this->encoder, $this->authChecker, $this->tokenStorage, $this->paginator, $this->dispatcher);
     }
 
     protected function getManager($withPaginator = true)
@@ -51,7 +53,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     public function testListWithoutPaginator()
     {
         $class = 'Beelab\UserBundle\Test\UserStub';
-        $manager = new UserManager($class, $this->em, $this->encoder, $this->security, null, $this->dispatcher);
+        $manager = new UserManager($class, $this->em, $this->encoder, $this->authChecker, $this->tokenStorage, null, $this->dispatcher);
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('execute'))
             ->disableOriginalConstructor()->getMockForAbstractClass();
@@ -99,7 +101,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
      */
     public function testDeleteAdminUserByNonSuperAdminUser()
     {
-        $this->security->expects($this->once())->method('isGranted')->with('ROLE_SUPER_ADMIN')
+        $this->authChecker->expects($this->once())->method('isGranted')->with('ROLE_SUPER_ADMIN')
             ->will($this->returnValue(false));
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('hasRole')->with('ROLE_SUPER_ADMIN')->will($this->returnValue(true));
@@ -115,7 +117,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('hasRole')->with('ROLE_SUPER_ADMIN')->will($this->returnValue(false));
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $this->security->expects($this->once())->method('getToken')->will($this->returnValue($token));
+        $this->tokenStorage->expects($this->once())->method('getToken')->will($this->returnValue($token));
         $token->expects($this->once())->method('getUser')->will($this->returnValue($user));
 
         $this->manager->delete($user);
@@ -126,7 +128,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $currentUser = $this->getMock('Beelab\UserBundle\User\UserInterface');
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $this->security->expects($this->once())->method('getToken')->will($this->returnValue($token));
+        $this->tokenStorage->expects($this->once())->method('getToken')->will($this->returnValue($token));
         $token->expects($this->once())->method('getUser')->will($this->returnValue($currentUser));
 
         $this->em->expects($this->once())->method('remove');
@@ -141,7 +143,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $user->expects($this->once())->method('getPassword')->will($this->returnValue('foo'));
         $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
-        $this->security->expects($this->once())->method('setToken');
+        $this->tokenStorage->expects($this->once())->method('setToken');
         $this->dispatcher->expects($this->once())->method('dispatch');
 
         $this->manager->authenticate($user, $request);
@@ -157,7 +159,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
         $request->expects($this->once())->method('getSession')->will($this->returnValue($session));
         $session->expects($this->once())->method('invalidate');
-        $this->security->expects($this->once())->method('setToken');
+        $this->tokenStorage->expects($this->once())->method('setToken');
         $this->dispatcher->expects($this->once())->method('dispatch');
 
         $this->manager->authenticate($user, $request, 'main', true);
