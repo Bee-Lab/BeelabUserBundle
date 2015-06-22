@@ -25,15 +25,15 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
 
     public function testLoginAuthenticated()
     {
-        $securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $router = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
-        $this->container->expects($this->at(0))->method('get')->with('security.context')
-            ->will($this->returnValue($securityContext));
+        $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
+            ->will($this->returnValue($authChecker));
         $this->container->expects($this->at(1))->method('get')->with('router')
             ->will($this->returnValue($router));
-        $securityContext->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
+        $authChecker->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
             ->will($this->returnValue(true));
         $router->expects($this->once())->method('generate')->will($this->returnValue('url'));
 
@@ -43,14 +43,14 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
 
     public function testLogin()
     {
-        $securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
         $request->attributes = new ParameterBag(array('_security.last_username' => 'user'));
         $session = $this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
 
-        $this->container->expects($this->any())->method('get')->with('security.context')
-            ->will($this->returnValue($securityContext));
-        $securityContext->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
+        $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
+            ->will($this->returnValue($authChecker));
+        $authChecker->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
             ->will($this->returnValue(false));
         $request->expects($this->any())->method('getSession')->will($this->returnValue($session));
         $session->expects($this->at(1))->method('get')->with('_security.last_error')->will($this->returnValue('user'));

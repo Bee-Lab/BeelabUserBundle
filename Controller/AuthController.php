@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Request;
 
 class AuthController extends Controller
@@ -20,12 +20,12 @@ class AuthController extends Controller
      */
     public function loginAction(Request $request)
     {
-        if ($this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirect($this->generateUrl('homepage'));
         }
 
         return array(
-            'last_username' => $request->getSession()->get(SecurityContext::LAST_USERNAME),
+            'last_username' => $request->getSession()->get(Security::LAST_USERNAME),
             'error'         => $this->getLoginError($request),
         );
     }
@@ -59,11 +59,11 @@ class AuthController extends Controller
      */
     protected function getLoginError(Request $request)
     {
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
+        if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
         } else {
-            $error = $request->getSession()->get(SecurityContext::AUTHENTICATION_ERROR);
-            $request->getSession()->remove(SecurityContext::AUTHENTICATION_ERROR);
+            $error = $request->getSession()->get(Security::AUTHENTICATION_ERROR);
+            $request->getSession()->remove(Security::AUTHENTICATION_ERROR);
         }
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
         if ($error instanceof \Exception && !$error instanceof BadCredentialsException) {
