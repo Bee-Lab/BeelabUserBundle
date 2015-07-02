@@ -64,4 +64,18 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             ->setParameter('roles', '%"' . $role . '"%')
         ;
     }
+
+    /**
+     * @param  array                      $roles
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function filterByRoles(array $roles)
+    {
+        $qb = $this->createQueryBuilder('u');
+        foreach ($roles as $key => $role) {
+            $qb->orWhere('u.roles LIKE :role'.$key)->setParameter('role'.$key, '%"' . $role . '"%');
+        }
+
+        return $qb;
+    }
 }
