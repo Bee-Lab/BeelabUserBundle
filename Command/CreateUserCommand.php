@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Inspired by CreateUserCommand by FOSUserBundle
- * See https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Command/CreateUserCommand.php
+ * See https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Command/CreateUserCommand.php.
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
@@ -22,11 +22,11 @@ class CreateUserCommand extends ContainerAwareCommand
         $this
             ->setName('beelab:user:create')
             ->setDescription('Create a user.')
-            ->setDefinition(array(
+            ->setDefinition([
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
-            ))
+            ])
             ->setHelp(<<<EOT
 The <info>%command.name%</info> command creates a user:
 

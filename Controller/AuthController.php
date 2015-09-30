@@ -27,10 +27,10 @@ class AuthController extends Controller
             return $this->redirect($this->generateUrl('homepage'));
         }
 
-        return array(
+        return [
             'last_username' => $request->getSession()->get(Security::LAST_USERNAME),
             'error'         => $this->getLoginError($request),
-        );
+        ];
     }
 
     /**
@@ -44,7 +44,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login check (implemented by Symfony security system)
+     * Login check (implemented by Symfony security system).
      *
      * @Route("/login_check", name="login_check")
      * @Method("POST")
@@ -57,9 +57,9 @@ class AuthController extends Controller
     /**
      * Get possible authentication error.
      *
-     * @param  Request $request
+     * @param Request $request
      *
-     * @return mixed   Exception or array
+     * @return mixed Exception or array
      */
     protected function getLoginError(Request $request)
     {
@@ -72,7 +72,7 @@ class AuthController extends Controller
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
         if ($error instanceof \Exception && !$error instanceof BadCredentialsException) {
             $this->get('logger')->log('error', $error->getMessage());
-            $error = array('message' => 'Unexpected error.');
+            $error = ['message' => 'Unexpected error.'];
         }
 
         return $error;

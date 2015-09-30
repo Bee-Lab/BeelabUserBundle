@@ -45,9 +45,9 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $this->repository->expects($this->once())->method('createQueryBuilder')->will($this->returnValue($qb));
         $this->paginator->expects($this->once())->method('paginate')->with($qb, 1, 20)
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
-        $this->assertEquals(array(), $this->manager->getList());
+        $this->assertEquals([], $this->manager->getList());
     }
 
     public function testListWithoutPaginator()
@@ -55,19 +55,19 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $class = 'Beelab\UserBundle\Test\UserStub';
         $manager = new UserManager($class, $this->em, $this->encoder, $this->authChecker, $this->tokenStorage, null, $this->dispatcher);
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('execute'))
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['execute'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
         $this->repository->expects($this->once())->method('createQueryBuilder')->will($this->returnValue($qb));
         $qb->expects($this->once())->method('getQuery')->will($this->returnValue($query));
-        $query->expects($this->once())->method('execute')->will($this->returnValue(array()));
+        $query->expects($this->once())->method('execute')->will($this->returnValue([]));
 
-        $this->assertEquals(array(), $manager->getList());
+        $this->assertEquals([], $manager->getList());
     }
 
     public function testFind()
     {
         $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
-        $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', array('pippo@example.org'))
+        $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', ['pippo@example.org'])
             ->will($this->returnValue($user));
 
         $this->assertEquals($user, $this->manager->find('pippo@example.org'));
@@ -142,7 +142,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->disableOriginalConstructor()
             ->getMock();
         $user->expects($this->once())->method('getPassword')->will($this->returnValue('foo'));
-        $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
+        $user->expects($this->once())->method('getRoles')->will($this->returnValue([]));
         $this->tokenStorage->expects($this->once())->method('setToken');
         $this->dispatcher->expects($this->once())->method('dispatch');
 
@@ -156,7 +156,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
             ->getMock();
         $session = $this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
         $user->expects($this->once())->method('getPassword')->will($this->returnValue('foo'));
-        $user->expects($this->once())->method('getRoles')->will($this->returnValue(array()));
+        $user->expects($this->once())->method('getRoles')->will($this->returnValue([]));
         $request->expects($this->once())->method('getSession')->will($this->returnValue($session));
         $session->expects($this->once())->method('invalidate');
         $this->tokenStorage->expects($this->once())->method('setToken');

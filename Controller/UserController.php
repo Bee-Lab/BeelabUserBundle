@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $users = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
 
-        return array('users' => $users);
+        return ['users' => $users];
     }
 
     /**
@@ -39,10 +39,10 @@ class UserController extends Controller
         $user = $this->get('beelab_user.manager')->get($id);
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return array(
+        return [
             'user'        => $user,
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -54,17 +54,17 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->get('beelab_user.manager')->getInstance();
-        $form = $this->createForm('beelab_user', $user, array('validation_groups' => array('create')));
+        $form = $this->createForm('beelab_user', $user, ['validation_groups' => ['create']]);
         if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -76,19 +76,19 @@ class UserController extends Controller
     public function editAction($id, Request $request)
     {
         $user = $this->get('beelab_user.manager')->get($id);
-        $editForm = $this->createForm('beelab_user', $user, array('validation_groups' => array('update')));
+        $editForm = $this->createForm('beelab_user', $user, ['validation_groups' => ['update']]);
         if ($request->isMethod('post') && $editForm->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return array(
+        return [
             'user'        => $user,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -121,26 +121,25 @@ class UserController extends Controller
         if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
-     * Create Delete form
+     * Create Delete form.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Form
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id))
+        return $this->createFormBuilder(['id' => $id])
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

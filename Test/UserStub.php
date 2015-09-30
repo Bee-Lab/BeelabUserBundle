@@ -5,7 +5,7 @@ namespace Beelab\UserBundle\Test;
 use Beelab\UserBundle\Entity\User;
 
 /**
- * UserStub
+ * UserStub.
  */
 class UserStub extends User
 {

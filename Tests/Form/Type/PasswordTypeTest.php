@@ -13,15 +13,15 @@ class PasswordTypeTest extends TypeTestCase
 {
     public function testSubmitValidData()
     {
-        $formData = array(
-            'plainPassowrd' => array(
+        $formData = [
+            'plainPassowrd' => [
                 'new_password'        => 'paperino',
                 'repeat_new_password' => 'paperino',
-            ),
-        );
+            ],
+        ];
 
         $type = new PasswordType();
-        $form = $this->factory->create($type, null, array('data_class' => 'Beelab\UserBundle\Test\UserStub'));
+        $form = $this->factory->create($type, null, ['data_class' => 'Beelab\UserBundle\Test\UserStub']);
 
         $user = new User();
         $user->setPlainPassword(null);

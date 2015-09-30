@@ -7,7 +7,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
- * Light User manager
+ * Light User manager.
  */
 class LightUserManager
 {
@@ -30,20 +30,20 @@ class LightUserManager
     }
 
     /**
-     * Get new instance of User
+     * Get new instance of User.
      *
      * @return UserInterface
      */
     public function getInstance()
     {
-        return new $this->className;
+        return new $this->className();
     }
 
     /**
-     * Create new user
+     * Create new user.
      *
      * @param UserInterface $user
-     * @param bool       $flush
+     * @param bool          $flush
      */
     public function create(UserInterface $user, $flush = true)
     {
@@ -55,10 +55,10 @@ class LightUserManager
     }
 
     /**
-     * Update existing user
+     * Update existing user.
      *
      * @param UserInterface $user
-     * @param bool       $flush
+     * @param bool          $flush
      */
     public function update(UserInterface $user, $flush = true)
     {
@@ -71,7 +71,7 @@ class LightUserManager
     }
 
     /**
-     * Password update
+     * Password update.
      *
      * @param UserInterface $user
      */

@@ -12,7 +12,7 @@ class BeelabUserExtensionTest extends PHPUnit_Framework_TestCase
         $container = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ContainerBuilder')->disableOriginalConstructor()->getMock();
         $extension = $this->getMockBuilder('Beelab\\UserBundle\\DependencyInjection\\BeelabUserExtension')->getMock();
 
-        $extension->load(array(array()), $container);
+        $extension->load([[]], $container);
     }
 
     public function testLoadSetParameters()
@@ -25,13 +25,13 @@ class BeelabUserExtensionTest extends PHPUnit_Framework_TestCase
         $container->expects($this->any())->method('getParameterBag')->will($this->returnValue($parameterBag));
 
         $extension = new BeelabUserExtension();
-        $configs = array(
-            array('user_class' => 'foo'),
-            array('user_manager_class' => 'foo'),
-            array('user_form_type' => 'foo'),
-            array('password_form_type' => 'foo'),
-            array('layout' => 'bar'),
-        );
+        $configs = [
+            ['user_class'         => 'foo'],
+            ['user_manager_class' => 'foo'],
+            ['user_form_type'     => 'foo'],
+            ['password_form_type' => 'foo'],
+            ['layout'             => 'bar'],
+        ];
         $extension->load($configs, $container);
     }
 }

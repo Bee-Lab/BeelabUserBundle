@@ -14,13 +14,12 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', 'repeated', array(
+            ->add('plainPassword', 'repeated', [
                 'first_name'  => 'new_password',
                 'second_name' => 'confirm_new_password',
                 'type'        => 'password',
                 'required'    => true,
-            ))
-        ;
+            ]);
     }
 
     /**
@@ -28,11 +27,11 @@ class PasswordType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class'         => 'Beelab\UserBundle\Entity\User',
-            'validation_groups'  => array('password'),
+            'validation_groups'  => ['password'],
             'translation_domain' => 'admin',
-        ));
+        ]);
     }
 
     /**
