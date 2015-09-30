@@ -58,7 +58,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function hasPaginator()
     {

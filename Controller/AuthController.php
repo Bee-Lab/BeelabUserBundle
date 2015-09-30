@@ -6,14 +6,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * AuthController.
+ */
 class AuthController extends Controller
 {
     /**
-     * Login form
+     * Login form.
      *
      * @Route("/login", name="login")
      * @Template()
@@ -31,7 +34,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout (implemented by Symfony security system)
+     * Logout (implemented by Symfony security system).
      *
      * @Route("/logout", name="logout")
      */
@@ -52,9 +55,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Get possible authentication error
+     * Get possible authentication error.
      *
      * @param  Request $request
+     *
      * @return mixed   Exception or array
      */
     protected function getLoginError(Request $request)

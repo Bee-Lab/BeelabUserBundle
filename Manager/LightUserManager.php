@@ -43,7 +43,7 @@ class LightUserManager
      * Create new user
      *
      * @param UserInterface $user
-     * @param boolean       $flush
+     * @param bool       $flush
      */
     public function create(UserInterface $user, $flush = true)
     {
@@ -58,7 +58,7 @@ class LightUserManager
      * Update existing user
      *
      * @param UserInterface $user
-     * @param boolean       $flush
+     * @param bool       $flush
      */
     public function update(UserInterface $user, $flush = true)
     {

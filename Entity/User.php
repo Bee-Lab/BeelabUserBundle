@@ -26,6 +26,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     );
 
     /**
+     * @var int
+     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -33,6 +35,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(unique=true)
      * @Assert\NotBlank(groups={"create", "update"})
      * @Assert\Email(groups={"create", "update"})
@@ -40,17 +44,23 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     protected $email;
 
     /**
+     * @var string
+     *
      * @ORM\Column(length=32)
      */
     protected $salt;
 
     /**
+     * @var string
+     *
      * @ORM\Column(length=255)
      */
     protected $password;
 
     /**
-     * Plain password
+     * Plain password.
+     *
+     * @var string
      *
      * @Assert\NotBlank(groups={"create"})
      * @Assert\Length(min=6, max=100, groups={"create", "update", "password"})
@@ -58,11 +68,15 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     protected $plainPassword;
 
     /**
+     * @var array
+     *
      * @ORM\Column(type="array")
      */
     protected $roles = array();
 
     /**
+     * @var bool
+     *
      * @ORM\Column(name="is_active", type="boolean", options={"default"=1})
      * @Assert\Type(type="bool", groups={"create", "update"})
      */
@@ -70,6 +84,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @var \DateTime
+     *
      * @ORM\Column(name="last_login", type="datetime", nullable=true)
      * @Assert\DateTime(groups={"create", "update"})
      */
@@ -117,6 +132,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @param  array $roles
+     *
      * @return User
      */
     public function setRoles(array $roles)
@@ -145,6 +161,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @param  string $role
+     *
      * @return User
      */
     public function addRole($role)
@@ -162,8 +179,9 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      * Use the AuthorizationChecker, or an implementation of AccessDecisionManager
      * instead, e.g. $securityContext->isGranted('ROLE_USER');
      *
-     * @param  string  $role
-     * @return boolean
+     * @param string $role
+     *
+     * @return bool
      */
     public function hasRole($role)
     {
@@ -171,7 +189,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param  string $role
+     * @param string $role
+     *
      * @return User
      */
     public function removeRole($role)
@@ -194,6 +213,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @see \Serializable::serialize()
+     *
      * @return string
      */
     public function serialize()
@@ -203,6 +223,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
 
     /**
      * @see \Serializable::unserialize()
+     *
      * @param string
      */
     public function unserialize($serialized)
@@ -211,9 +232,9 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -221,9 +242,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Set email
+     * Set email.
      *
-     * @param  string $email
+     * @param string $email
+     *
      * @return User
      */
     public function setEmail($email)
@@ -234,7 +256,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -244,9 +266,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Set salt
+     * Set salt.
      *
-     * @param  string $salt
+     * @param string $salt
+     *
      * @return User
      */
     public function setSalt($salt)
@@ -257,9 +280,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Set password
+     * Set password.
      *
-     * @param  string $password
+     * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -270,9 +294,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Set active
+     * Set active.
      *
-     * @param  boolean $active
+     * @param bool $active
+     *
      * @return User
      */
     public function setActive($active)
@@ -283,9 +308,9 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * IsActive
+     * IsActive.
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive()
     {
@@ -293,7 +318,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param  DateTime $time
+     * @param \DateTime $time
+     *
      * @return User
      */
     public function setLastLogin(\DateTime $time = null)
@@ -314,7 +340,8 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param  string
+     * @param string
+     *
      * @return User
      */
     public function setPlainPassword($password)
@@ -377,7 +404,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get role labels
+     * Get role labels.
      *
      * @return array
      */
@@ -387,9 +414,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get role label
+     * Get role label.
      *
-     * @param  string $role
+     * @param string $role
+     *
      * @return string
      */
     public function getRoleLabel($role)
@@ -398,9 +426,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * Get roles with labels
+     * Get roles with labels.
      *
-     * @param  string $glue
+     * @param string $glue
+     *
      * @return string
      */
     public function getRolesWithLabel($glue = ', ')

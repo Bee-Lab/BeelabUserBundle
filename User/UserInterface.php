@@ -21,7 +21,8 @@ interface UserInterface extends AdvancedUserInterface
 
     /**
      * @param  string
-     * @return boolean
+     *
+     * @return bool
      */
     public function hasRole($role);
 

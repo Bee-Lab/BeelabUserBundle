@@ -48,6 +48,7 @@ class UserManager extends LightUserManager
      *
      * @param  int   $page
      * @param  int   $limit
+     *
      * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
     public function getList($page = 1, $limit = 20)
@@ -64,6 +65,7 @@ class UserManager extends LightUserManager
      * Find user by email
      *
      * @param  string        $email
+     *
      * @return UserInterface
      */
     public function find($email)
@@ -74,7 +76,8 @@ class UserManager extends LightUserManager
     /**
      * Find user by id
      *
-     * @param  integer       $id
+     * @param  int       $id
+     *
      * @return UserInterface
      */
     public function get($id)
@@ -91,7 +94,7 @@ class UserManager extends LightUserManager
      * Delete user
      *
      * @param UserInterface $user
-     * @param boolean       $flush
+     * @param bool       $flush
      */
     public function delete(UserInterface $user, $flush = true)
     {
@@ -113,7 +116,7 @@ class UserManager extends LightUserManager
      * @param UserInterface $user
      * @param Request       $request
      * @param string        $firewall firewall name (see your security.yml config file)
-     * @param boolean       $logout   wether to logout before login
+     * @param bool       $logout   wether to logout before login
      */
     public function authenticate(UserInterface $user, Request $request, $firewall = 'main', $logout = false)
     {
