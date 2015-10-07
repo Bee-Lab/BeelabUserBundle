@@ -60,7 +60,9 @@ EOT
         $manager = $this->getContainer()->get('beelab_user.light_manager');
 
         $user = $manager->getInstance();
-        $user->setEmail($email)->setPlainPassword($password)->setActive(!$inactive);
+        $user->setEmail($email);
+        $user->setPlainPassword($password);
+        $user->setActive(!$inactive);
 
         try {
             $manager->create($user);
