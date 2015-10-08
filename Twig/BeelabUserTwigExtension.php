@@ -8,7 +8,7 @@ use Twig_SimpleFunction;
 
 /**
  * This extension is used to register some global variables.
- * Also, add a function to check if Knp Paginator is enabled
+ * Also, add a function to check if Knp Paginator is enabled.
  */
 class BeelabUserTwigExtension extends Twig_Extension
 {
@@ -35,7 +35,7 @@ class BeelabUserTwigExtension extends Twig_Extension
     {
         return array(
             'beelab_user_layout' => $this->layout,
-            'beelab_user_route'  => $this->route,
+            'beelab_user_route' => $this->route,
         );
     }
 

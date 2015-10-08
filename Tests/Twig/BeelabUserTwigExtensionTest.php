@@ -15,7 +15,7 @@ class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
         $extension = new BeelabUserTwigExtension('fooLayout', 'bazRoute');
         $expected = array(
             'beelab_user_layout' => 'fooLayout',
-            'beelab_user_route'  => 'bazRoute',
+            'beelab_user_route' => 'bazRoute',
         );
         $this->assertEquals($expected, $extension->getGlobals());
     }

@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface as SymfonyUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * User
+ * User.
  *
  * @ORM\MappedSuperclass
  * @UniqueEntity(fields={"email"}, groups={"create", "update"})
@@ -22,7 +22,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     protected static $roleLabels = array(
         'ROLE_ADMIN' => 'admin',
-        'ROLE_USER'  => 'user',
+        'ROLE_USER' => 'user',
     );
 
     /**
@@ -91,7 +91,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     protected $lastLogin = null;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -131,7 +131,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param  array $roles
+     * @param array $roles
      *
      * @return User
      */
@@ -160,7 +160,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     }
 
     /**
-     * @param  string $role
+     * @param string $role
      *
      * @return User
      */
@@ -177,7 +177,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * Never use this to check if this user has access to anything!
      * Use the AuthorizationChecker, or an implementation of AccessDecisionManager
-     * instead, e.g. $securityContext->isGranted('ROLE_USER');
+     * instead, e.g. $securityContext->isGranted('ROLE_USER');.
      *
      * @param string $role
      *

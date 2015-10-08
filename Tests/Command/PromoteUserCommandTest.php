@@ -26,7 +26,7 @@ class PromoteUserCommandTest extends PHPUnit_Framework_TestCase
         $this->command->setContainer($this->getMockContainer());
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
-        $this->assertContains('Role ' . $input['role'] . ' has been added to user ' . $input['email'], $tester->getDisplay());
+        $this->assertContains('Role '.$input['role'].' has been added to user '.$input['email'], $tester->getDisplay());
     }
 
     public function testUserNotFound()
@@ -36,7 +36,7 @@ class PromoteUserCommandTest extends PHPUnit_Framework_TestCase
         $this->command->setContainer($this->getMockContainer(false));
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
-        $this->assertContains('Error: user ' . $input['email'] . ' not found', $tester->getDisplay());
+        $this->assertContains('Error: user '.$input['email'].' not found', $tester->getDisplay());
     }
 
     public function testHasAlreadyRole()
@@ -46,7 +46,7 @@ class PromoteUserCommandTest extends PHPUnit_Framework_TestCase
         $this->command->setContainer($this->getMockContainer(true, $input['role']));
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
-        $this->assertContains('User ' . $input['email'] . ' did already have ' . $input['role'] . ' role', $tester->getDisplay());
+        $this->assertContains('User '.$input['email'].' did already have '.$input['role'].' role', $tester->getDisplay());
     }
 
     private function getMockContainer($found = true, $role = 'ROLE_ADMIN')

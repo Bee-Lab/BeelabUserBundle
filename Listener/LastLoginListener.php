@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
- * Set "last login" date when user login
+ * Set "last login" date when user login.
  */
 class LastLoginListener implements EventSubscriberInterface
 {

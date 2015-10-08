@@ -15,7 +15,7 @@ class PasswordTypeTest extends TypeTestCase
     {
         $formData = array(
             'plainPassowrd' => array(
-                'new_password'        => 'paperino',
+                'new_password' => 'paperino',
                 'repeat_new_password' => 'paperino',
             ),
         );

@@ -37,7 +37,7 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
         $this->command->setContainer($this->getMockContainer());
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
-        $this->assertContains('Created user ' . $input['email'], $tester->getDisplay());
+        $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
     }
 
     public function testCreateError()
@@ -47,7 +47,7 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
         $this->command->setContainer($this->getMockContainer(false));
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
-        $this->assertContains('Error, user ' . $input['email'] . ' not created. Generic error', $tester->getDisplay());
+        $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
     }
 
     private function getMockContainer($success = true)

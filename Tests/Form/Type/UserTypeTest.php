@@ -14,9 +14,9 @@ class UserTypeTest extends TypeTestCase
     public function testSubmitValidData()
     {
         $formData = array(
-            'email'   => 'test@example.org',
-            'roles'   => array('ROLE_USER'),
-            'active'  => true,
+            'email' => 'test@example.org',
+            'roles' => array('ROLE_USER'),
+            'active' => true,
         );
 
         $type = new UserType();
@@ -44,9 +44,9 @@ class UserTypeTest extends TypeTestCase
     public function testIsOld()
     {
         $formData = array(
-            'email'   => 'test@example.org',
-            'roles'   => array('ROLE_USER'),
-            'active'  => true,
+            'email' => 'test@example.org',
+            'roles' => array('ROLE_USER'),
+            'active' => true,
         );
 
         $type = new UserType();

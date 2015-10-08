@@ -30,7 +30,7 @@ class AuthController extends Controller
 
         return array(
             'last_username' => $request->getSession()->get(Security::LAST_USERNAME),
-            'error'         => $this->getLoginError($request),
+            'error' => $this->getLoginError($request),
         );
     }
 
@@ -46,7 +46,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Login check (implemented by Symfony security system)
+     * Login check (implemented by Symfony security system).
      *
      * @Route("/login_check", name="login_check")
      * @Method("POST")
@@ -59,9 +59,9 @@ class AuthController extends Controller
     /**
      * Get possible authentication error.
      *
-     * @param  Request $request
+     * @param Request $request
      *
-     * @return mixed   Exception or array
+     * @return mixed Exception or array
      */
     protected function getLoginError(Request $request)
     {

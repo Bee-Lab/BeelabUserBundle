@@ -42,7 +42,7 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($user->getId());
 
         return array(
-            'user'        => $user,
+            'user' => $user,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -89,8 +89,8 @@ class UserController extends Controller
         $deleteForm = $this->createDeleteForm($user->getId());
 
         return array(
-            'user'        => $user,
-            'edit_form'   => $editForm->createView(),
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,9 +135,9 @@ class UserController extends Controller
     }
 
     /**
-     * Create Delete form
+     * Create Delete form.
      *
-     * @param  int $id
+     * @param int $id
      *
      * @return Form
      */

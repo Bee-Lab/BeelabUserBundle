@@ -54,9 +54,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     }
 
     /**
-     * See http://stackoverflow.com/a/16692911/369194
+     * See http://stackoverflow.com/a/16692911/369194.
      *
-     * @param  string                     $role
+     * @param string $role
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -67,12 +67,12 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         return $this
             ->createQueryBuilder('u')
             ->where('u.roles LIKE :roles')
-            ->setParameter('roles', '%' . $role . '%')
+            ->setParameter('roles', '%'.$role.'%')
         ;
     }
 
     /**
-     * @param  array                      $roles
+     * @param array $roles
      *
      * @return \Doctrine\ORM\QueryBuilder
      */
@@ -81,7 +81,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         $qb = $this->createQueryBuilder('u');
         foreach ($roles as $key => $role) {
             $role = $role === 'ROLE_USER' ? '{}' : '"'.$role.'"';
-            $qb->orWhere('u.roles LIKE :role'.$key)->setParameter('role'.$key, '%' . $role . '%');
+            $qb->orWhere('u.roles LIKE :role'.$key)->setParameter('role'.$key, '%'.$role.'%');
         }
 
         return $qb;

@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
- * User manager
+ * User manager.
  */
 class UserManager extends LightUserManager
 {
@@ -44,10 +44,10 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * List of users (can be paginated)
+     * List of users (can be paginated).
      *
-     * @param  int   $page
-     * @param  int   $limit
+     * @param int $page
+     * @param int $limit
      *
      * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
@@ -62,9 +62,9 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Find user by email
+     * Find user by email.
      *
-     * @param  string        $email
+     * @param string $email
      *
      * @return UserInterface
      */
@@ -74,9 +74,9 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Find user by id
+     * Find user by id.
      *
-     * @param  int       $id
+     * @param int $id
      *
      * @return UserInterface
      */
@@ -91,10 +91,10 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Delete user
+     * Delete user.
      *
      * @param UserInterface $user
-     * @param bool       $flush
+     * @param bool          $flush
      */
     public function delete(UserInterface $user, $flush = true)
     {
@@ -111,12 +111,12 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Manual authentication
+     * Manual authentication.
      *
      * @param UserInterface $user
      * @param Request       $request
      * @param string        $firewall firewall name (see your security.yml config file)
-     * @param bool       $logout   wether to logout before login
+     * @param bool          $logout   wether to logout before login
      */
     public function authenticate(UserInterface $user, Request $request, $firewall = 'main', $logout = false)
     {

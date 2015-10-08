@@ -28,10 +28,10 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('plainPassword', 'repeated', array(
-                'first_name'  => 'password',
+                'first_name' => 'password',
                 'second_name' => 'confirm',
-                'type'        => 'password',
-                'required'    => $isNew,
+                'type' => 'password',
+                'required' => $isNew,
             ))
             ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
             ->add('active', 'checkbox', array('required' => false))
@@ -44,7 +44,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'         => 'Beelab\UserBundle\Entity\User',
+            'data_class' => 'Beelab\UserBundle\Entity\User',
             'translation_domain' => 'admin',
         ));
     }
