@@ -15,6 +15,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
     protected $container;
     protected $formBuilder;
     protected $userManager;
+    protected $router;
 
     public function setUp()
     {
@@ -24,6 +25,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()->getMock();
         $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()->getMock();
+        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
         $this->controller = new UserController();
         $this->controller->setContainer($this->container);
     }
@@ -49,10 +51,15 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->userManager));
         $this->container->expects($this->at(1))->method('get')->with('form.factory')
             ->will($this->returnValue($formFactory));
+        $this->container->expects($this->at(2))->method('get')->with('router')
+            ->will($this->returnValue($this->router));
         $this->userManager->expects($this->once())->method('get')->with(42)->will($this->returnValue($user));
         $user->expects($this->once())->method('getId')->will($this->returnValue(42));
         $this->formBuilder->expects($this->once())->method('add')->will($this->returnSelf());
+        $this->formBuilder->expects($this->once())->method('setAction')->will($this->returnSelf());
+        $this->formBuilder->expects($this->once())->method('setMethod')->will($this->returnSelf());
         $this->formBuilder->expects($this->once())->method('getForm')->will($this->returnValue($form));
+        $this->router->expects($this->once())->method('generate')->will($this->returnValue('foourl'));
         $form->expects($this->once())->method('createView');
 
         $this->controller->showAction(42);

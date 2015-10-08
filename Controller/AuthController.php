@@ -19,6 +19,7 @@ class AuthController extends Controller
      * Login form.
      *
      * @Route("/login", name="login")
+     * @Method("GET")
      * @Template()
      */
     public function loginAction(Request $request)
@@ -37,6 +38,7 @@ class AuthController extends Controller
      * Logout (implemented by Symfony security system).
      *
      * @Route("/logout", name="logout")
+     * @Method("GET")
      */
     public function logoutAction()
     {

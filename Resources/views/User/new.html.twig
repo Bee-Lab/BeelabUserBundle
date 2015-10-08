@@ -5,12 +5,12 @@
 {% block body %}
     <h1>{{ '%entity% creation'|trans({'%entity%': 'User'}, 'admin') }}</h1>
 
-    <form action="{{ path('user_new') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_start(form) }}
         {{ form_widget(form) }}
         <p>
             <button class="btn btn-primary" type="submit">{{ 'Create'|trans({}, 'admin') }}</button>
         </p>
-    </form>
+    {{ form_end(form) }}
 
     <div class="btn-group record_actions">
         <a class="btn btn-info" href="{{ path('user') }}">

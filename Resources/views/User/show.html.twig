@@ -30,7 +30,7 @@
         </tbody>
     </table>
 
-    <form id="delete" action="{{ path('user_delete', {id: user.id}) }}" method="post">
+    {{ form_start(delete_form) }}
         {{ form_widget(delete_form) }}
 
         <div class="btn-group record_actions">
@@ -48,7 +48,7 @@
          </div>
 
         <input name="modal" type="hidden" value="0">
-    </form>
+    {{ form_end(delete_form) }}
 
     <div id="delete_confirm" class="modal fade">
         <div class="modal-dialog">
@@ -68,5 +68,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}

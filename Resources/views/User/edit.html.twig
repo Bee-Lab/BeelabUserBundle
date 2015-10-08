@@ -5,15 +5,15 @@
 {% block body %}
     <h1>{{ '%entity% edit'|trans({'%entity%': 'User'}, 'admin') }}</h1>
 
-    <form action="{{ path('user_edit', {id: user.id}) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
 
         <p>
             <button class="btn btn-primary" type="submit"><i class="fa fa-edit"></i> {{ 'Edit'|trans({}, 'admin') }}</button>
         </p>
-    </form>
+    {{ form_end(edit_form) }}
 
-    <form id="delete" action="{{ path('user_delete', {id: user.id}) }}" method="post">
+    {{ form_start(delete_form) }}
         {{ form_widget(delete_form) }}
 
         <div class="btn-group record_actions">
@@ -27,7 +27,7 @@
         </div>
 
         <input name="modal" type="hidden" value="0">
-    </form>
+    {{ form_end(delete_form) }}
 
     <div id="delete_confirm" class="modal fade">
         <div class="modal-dialog">
@@ -47,5 +47,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
