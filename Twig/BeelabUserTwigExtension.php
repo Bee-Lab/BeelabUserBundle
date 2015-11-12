@@ -4,13 +4,14 @@ namespace Beelab\UserBundle\Twig;
 
 use Knp\Component\Pager\PaginatorInterface;
 use Twig_Extension;
+use Twig_Extension_GlobalsInterface;
 use Twig_SimpleFunction;
 
 /**
  * This extension is used to register some global variables.
  * Also, add a function to check if Knp Paginator is enabled.
  */
-class BeelabUserTwigExtension extends Twig_Extension
+class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_GlobalsInterface
 {
     protected $layout;
     protected $route;
