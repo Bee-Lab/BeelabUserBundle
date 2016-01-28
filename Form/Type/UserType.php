@@ -4,6 +4,7 @@ namespace Beelab\UserBundle\Form\Type;
 
 use Beelab\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,15 +27,15 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('email')
-            ->add('plainPassword', 'repeated', array(
+            ->add('email', $this->isLegacy() ? 'email' : Type\EmailType::CLASS)
+            ->add('plainPassword', $this->isLegacy() ? 'repeated' : Type\RepeatedType::CLASS, array(
                 'first_name' => 'password',
                 'second_name' => 'confirm',
-                'type' => 'password',
+                'type' => $this->isLegacy() ? 'password' : Type\PasswordType::CLASS,
                 'required' => $isNew,
             ))
-            ->add('roles', 'choice', array('choices' => $roles, 'multiple' => true))
-            ->add('active', 'checkbox', array('required' => false))
+            ->add('roles', $this->isLegacy() ? 'choice' : Type\ChoiceType::CLASS, array('choices' => $roles, 'multiple' => true))
+            ->add('active', $this->isLegacy() ? 'checkbox' : Type\CheckboxType::CLASS, array('required' => false))
         ;
     }
 
@@ -52,8 +53,24 @@ class UserType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    public function getBlockPrefix()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * BC for Symfony < 3.0.
+     */
     public function getName()
     {
         return 'beelab_user';
+    }
+
+    /**
+     * @return bool
+     */
+    private function isLegacy()
+    {
+        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

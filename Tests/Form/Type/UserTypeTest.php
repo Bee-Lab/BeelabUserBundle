@@ -19,7 +19,11 @@ class UserTypeTest extends TypeTestCase
             'active' => true,
         );
 
-        $type = new UserType();
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = UserType::CLASS;
+        } else {
+            $type = new UserType();
+        }
         $form = $this->factory->create($type, null, array('data_class' => 'Beelab\UserBundle\Test\UserStub'));
 
         $user = new User();
@@ -49,7 +53,11 @@ class UserTypeTest extends TypeTestCase
             'active' => true,
         );
 
-        $type = new UserType();
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = UserType::CLASS;
+        } else {
+            $type = new UserType();
+        }
 
         $user = new User();
 
