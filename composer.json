@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.*",
-        "knplabs/knp-paginator-bundle": "2.4.*|2.5.*"
+        "knplabs/knp-paginator-bundle": "2.4.*|2.5.*",
+        "knplabs/knp-components": ">=1.2.4"
     },
     "suggest": {
         "knplabs/knp-paginator-bundle": "Needed for optional pagination"
