@@ -20,10 +20,9 @@ class PasswordTypeTest extends TypeTestCase
             ),
         );
 
+        $type = new PasswordType();
         if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $type = PasswordType::CLASS;
-        } else {
-            $type = new PasswordType();
+            $type = get_class($type);
         }
         $form = $this->factory->create($type, null, array('data_class' => 'Beelab\UserBundle\Test\UserStub'));
 

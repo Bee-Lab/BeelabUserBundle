@@ -15,10 +15,10 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', $this->isLegacy() ? 'repeated' : Type\RepeatedType::CLASS, array(
+            ->add('plainPassword', $this->isLegacy() ? 'repeated' : 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', array(
                 'first_name' => 'new_password',
                 'second_name' => 'confirm_new_password',
-                'type' => $this->isLegacy() ? 'password' : Type\PasswordType::CLASS,
+                'type' => $this->isLegacy() ? 'password' : 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => true,
             ))
         ;

@@ -27,15 +27,15 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('email', $this->isLegacy() ? 'email' : Type\EmailType::CLASS)
-            ->add('plainPassword', $this->isLegacy() ? 'repeated' : Type\RepeatedType::CLASS, array(
+            ->add('email', $this->isLegacy() ? 'email' : 'Symfony\Component\Form\Extension\Core\Type\EmailType')
+            ->add('plainPassword', $this->isLegacy() ? 'repeated' : 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', array(
                 'first_name' => 'password',
                 'second_name' => 'confirm',
-                'type' => $this->isLegacy() ? 'password' : Type\PasswordType::CLASS,
+                'type' => $this->isLegacy() ? 'password' : 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => $isNew,
             ))
-            ->add('roles', $this->isLegacy() ? 'choice' : Type\ChoiceType::CLASS, array('choices' => $roles, 'multiple' => true))
-            ->add('active', $this->isLegacy() ? 'checkbox' : Type\CheckboxType::CLASS, array('required' => false))
+            ->add('roles', $this->isLegacy() ? 'choice' : 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array('choices' => $roles, 'multiple' => true))
+            ->add('active', $this->isLegacy() ? 'checkbox' : 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array('required' => false))
         ;
     }
 
