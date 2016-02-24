@@ -43,7 +43,7 @@ EOT
         $role = $input->getArgument('role');
 
         $manager = $this->getContainer()->get('beelab_user.manager');
-        $user = $manager->find($email);
+        $user = $manager->loadUserByUsername($email);
         if (empty($user)) {
             $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
         } else {

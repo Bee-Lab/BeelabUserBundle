@@ -70,7 +70,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
         $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', array('pippo@example.org'))
             ->will($this->returnValue($user));
 
-        $this->assertEquals($user, $this->manager->find('pippo@example.org'));
+        $this->assertEquals($user, $this->manager->loadUserByUsername('pippo@example.org'));
     }
 
     public function testGet()
