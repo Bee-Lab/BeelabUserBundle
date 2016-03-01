@@ -55,7 +55,6 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->router));
         $this->userManager->expects($this->once())->method('get')->with(42)->will($this->returnValue($user));
         $user->expects($this->once())->method('getId')->will($this->returnValue(42));
-        $this->formBuilder->expects($this->once())->method('add')->will($this->returnSelf());
         $this->formBuilder->expects($this->once())->method('setAction')->will($this->returnSelf());
         $this->formBuilder->expects($this->once())->method('setMethod')->will($this->returnSelf());
         $this->formBuilder->expects($this->once())->method('getForm')->will($this->returnValue($form));
