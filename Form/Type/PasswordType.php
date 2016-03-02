@@ -14,10 +14,10 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', $this->isLegacy() ? 'repeated' : 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', array(
+            ->add('plainPassword', 'repeated', array(
                 'first_name' => 'new_password',
                 'second_name' => 'confirm_new_password',
-                'type' => $this->isLegacy() ? 'password' : 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
+                'type' => 'password',
                 'required' => true,
             ))
         ;
@@ -38,24 +38,8 @@ class PasswordType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
-    {
-        return $this->getName();
-    }
-
-    /**
-     * BC for Symfony < 3.0.
-     */
     public function getName()
     {
         return 'beelab_password';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isLegacy()
-    {
-        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

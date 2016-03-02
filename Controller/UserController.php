@@ -57,7 +57,7 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->get('beelab_user.manager')->getInstance();
-        $form = $this->createForm($this->getUserFormName(), $user, array('validation_groups' => array('create')));
+        $form = $this->createForm('beelab_user', $user, array('validation_groups' => array('create')));
         if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
@@ -80,7 +80,7 @@ class UserController extends Controller
     public function editAction($id, Request $request)
     {
         $user = $this->get('beelab_user.manager')->get($id);
-        $editForm = $this->createForm($this->getUserFormName(), $user, array('validation_groups' => array('update'), 'method' => 'PUT'));
+        $editForm = $this->createForm('beelab_user', $user, array('validation_groups' => array('update'), 'method' => 'PUT'));
         if ($editForm->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
@@ -148,17 +148,5 @@ class UserController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
-    }
-
-    /**
-     * @return string
-     */
-    private function getUserFormName()
-    {
-        if (!method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            return 'beelab_user';
-        }
-
-        return $this->container->getParameter('beelab_user.user_form_type');
     }
 }
