@@ -35,8 +35,8 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
         $this->container->expects($this->once())->method('get')->with('beelab_user.manager')
             ->will($this->returnValue($this->userManager));
         $this->userManager->expects($this->once())->method('getList')->with(1, 20)
-            ->will($this->returnValue(array('foo', 'bar')));
-        $this->assertEquals(array('users' => array('foo', 'bar')), $this->controller->indexAction(new Request()));
+            ->will($this->returnValue(['foo', 'bar']));
+        $this->assertEquals(['users' => ['foo', 'bar']], $this->controller->indexAction(new Request()));
     }
 
     public function testShow()

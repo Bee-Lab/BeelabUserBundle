@@ -45,7 +45,7 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
     {
         $authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $request->attributes = new ParameterBag(array('_security.last_username' => 'user'));
+        $request->attributes = new ParameterBag(['_security.last_username' => 'user']);
         $session = $this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
 
         $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
@@ -57,7 +57,7 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
         $session->expects($this->at(0))->method('get')->with('_security.last_username')
             ->will($this->returnValue('user'));
 
-        $this->assertEquals(array('last_username' => 'user', 'error' => 'user'),
+        $this->assertEquals(['last_username' => 'user', 'error' => 'user'],
                             $this->controller->loginAction($request));
     }
 

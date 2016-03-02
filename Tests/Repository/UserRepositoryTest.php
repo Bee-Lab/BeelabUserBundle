@@ -30,7 +30,7 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
     public function testLoadUserByUsernameNotFound()
     {
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
@@ -49,7 +49,7 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
     {
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(array('getOneOrNullResult'))
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));

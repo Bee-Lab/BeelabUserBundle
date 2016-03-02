@@ -34,10 +34,10 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
      */
     public function getGlobals()
     {
-        return array(
+        return [
             'beelab_user_layout' => $this->layout,
             'beelab_user_route' => $this->route,
-        );
+        ];
     }
 
     /**
@@ -45,9 +45,9 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
      */
     public function getFunctions()
     {
-        return array(
-            new Twig_SimpleFunction('has_paginator', array($this, 'hasPaginator')),
-        );
+        return [
+            new Twig_SimpleFunction('has_paginator', [$this, 'hasPaginator']),
+        ];
     }
 
     /**

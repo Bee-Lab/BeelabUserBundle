@@ -24,29 +24,29 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEmailError()
     {
-        $input = array('email' => 'invalid', 'password' => 'fooBarBaz');
+        $input = ['email' => 'invalid', 'password' => 'fooBarBaz'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
+        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
     }
 
     public function testCreate()
     {
-        $input = array('email' => 'garak@example.org', 'password' => 'fooBarBaz');
+        $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
         $this->command->setContainer($this->getMockContainer());
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
+        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
     }
 
     public function testCreateError()
     {
-        $input = array('email' => 'garak@example.org', 'password' => 'fooBarBaz');
+        $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
         $this->command->setContainer($this->getMockContainer(false));
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(array('command' => $this->command->getName()), $input));
+        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
     }
 

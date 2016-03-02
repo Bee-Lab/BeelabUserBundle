@@ -26,7 +26,7 @@ class UserController extends Controller
     {
         $users = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
 
-        return array('users' => $users);
+        return ['users' => $users];
     }
 
     /**
@@ -41,10 +41,10 @@ class UserController extends Controller
         $user = $this->get('beelab_user.manager')->get($id);
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return array(
+        return [
             'user' => $user,
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -57,17 +57,17 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = $this->get('beelab_user.manager')->getInstance();
-        $form = $this->createForm($this->getUserFormName(), $user, array('validation_groups' => array('create')));
+        $form = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['create']]);
         if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
 
-        return array(
+        return [
             'user' => $user,
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -80,19 +80,19 @@ class UserController extends Controller
     public function editAction($id, Request $request)
     {
         $user = $this->get('beelab_user.manager')->get($id);
-        $editForm = $this->createForm($this->getUserFormName(), $user, array('validation_groups' => array('update'), 'method' => 'PUT'));
+        $editForm = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['update'], 'method' => 'PUT']);
         if ($editForm->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return array(
+        return [
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+        ];
     }
 
     /**
@@ -122,16 +122,16 @@ class UserController extends Controller
     public function passwordAction(Request $request)
     {
         $user = $this->getUser();
-        $form = $this->createForm('beelab_password', $user, array('method' => 'PUT'));
+        $form = $this->createForm($this->getPasswordFormName(), $user, ['method' => 'PUT']);
         if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $user->getId())));
+            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
         }
 
-        return array(
+        return [
             'form' => $form->createView(),
-        );
+        ];
     }
 
     /**
@@ -143,8 +143,8 @@ class UserController extends Controller
      */
     protected function createDeleteForm($id)
     {
-        return $this->createFormBuilder(array('id' => $id), array('attr' => array('id' => 'delete')))
-            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
+        return $this->createFormBuilder(['id' => $id], ['attr' => ['id' => 'delete']])
+            ->setAction($this->generateUrl('user_delete', ['id' => $id]))
             ->setMethod('DELETE')
             ->getForm()
         ;
@@ -155,10 +155,14 @@ class UserController extends Controller
      */
     private function getUserFormName()
     {
-        if (!method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            return 'beelab_user';
-        }
-
         return $this->container->getParameter('beelab_user.user_form_type');
+    }
+
+    /**
+     * @return string
+     */
+    private function getPasswordFormName()
+    {
+        return $this->container->getParameter('beelab_user.password_form_type');
     }
 }

@@ -20,7 +20,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function testGetRolesWithLabel()
     {
         $user = new User();
-        $user->setRoles(array('ROLE_ADMIN', 'ROLE_USER'));
+        $user->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
 
         $this->assertEquals('admin, user', $user->getRolesWithLabel());
         $this->assertEquals('admin | user', $user->getRolesWithLabel(' | '));

@@ -28,10 +28,10 @@ The <info>%command.name%</info> command promotes a user by adding a role
 
   <info>%command.full_name% garak@example.com ROLE_CUSTOM</info>
 EOT
-            )->setDefinition(array(
+            )->setDefinition([
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('role', InputArgument::REQUIRED, 'The role'),
-            ));
+            ]);
     }
 
     /**

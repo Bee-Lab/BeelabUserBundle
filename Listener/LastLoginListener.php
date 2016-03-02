@@ -29,9 +29,9 @@ class LastLoginListener implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        return array(
+        return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
-        );
+        ];
     }
 
     /**

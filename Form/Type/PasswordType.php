@@ -14,12 +14,12 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', $this->isLegacy() ? 'repeated' : 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', array(
+            ->add('plainPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                 'first_name' => 'new_password',
                 'second_name' => 'confirm_new_password',
-                'type' => $this->isLegacy() ? 'password' : 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
+                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => true,
-            ))
+            ])
         ;
     }
 
@@ -28,11 +28,11 @@ class PasswordType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Beelab\UserBundle\Entity\User',
-            'validation_groups' => array('password'),
+            'validation_groups' => ['password'],
             'translation_domain' => 'admin',
-        ));
+        ]);
     }
 
     /**
@@ -40,22 +40,6 @@ class PasswordType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return $this->getName();
-    }
-
-    /**
-     * BC for Symfony < 3.0.
-     */
-    public function getName()
-    {
         return 'beelab_password';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isLegacy()
-    {
-        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

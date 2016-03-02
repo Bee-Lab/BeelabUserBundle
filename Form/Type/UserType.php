@@ -26,15 +26,15 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('email', $this->isLegacy() ? 'email' : 'Symfony\Component\Form\Extension\Core\Type\EmailType')
-            ->add('plainPassword', $this->isLegacy() ? 'repeated' : 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', array(
+            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType')
+            ->add('plainPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                 'first_name' => 'password',
                 'second_name' => 'confirm',
-                'type' => $this->isLegacy() ? 'password' : 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
+                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => $isNew,
-            ))
-            ->add('roles', $this->isLegacy() ? 'choice' : 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', array('choices' => $roles, 'multiple' => true))
-            ->add('active', $this->isLegacy() ? 'checkbox' : 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', array('required' => false))
+            ])
+            ->add('roles', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', ['choices' => $roles, 'multiple' => true])
+            ->add('active', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', ['required' => false])
         ;
     }
 
@@ -43,10 +43,10 @@ class UserType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Beelab\UserBundle\Entity\User',
             'translation_domain' => 'admin',
-        ));
+        ]);
     }
 
     /**
@@ -54,22 +54,6 @@ class UserType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return $this->getName();
-    }
-
-    /**
-     * BC for Symfony < 3.0.
-     */
-    public function getName()
-    {
         return 'beelab_user';
-    }
-
-    /**
-     * @return bool
-     */
-    private function isLegacy()
-    {
-        return !method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix');
     }
 }

@@ -20,10 +20,10 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @var array
      */
-    protected static $roleLabels = array(
+    protected static $roleLabels = [
         'ROLE_ADMIN' => 'admin',
         'ROLE_USER' => 'user',
-    );
+    ];
 
     /**
      * @var int
@@ -72,7 +72,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @ORM\Column(type="array")
      */
-    protected $roles = array();
+    protected $roles = [];
 
     /**
      * @var bool
@@ -137,7 +137,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function setRoles(array $roles)
     {
-        $this->roles = array();
+        $this->roles = [];
         foreach ($roles as $role) {
             $this->addRole($role);
         }
@@ -218,7 +218,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function serialize()
     {
-        return serialize(array($this->id, $this->email));
+        return serialize([$this->id, $this->email]);
     }
 
     /**
@@ -434,7 +434,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getRolesWithLabel($glue = ', ')
     {
-        $labels = array();
+        $labels = [];
         $roles = $this->getRoles();
         foreach ($roles as $role) {
             $labels[] = $this->getRoleLabel($role);
