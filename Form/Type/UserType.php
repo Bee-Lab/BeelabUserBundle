@@ -33,7 +33,11 @@ class UserType extends AbstractType
                 'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => $isNew,
             ])
-            ->add('roles', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', ['choices' => $roles, 'multiple' => true])
+            ->add('roles', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+                'choices' => array_flip($roles),
+                'choices_as_values' => true,
+                'multiple' => true,
+            ])
             ->add('active', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', ['required' => false])
         ;
     }

@@ -11,9 +11,24 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
  */
 class LightUserManager
 {
+    /**
+     * @var string
+     */
     protected $className;
+
+    /**
+     * @var ObjectManager
+     */
     protected $em;
+
+    /**
+     * @var \Doctrine\Common\Persistence\ObjectRepository
+     */
     protected $repository;
+
+    /**
+     * @var EncoderFactoryInterface
+     */
     protected $encoder;
 
     /**

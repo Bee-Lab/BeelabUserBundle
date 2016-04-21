@@ -20,9 +20,24 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
  */
 class UserManager extends LightUserManager
 {
+    /**
+     * @var AuthorizationCheckerInterface
+     */
     protected $authChecker;
+
+    /**
+     * @var TokenStorageInterface
+     */
     protected $tokenStorage;
+
+    /**
+     * @var PaginatorInterface
+     */
     protected $paginator;
+
+    /**
+     * @var EventDispatcherInterface
+     */
     protected $dispatcher;
 
     /**
@@ -34,8 +49,15 @@ class UserManager extends LightUserManager
      * @param PaginatorInterface            $paginator
      * @param EventDispatcherInterface      $dispatcher
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder, AuthorizationCheckerInterface $authChecker, TokenStorageInterface $tokenStorage, PaginatorInterface $paginator = null, EventDispatcherInterface $dispatcher)
-    {
+    public function __construct(
+        $class,
+        ObjectManager $em,
+        EncoderFactoryInterface $encoder,
+        AuthorizationCheckerInterface $authChecker,
+        TokenStorageInterface $tokenStorage,
+        PaginatorInterface $paginator = null,
+        EventDispatcherInterface $dispatcher
+    ) {
         parent::__construct($class, $em, $encoder);
         $this->authChecker = $authChecker;
         $this->tokenStorage = $tokenStorage;
