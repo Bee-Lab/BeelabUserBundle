@@ -46,7 +46,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(length=32)
+     * @ORM\Column(length=32, nullable=true)
      */
     protected $salt;
 
