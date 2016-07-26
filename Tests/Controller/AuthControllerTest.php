@@ -31,8 +31,8 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
 
         $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
             ->will($this->returnValue($authChecker));
-        $this->container->expects($this->at(1))->method('get')->with('router')
-            ->will($this->returnValue($router));
+        $this->container->expects($this->at(1))->method('getParameter')->will($this->returnValue('homepage'));
+        $this->container->expects($this->at(2))->method('get')->with('router')->will($this->returnValue($router));
         $authChecker->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
             ->will($this->returnValue(true));
         $router->expects($this->once())->method('generate')->will($this->returnValue('url'));

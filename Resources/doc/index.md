@@ -23,10 +23,10 @@ Enable bundle in the kernel:
 // app/AppKernel.php
 public function registerBundles()
 {
-    $bundles = array(
+    $bundles = [
         // ...
         new Beelab\UserBundle\BeelabUserBundle(),
-    );
+    ];
 }
 ```
 
@@ -34,7 +34,7 @@ If you want pagination in users' administration, install also [KnpPaginatorBundl
 
 ### 2. Configuration
 
-Create a ``User`` entity class.
+Create a `User` entity class.
 Example:
 
 ```php
@@ -103,9 +103,9 @@ security:
 ```
 
 This is just an example, your real security configuration may vary.
-It's important here to use the name of your entity in ``encoders`` and ``providers``.
+It's important here to use the name of your entity in `encoders` and `providers`.
 
-> **Warning**: if you customize the route prefix, don't forget to explicit ``login_path`` and other options in your
+> **Warning**: if you customize the route prefix, don't forget to explicit `login_path` and other options in your
 > firewall. See [security reference](http://symfony.com/doc/current/reference/configuration/security.html#the-login-form-and-process) for more details.
 >
 
@@ -143,7 +143,7 @@ beelab_user:
     user_manager_class: AppBundle\Manager\UserManager
 ```
 
-If you need a lighter UserManager, you can use ``LightUserManager``, that has less
+If you need a lighter UserManager, you can use `LightUserManager`, that has less
 dependencies than UserManager. For example, you can use it for Facebook integration with
 [FOSFacebookBundle](https://github.com/FriendsOfSymfony/FOSFacebookBundle).
 You can extend it, and add to configuration:
@@ -169,7 +169,7 @@ beelab_user:
 
 #### Validation
 
-Constraints are in ``User`` entity, so you can ovverride them in your entity.
+Constraints are in `User` entity, so you can ovverride them in your entity.
 See [Doctrine docs](http://docs.doctrine-project.org/en/latest/tutorials/override-field-association-mappings-in-subclasses.html).
 Controllers use three validations groups: "create", "update", and "password".
 First two groups are for creating and editing a user, the last one is for password change.
@@ -179,8 +179,9 @@ You can override which group is used in each form just by overriding actions in 
 
 Routes are annotated in controllers, so you can override them just by overriding controllers (see above).
 
-There is a route, with default name "admin", that is used for user switching. It should point
-to your backend homepage, and you can customize it in configuration:
+There is a route, with default name "admin", that is used for some redirects (user switching, password change, etc.).
+It should point to your backend homepage, and you can customize it in configuration:
+
 ```yaml
 # app/config/config.yml
 
@@ -190,7 +191,8 @@ beelab_user:
 ```
 
 You need to separate authentication routes from administration route, maybe because you want all your administration
-under an ``/admin`` path, you can import routes like so:
+under an `/admin` path, you can import routes like so:
+
 ```yaml
 # app/config/routing.yml
 

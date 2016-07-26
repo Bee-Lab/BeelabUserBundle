@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function loginAction(Request $request)
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirect($this->generateUrl('homepage'));
+            return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }
 
         return [

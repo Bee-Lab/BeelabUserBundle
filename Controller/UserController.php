@@ -61,7 +61,7 @@ class UserController extends Controller
         if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
-            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
         return [
@@ -84,7 +84,7 @@ class UserController extends Controller
         if ($editForm->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
+            return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
         $deleteForm = $this->createDeleteForm($user->getId());
 
@@ -109,7 +109,7 @@ class UserController extends Controller
             $this->get('beelab_user.manager')->delete($user);
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirectToRoute('user');
     }
 
     /**
@@ -126,7 +126,7 @@ class UserController extends Controller
         if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
-            return $this->redirect($this->generateUrl('user_show', ['id' => $user->getId()]));
+            return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }
 
         return [
