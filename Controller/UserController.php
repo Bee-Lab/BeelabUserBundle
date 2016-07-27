@@ -2,6 +2,7 @@
 
 namespace Beelab\UserBundle\Controller;
 
+use Beelab\UserBundle\Event\UserEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -125,6 +126,7 @@ class UserController extends Controller
         $form = $this->createForm($this->getPasswordFormName(), $user);
         if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
+            $this->get('event_dispatcher')->dispatch('beelab_user.change_password', new UserEvent($user));
 
             return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }

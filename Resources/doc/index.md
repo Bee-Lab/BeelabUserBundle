@@ -7,6 +7,7 @@ BeelabUserBundle Documentation
 2. [Configuration](#2-configuration)
 3. [Customizations](#3-customizations)
 4. [Commands](#4-commands)
+5. [Events](#4-events)
 
 ### 1. Install BeelabUserBundle
 
@@ -215,3 +216,9 @@ You can see them by typing:
 ```bash
 $ php app/console list beelab
 ```
+
+### 5. Events
+
+For now, there is only one event: `beelab_user.change_password`.
+This event is dispatched after user changes their password.
+You can listen to this event, for example, to set a flash with a courtesy message.
