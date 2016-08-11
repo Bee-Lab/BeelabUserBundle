@@ -59,7 +59,7 @@ class UserController extends Controller
     {
         $user = $this->get('beelab_user.manager')->getInstance();
         $form = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['create'], 'method' => 'PUT']);
-        if ($request->isMethod('post') && $form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
