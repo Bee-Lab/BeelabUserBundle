@@ -52,13 +52,13 @@ class UserController extends Controller
      * Creates a new User entity.
      *
      * @Route("/new", name="user_new")
-     * @Method({"GET", "PUT"})
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function newAction(Request $request)
     {
         $user = $this->get('beelab_user.manager')->getInstance();
-        $form = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['create'], 'method' => 'PUT']);
+        $form = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['create']]);
         if ($form->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
@@ -75,13 +75,13 @@ class UserController extends Controller
      * Edits an existing User entity.
      *
      * @Route("/{id}/edit", name="user_edit")
-     * @Method({"GET", "POST"})
+     * @Method({"GET", "PUT"})
      * @Template()
      */
     public function editAction($id, Request $request)
     {
         $user = $this->get('beelab_user.manager')->get($id);
-        $editForm = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['update']]);
+        $editForm = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['update'], 'method' => 'PUT']);
         if ($editForm->handleRequest($request)->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 

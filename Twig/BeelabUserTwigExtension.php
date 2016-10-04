@@ -51,14 +51,6 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'beelab_user_twig_extension';
-    }
-
-    /**
      * @return bool
      */
     public function hasPaginator()
