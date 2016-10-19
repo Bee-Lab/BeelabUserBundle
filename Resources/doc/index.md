@@ -74,7 +74,6 @@ Add routes:
 beelab_user:
     resource: "@BeelabUserBundle/Controller/"
     type:     annotation
-    prefix:   /
 ```
 
 Enable security:
@@ -115,7 +114,7 @@ It's important here to use the name of your entity in `encoders` and `providers`
 #### Templates
 
 You can customize templates as explained in
-[official documentation](http://symfony.com/doc/current/book/templating.html#overriding-bundle-templates).
+[official documentation](http://symfony.com/doc/current/templating.html#overriding-bundle-templates).
 
 All template use a default layout. If you want to use your custom layout, you can
 specify it in configuration:
@@ -130,7 +129,7 @@ beelab_user:
 #### Controllers
 
 You can customize controllers by extending bundle, like explained in
-[official documentation](http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers).
+[official documentation](http://symfony.com/doc/current/bundles/inheritance.html#overriding-controllers).
 
 #### UserManager
 
