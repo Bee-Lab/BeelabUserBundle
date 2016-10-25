@@ -27,6 +27,7 @@ class BeelabUserExtension extends Extension
         $container->setParameter('beelab_user.user_manager_class', $config['user_manager_class']);
         $container->setParameter('beelab_user.user_form_type', $config['user_form_type']);
         $container->setParameter('beelab_user.password_form_type', $config['password_form_type']);
+        $container->setParameter('beelab_user.filter_form_type', $config['filter_form_type']);
         $container->setParameter('beelab_user.layout', $config['layout']);
         $container->setParameter('beelab_user.route', $config['route']);
 

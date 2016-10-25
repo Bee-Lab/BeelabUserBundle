@@ -2,6 +2,7 @@
 
 namespace Beelab\UserBundle\Controller;
 
+use Beelab\UserBundle\Event\FormEvent;
 use Beelab\UserBundle\Event\UserEvent;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 class UserController extends Controller
 {
     /**
-     * Lists all User entities.
+     * Lists all User entities (with possibile filter).
      *
      * @Route("", name="user")
      * @Method("GET")
@@ -25,9 +26,18 @@ class UserController extends Controller
      */
     public function indexAction(Request $request)
     {
+        if (!is_null($filter = $this->getFilterFormName())) {
+            $form = $this->createForm($filter);
+            $event = new FormEvent($form, $request);
+            $this->get('event_dispatcher')->dispatch('beelab_user.filter', $event);
+            if (!is_null($response = $event->getResponse())) {
+                return $response;
+            }
+            $this->get('event_dispatcher')->dispatch('beelab_user.filter_apply', $event);
+        }
         $users = $this->get('beelab_user.manager')->getList($request->query->get('page', 1), 20);
 
-        return ['users' => $users];
+        return empty($form) ? ['users' => $users] : ['users' => $users, 'form' => $form->createView()];
     }
 
     /**
@@ -166,5 +176,13 @@ class UserController extends Controller
     private function getPasswordFormName()
     {
         return $this->container->getParameter('beelab_user.password_form_type');
+    }
+
+    /**
+     * @return string
+     */
+    private function getFilterFormName()
+    {
+        return $this->container->getParameter('beelab_user.filter_form_type');
     }
 }

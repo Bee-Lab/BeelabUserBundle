@@ -41,6 +41,11 @@ class UserManager extends LightUserManager
     protected $dispatcher;
 
     /**
+     * @var \Doctrine\ORM\QueryBuilder
+     */
+    protected $queryBuilder;
+
+    /**
      * @param string                        $class
      * @param ObjectManager                 $em
      * @param EncoderFactoryInterface       $encoder
@@ -76,12 +81,13 @@ class UserManager extends LightUserManager
      */
     public function getList($page = 1, $limit = 20, $sortBy = 'email')
     {
-        $qb = $this->repository->createQueryBuilder('u')->orderBy('u.'.$sortBy);
+        $this->getQueryBuilder();
+        $this->queryBuilder->orderBy('u.'.$sortBy);
         if (!is_null($this->paginator)) {
-            return $this->paginator->paginate($qb, $page, $limit);
+            return $this->paginator->paginate($this->queryBuilder, $page, $limit);
         }
 
-        return $qb->getQuery()->execute();
+        return $this->queryBuilder->getQuery()->execute();
     }
 
     /**
@@ -166,5 +172,19 @@ class UserManager extends LightUserManager
         $this->tokenStorage->setToken($token);
         $event = new InteractiveLoginEvent($request, $token);
         $this->dispatcher->dispatch('security.interactive_login', $event);
+    }
+
+    /**
+     * Get QueryBuilder.
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilder()
+    {
+        if (is_null($this->queryBuilder)) {
+            $this->queryBuilder = $this->repository->createQueryBuilder('u');
+        }
+
+        return $this->queryBuilder;
     }
 }
