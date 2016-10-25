@@ -68,14 +68,15 @@ class UserManager extends LightUserManager
     /**
      * List of users (can be paginated).
      *
-     * @param int $page
-     * @param int $limit
+     * @param int    $page
+     * @param int    $limit
+     * @param string $sortBy
      *
      * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
-    public function getList($page = 1, $limit = 20)
+    public function getList($page = 1, $limit = 20, $sortBy = 'email')
     {
-        $qb = $this->repository->createQueryBuilder('u');
+        $qb = $this->repository->createQueryBuilder('u')->orderBy('u.'.$sortBy);
         if (!is_null($this->paginator)) {
             return $this->paginator->paginate($qb, $page, $limit);
         }
