@@ -165,7 +165,7 @@ class UserController extends Controller
     /**
      * @return string
      */
-    private function getUserFormName()
+    protected function getUserFormName()
     {
         return $this->container->getParameter('beelab_user.user_form_type');
     }
@@ -173,7 +173,7 @@ class UserController extends Controller
     /**
      * @return string
      */
-    private function getPasswordFormName()
+    protected function getPasswordFormName()
     {
         return $this->container->getParameter('beelab_user.password_form_type');
     }
@@ -181,7 +181,7 @@ class UserController extends Controller
     /**
      * @return string
      */
-    private function getFilterFormName()
+    protected function getFilterFormName()
     {
         return $this->container->getParameter('beelab_user.filter_form_type');
     }
