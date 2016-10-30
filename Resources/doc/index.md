@@ -207,6 +207,12 @@ beelab_user_admin:
     prefix:   /admin/
 ```
 
+#### Filters
+
+This bundle is ready to filter users in the list, but filter implementation is up to the
+developer.
+To implement filters, see [filters.md](filters.md).
+
 ### 4. Commands
 
 Two commands are available, to create a new user and to promote an existing user.
