@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Inspired by CreateUserCommand by FOSUserBundle
@@ -23,7 +24,7 @@ class PromoteUserCommand extends ContainerAwareCommand
         $this
             ->setName('beelab:user:promote')
             ->setDescription('Promotes a user by adding a role')
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>%command.name%</info> command promotes a user by adding a role
 
   <info>%command.full_name% garak@example.com ROLE_CUSTOM</info>
@@ -66,31 +67,27 @@ EOT
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getArgument('email')) {
-            $email = $this->getHelper('dialog')->askAndValidate(
-                $output,
-                'Please choose an email:',
-                function ($email) {
-                    if (empty($email)) {
-                        throw new \InvalidArgumentException('Email can not be empty');
-                    }
-
-                    return $email;
+            $question = new Question('Please choose an email:');
+            $question->setValidator(function ($email) {
+                if (empty($email)) {
+                    throw new \InvalidArgumentException('Email can not be empty');
                 }
-            );
+
+                return $email;
+            });
+            $email = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('email', $email);
         }
         if (!$input->getArgument('role')) {
-            $role = $this->getHelper('dialog')->askAndValidate(
-                $output,
-                'Please choose a role:',
-                function ($role) {
-                    if (empty($role)) {
-                        throw new \InvalidArgumentException('Role can not be empty');
-                    }
-
-                    return $role;
+            $question = new Question('Please choose a role:');
+            $question->setValidator(function ($role) {
+                if (empty($role)) {
+                    throw new \InvalidArgumentException('Role can not be empty');
                 }
-            );
+
+                return $role;
+            });
+            $role = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('role', $role);
         }
     }

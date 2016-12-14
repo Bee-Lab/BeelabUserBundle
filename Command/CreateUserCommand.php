@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 
 /**
  * Inspired by CreateUserCommand by FOSUserBundle
@@ -27,7 +28,7 @@ class CreateUserCommand extends ContainerAwareCommand
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ])
-            ->setHelp(<<<EOT
+            ->setHelp(<<<'EOT'
 The <info>%command.name%</info> command creates a user:
 
   <info>%command.full_name%</info>
@@ -80,32 +81,29 @@ EOT
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         if (!$input->getArgument('email')) {
-            $email = $this->getHelper('dialog')->askAndValidate(
-                $output,
-                'Please choose an email:',
-                function ($email) {
-                    if (empty($email) || false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                        throw new \InvalidArgumentException('Invalid email');
-                    }
-
-                    return $email;
+            $question = new Question('Please choose an email:');
+            $question->setValidator(function ($email) {
+                if (empty($email) || false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    throw new \InvalidArgumentException('Invalid email');
                 }
-            );
+
+                return $email;
+            });
+            $email = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('email', $email);
         }
 
         if (!$input->getArgument('password')) {
-            $password = $this->getHelper('dialog')->askHiddenResponseAndValidate(
-                $output,
-                'Please choose a password:',
-                function ($password) {
-                    if (empty($password)) {
-                        throw new \InvalidArgumentException('Password can not be empty');
-                    }
-
-                    return $password;
+            $question = new Question('Please choose a password:');
+            $question->setValidator(function ($password) {
+                if (empty($password)) {
+                    throw new \InvalidArgumentException('Password can not be empty');
                 }
-            );
+
+                return $password;
+            });
+            $question->setHidden(true);
+            $password = $this->getHelper('question')->ask($input, $output, $question);
             $input->setArgument('password', $password);
         }
     }
