@@ -25,7 +25,7 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @expectedException \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
      */
     public function testLoadUserByUsernameNotFound()
     {
@@ -65,7 +65,7 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\Security\Core\Exception\UnsupportedUserException
+     * @expectedException \Symfony\Component\Security\Core\Exception\UnsupportedUserException
      */
     public function testRefreshUserUnsupported()
     {
@@ -99,5 +99,18 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
 
         $this->assertEquals($queryBuilder, $this->repository->filterByRole('ROLE'));
+    }
+
+    public function testFilterByRoles()
+    {
+        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('orWhere')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
+        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
+
+        $this->assertEquals($queryBuilder, $this->repository->filterByRoles(['ROLE_USER']));
     }
 }

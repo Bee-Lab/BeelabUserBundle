@@ -1,12 +1,6 @@
 Filters
 =======
 
-> **Warning**: filters are still an experimental feature.
-> You need the latest master to get it, so you need to change the requirement in
-> your `composer.json` to `2.1.*@dev`.
-> If you're installing, use `composer require beelab/user-bundle:2.1.*@dev`.
-
-
 You can filter the list of users.
 In this guide, we'll use [LexikFormFilterBundle](https://github.com/lexik/LexikFormFilterBundle).
 Of course, you can use whatever software you like.
@@ -139,4 +133,3 @@ That's it. Now you only need to override template `BeelabUserBundle/User/index.h
 adding the filter form.
 
 [Go back to main documentations](index.md)
-

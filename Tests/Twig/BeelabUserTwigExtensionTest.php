@@ -38,4 +38,10 @@ class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
         $extension = new BeelabUserTwigExtension('foo', 'barRoute');
         $this->assertFalse($extension->hasPaginator());
     }
+
+    public function testGetFunctions()
+    {
+        $extension = new BeelabUserTwigExtension('foo', 'barRoute');
+        $this->assertCount(1, $extension->getFunctions());
+    }
 }

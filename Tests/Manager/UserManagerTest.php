@@ -82,7 +82,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function testGetUserNotFound()
     {
@@ -97,7 +97,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function testDeleteAdminUserByNonSuperAdminUser()
     {
@@ -110,7 +110,7 @@ class UserManagerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Symfony\Component\Security\Core\Exception\AccessDeniedException
+     * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
     public function testDeleteOwnUser()
     {

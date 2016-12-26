@@ -22,17 +22,19 @@
     "require-dev": {
         "phpunit/phpunit": "^4.8",
         "knplabs/knp-paginator-bundle": "2.4.*|2.5.*",
-        "knplabs/knp-components": ">=1.2.4"
+        "knplabs/knp-components": ">=1.2.4",
+        "lexik/form-filter-bundle": "^5.0"
     },
     "suggest": {
-        "knplabs/knp-paginator-bundle": "Needed for optional pagination"
+        "knplabs/knp-paginator-bundle": "Needed for optional pagination",
+        "lexik/form-filter-bundle": "If you want to use filters"
     },
     "autoload": {
         "psr-4": { "Beelab\\UserBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.1.x-dev"
+            "dev-master": "2.2.x-dev"
         }
     }
 }

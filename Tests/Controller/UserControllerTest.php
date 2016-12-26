@@ -32,11 +32,27 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
 
     public function testIndex()
     {
-        $this->container->expects($this->once())->method('get')->with('beelab_user.manager')
+        $eventDispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
+            ->getMock();
+        $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
+        $formFactory = $this->getMockBuilder('Symfony\Component\Form\FormFactory')
+            ->disableOriginalConstructor()->getMock();
+        $formFactory->expects($this->once())->method('create')
+            ->will($this->returnValue($form));
+        $this->container->expects($this->once())->method('getParameter')->with('beelab_user.filter_form_type')
+            ->will($this->returnValue('Beelab\UserBundle\Test\FilterFormStub'));
+        $this->container->expects($this->at(1))->method('get')->with('form.factory')
+            ->will($this->returnValue($formFactory));
+        $this->container->expects($this->at(2))->method('get')->with('event_dispatcher')
+            ->will($this->returnValue($eventDispatcher));
+        $this->container->expects($this->at(3))->method('get')->with('event_dispatcher')
+            ->will($this->returnValue($eventDispatcher));
+        $this->container->expects($this->at(4))->method('get')->with('beelab_user.manager')
             ->will($this->returnValue($this->userManager));
+
         $this->userManager->expects($this->once())->method('getList')->with(1, 20)
             ->will($this->returnValue(['foo', 'bar']));
-        $this->assertEquals(['users' => ['foo', 'bar']], $this->controller->indexAction(new Request()));
+        $this->assertEquals(['users' => ['foo', 'bar'], 'form' => null], $this->controller->indexAction(new Request()));
     }
 
     public function testShow()

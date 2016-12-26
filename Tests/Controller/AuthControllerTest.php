@@ -62,7 +62,7 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testLogout()
     {
@@ -70,7 +70,7 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testLoginCheck()
     {
