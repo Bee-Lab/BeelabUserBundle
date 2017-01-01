@@ -3,11 +3,11 @@
 namespace Beelab\UserBundle\Tests\Command;
 
 use Beelab\UserBundle\Command\CreateUserCommand;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CreateUserCommandTest extends PHPUnit_Framework_TestCase
+class CreateUserCommandTest extends TestCase
 {
     protected $command;
 
@@ -54,7 +54,7 @@ class CreateUserCommandTest extends PHPUnit_Framework_TestCase
     {
         $userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\LightUserManager')->disableOriginalConstructor()->getMock();
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')->disableOriginalConstructor()->getMock();
-        $user = $this->getMock('Beelab\UserBundle\Entity\User');
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
 
         $container->expects($this->any())->method('get')->with('beelab_user.light_manager')->will($this->returnValue($userManager));
         $userManager->expects($this->at(0))->method('getInstance')->will($this->returnValue($user));

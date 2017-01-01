@@ -219,7 +219,7 @@ Two commands are available, to create a new user and to promote an existing user
 You can see them by typing:
 
 ```bash
-$ php app/console list beelab
+$ php bin/console list beelab
 ```
 
 ### 5. Events

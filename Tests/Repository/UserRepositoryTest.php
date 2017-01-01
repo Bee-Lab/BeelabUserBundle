@@ -3,12 +3,12 @@
 namespace Beelab\UserBundle\Tests\Repository;
 
 use Beelab\UserBundle\Repository\UserRepository;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class UserRepositoryTest extends PHPUnit_Framework_TestCase
+class UserRepositoryTest extends TestCase
 {
     protected $repository;
     protected $em;
@@ -47,7 +47,7 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
 
     public function testLoadUserByUsernameFound()
     {
-        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
@@ -69,13 +69,13 @@ class UserRepositoryTest extends PHPUnit_Framework_TestCase
      */
     public function testRefreshUserUnsupported()
     {
-        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $this->repository->refreshUser($user);
     }
 
     public function testRefreshUserSupported()
     {
-        $user = $this->getMock('Beelab\UserBundle\Test\UserStub');
+        $user = $this->createMock('Beelab\UserBundle\Test\UserStub');
         $this->repository->refreshUser($user);
     }
 

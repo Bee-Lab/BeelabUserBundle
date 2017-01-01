@@ -3,13 +3,13 @@
 namespace Beelab\UserBundle\Tests\Controller;
 
 use Beelab\UserBundle\Controller\UserController;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @group unit
  */
-class UserControllerTest extends PHPUnit_Framework_TestCase
+class UserControllerTest extends TestCase
 {
     protected $controller;
     protected $container;
@@ -25,7 +25,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()->getMock();
         $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
             ->disableOriginalConstructor()->getMock();
-        $this->router = $this->getMock('Symfony\Component\Routing\RouterInterface');
+        $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $this->controller = new UserController();
         $this->controller->setContainer($this->container);
     }
@@ -60,7 +60,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase
         $formFactory = $this->getMockBuilder('Symfony\Component\Form\FormFactory')->disableOriginalConstructor()
             ->getMock();
         $formFactory->expects($this->any())->method('createBuilder')->will($this->returnValue($this->formBuilder));
-        $user = $this->getMock('Beelab\UserBundle\Entity\User');
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
 
         $this->container->expects($this->at(0))->method('get')->with('beelab_user.manager')

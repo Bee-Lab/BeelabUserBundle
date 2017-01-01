@@ -3,13 +3,13 @@
 namespace Beelab\UserBundle\Tests\Controller;
 
 use Beelab\UserBundle\Controller\AuthController;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * @group unit
  */
-class AuthControllerTest extends PHPUnit_Framework_TestCase
+class AuthControllerTest extends TestCase
 {
     protected $controller;
     protected $container;
@@ -25,9 +25,9 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
 
     public function testLoginAuthenticated()
     {
-        $authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $router = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $authChecker = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $router = $this->createMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
 
         $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
             ->will($this->returnValue($authChecker));
@@ -43,10 +43,10 @@ class AuthControllerTest extends PHPUnit_Framework_TestCase
 
     public function testLogin()
     {
-        $authChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $request = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $authChecker = $this->createMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
         $request->attributes = new ParameterBag(['_security.last_username' => 'user']);
-        $session = $this->getMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $session = $this->createMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
 
         $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
             ->will($this->returnValue($authChecker));

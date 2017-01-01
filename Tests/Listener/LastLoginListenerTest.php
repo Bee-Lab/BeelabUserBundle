@@ -3,13 +3,13 @@
 namespace Beelab\UserBundle\Tests\Listener;
 
 use Beelab\UserBundle\Listener\LastLoginListener;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
  * @group unit
  */
-class LastLoginListenerTest extends PHPUnit_Framework_TestCase
+class LastLoginListenerTest extends TestCase
 {
     protected $listener;
     protected $userManager;
@@ -27,10 +27,10 @@ class LastLoginListenerTest extends PHPUnit_Framework_TestCase
 
     public function testOnSecurityInteractiveLogin()
     {
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $event = $this->getMockBuilder('Symfony\Component\Security\Http\Event\InteractiveLoginEvent')->disableOriginalConstructor()->getMock();
         $event->expects($this->once())->method('getAuthenticationToken')->will($this->returnValue($token));
-        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $token->expects($this->once())->method('getUser')->will($this->returnValue($user));
         $user->expects($this->once())->method('setLastLogin');
         $this->userManager->expects($this->once())->method('update')->with($user);

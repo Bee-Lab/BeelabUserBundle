@@ -3,12 +3,12 @@
 namespace Beelab\UserBundle\Tests\Manager;
 
 use Beelab\UserBundle\Manager\LightUserManager;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class LightUserManagerTest extends PHPUnit_Framework_TestCase
+class LightUserManagerTest extends TestCase
 {
     protected $manager;
     protected $em;
@@ -18,8 +18,8 @@ class LightUserManagerTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $class = 'Beelab\UserBundle\Test\UserStub';
-        $this->em = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
-        $this->encoder = $this->getMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
+        $this->em = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
+        $this->encoder = $this->createMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
         $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $this->em->expects($this->once())->method('getRepository')->with($class)->will($this->returnValue($this->repository));
 
@@ -33,10 +33,10 @@ class LightUserManagerTest extends PHPUnit_Framework_TestCase
 
     public function testCreate()
     {
-        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('getPlainPassword')->will($this->returnValue('pippo'));
         $user->expects($this->once())->method('getSalt')->will($this->returnValue('pluto'));
-        $passwordEncoder = $this->getMock('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
+        $passwordEncoder = $this->createMock('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
         $this->encoder->expects($this->once())->method('getEncoder')->with($user)->will($this->returnValue($passwordEncoder));
         $passwordEncoder->expects($this->once())->method('encodePassword');
         $user->expects($this->once())->method('setPassword');
@@ -48,7 +48,7 @@ class LightUserManagerTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateNoPasswordChangeAndNoFlush()
     {
-        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('getPlainPassword')->will($this->returnValue(null));
 
         $this->manager->update($user, false);
@@ -56,10 +56,10 @@ class LightUserManagerTest extends PHPUnit_Framework_TestCase
 
     public function testUpdateWithPasswordChangeAndFlush()
     {
-        $user = $this->getMock('Beelab\UserBundle\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->exactly(2))->method('getPlainPassword')->will($this->returnValue('pippo'));
         $user->expects($this->once())->method('getSalt')->will($this->returnValue('pluto'));
-        $passwordEncoder = $this->getMock('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
+        $passwordEncoder = $this->createMock('Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface');
         $this->encoder->expects($this->once())->method('getEncoder')->with($user)->will($this->returnValue($passwordEncoder));
         $passwordEncoder->expects($this->once())->method('encodePassword');
         $user->expects($this->once())->method('setPassword');

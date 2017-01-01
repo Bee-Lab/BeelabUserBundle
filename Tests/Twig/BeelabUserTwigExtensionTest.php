@@ -3,12 +3,12 @@
 namespace Beelab\UserBundle\Tests\Twig;
 
 use Beelab\UserBundle\Twig\BeelabUserTwigExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
+class BeelabUserTwigExtensionTest extends TestCase
 {
     public function testGetGlobals()
     {
@@ -28,7 +28,7 @@ class BeelabUserTwigExtensionTest extends PHPUnit_Framework_TestCase
 
     public function testHasPaginatorTrue()
     {
-        $paginator = $this->getMock('Knp\Component\Pager\PaginatorInterface');
+        $paginator = $this->createMock('Knp\Component\Pager\PaginatorInterface');
         $extension = new BeelabUserTwigExtension('foo', 'barRoute', $paginator);
         $this->assertTrue($extension->hasPaginator());
     }
