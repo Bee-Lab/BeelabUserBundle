@@ -2,9 +2,7 @@
 
 namespace Beelab\UserBundle\Form\Type;
 
-use Beelab\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,10 +14,10 @@ class PasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('plainPassword', Type\RepeatedType::class, [
+            ->add('plainPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                 'first_name' => 'new_password',
                 'second_name' => 'confirm_new_password',
-                'type' => Type\PasswordType::class,
+                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => true,
             ])
         ;
@@ -31,7 +29,7 @@ class PasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => 'Beelab\UserBundle\Entity\User',
             'validation_groups' => ['password'],
             'translation_domain' => 'admin',
         ]);

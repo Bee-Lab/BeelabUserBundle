@@ -4,7 +4,6 @@ namespace Beelab\UserBundle\Form\Type;
 
 use Beelab\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,19 +26,19 @@ class UserType extends AbstractType
         }
 
         $builder
-            ->add('email', Type\EmailType::class)
-            ->add('plainPassword', Type\RepeatedType::class, [
+            ->add('email', 'Symfony\Component\Form\Extension\Core\Type\EmailType')
+            ->add('plainPassword', 'Symfony\Component\Form\Extension\Core\Type\RepeatedType', [
                 'first_name' => 'password',
                 'second_name' => 'confirm',
-                'type' => Type\PasswordType::class,
+                'type' => 'Symfony\Component\Form\Extension\Core\Type\PasswordType',
                 'required' => $isNew,
             ])
-            ->add('roles', Type\ChoiceType::class, [
+            ->add('roles', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
                 'choices' => array_flip($roles),
                 'choices_as_values' => true,
                 'multiple' => true,
             ])
-            ->add('active', Type\CheckboxType::class, ['required' => false])
+            ->add('active', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', ['required' => false])
         ;
     }
 
@@ -49,7 +48,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+            'data_class' => 'Beelab\UserBundle\Entity\User',
             'translation_domain' => 'admin',
         ]);
     }
