@@ -69,7 +69,7 @@ class UserController extends Controller
     {
         $user = $this->get('beelab_user.manager')->getInstance();
         $form = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['create']]);
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $this->get('beelab_user.manager')->create($user);
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $user = $this->get('beelab_user.manager')->get($id);
         $editForm = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['update'], 'method' => 'PUT']);
-        if ($editForm->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
@@ -116,7 +116,7 @@ class UserController extends Controller
     {
         $user = $this->get('beelab_user.manager')->get($id);
         $form = $this->createDeleteForm($user->getId());
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $this->get('beelab_user.manager')->delete($user);
         }
 
@@ -134,7 +134,7 @@ class UserController extends Controller
     {
         $user = $this->getUser();
         $form = $this->createForm($this->getPasswordFormName(), $user);
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
             $this->get('beelab_user.manager')->update($user);
             $this->get('event_dispatcher')->dispatch('beelab_user.change_password', new UserEvent($user));
 

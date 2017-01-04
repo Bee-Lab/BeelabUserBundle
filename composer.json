@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Simple user provider for Symfony",
     "keywords": ["User management"],
-    "homepage": "https://bee-lab.net",
+    "homepage": "https://github.com/bee-lab/",
     "license": "LGPL-3.0",
     "authors": [
         {
