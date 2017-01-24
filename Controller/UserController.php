@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $user = $this->get('beelab_user.manager')->get($id);
         $editForm = $this->createForm($this->getUserFormName(), $user, ['validation_groups' => ['update'], 'method' => 'PUT']);
-        if ($form->handleRequest($request)->isSubmitted() && $form->isValid()) {
+        if ($editForm->handleRequest($request)->isSubmitted() && $editForm->isValid()) {
             $this->get('beelab_user.manager')->update($user);
 
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
