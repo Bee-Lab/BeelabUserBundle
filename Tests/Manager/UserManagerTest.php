@@ -64,13 +64,27 @@ class UserManagerTest extends TestCase
         $this->assertEquals([], $manager->getList());
     }
 
-    public function testFind()
+    public function testLoad()
     {
-        $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', ['pippo@example.org'])
             ->will($this->returnValue($user));
+        $user->expects($this->once())->method('isActive')->will($this->returnValue(true));
 
         $this->assertEquals($user, $this->manager->loadUserByUsername('pippo@example.org'));
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
+     */
+    public function testLoadUserNotActive()
+    {
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
+        $this->repository->expects($this->any())->method('__call')->with('findOneByEmail', ['pippo@example.org'])
+            ->will($this->returnValue($user));
+        $user->expects($this->once())->method('isActive')->will($this->returnValue(false));
+
+        $this->assertNull($this->manager->loadUserByUsername('pippo@example.org'));
     }
 
     public function testGet()

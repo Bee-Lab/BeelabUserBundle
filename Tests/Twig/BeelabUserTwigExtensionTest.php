@@ -20,12 +20,6 @@ class BeelabUserTwigExtensionTest extends TestCase
         $this->assertEquals($expected, $extension->getGlobals());
     }
 
-    public function testGetName()
-    {
-        $extension = new BeelabUserTwigExtension('foo', 'barRoute');
-        $this->assertEquals('Beelab\\UserBundle\\Twig\\BeelabUserTwigExtension', $extension->getName());
-    }
-
     public function testHasPaginatorTrue()
     {
         $paginator = $this->createMock('Knp\Component\Pager\PaginatorInterface');

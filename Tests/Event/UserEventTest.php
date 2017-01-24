@@ -2,8 +2,8 @@
 
 namespace Beelab\UserBundle\Tests\Event;
 
-use Beelab\UserBundle\Test\UserStub;
 use Beelab\UserBundle\Event\UserEvent;
+use Beelab\UserBundle\Test\UserStub;
 use PHPUnit_Framework_TestCase;
 
 /**
