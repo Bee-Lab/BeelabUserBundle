@@ -3,8 +3,8 @@
 namespace Beelab\UserBundle\Tests\Form\Type;
 
 use Beelab\UserBundle\Form\Type\PasswordType;
+use Beelab\UserBundle\Test\TypeTestCase;
 use Beelab\UserBundle\Test\UserStub as User;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * @group unit

@@ -3,6 +3,7 @@
 namespace Beelab\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -59,9 +60,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $role
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function filterByRole($role)
+    public function filterByRole(string $role): QueryBuilder
     {
         $role = $role === 'ROLE_USER' ? '{}' : '"'.$role.'"';
 
@@ -75,9 +76,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     /**
      * @param array $roles
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function filterByRoles(array $roles)
+    public function filterByRoles(array $roles): QueryBuilder
     {
         $qb = $this->createQueryBuilder('u');
         foreach ($roles as $key => $role) {

@@ -36,7 +36,7 @@ class LightUserManager
      * @param ObjectManager           $em
      * @param EncoderFactoryInterface $encoder
      */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder)
+    public function __construct(string $class, ObjectManager $em, EncoderFactoryInterface $encoder)
     {
         $this->className = $class;
         $this->em = $em;
@@ -49,7 +49,7 @@ class LightUserManager
      *
      * @return UserInterface
      */
-    public function getInstance()
+    public function getInstance(): UserInterface
     {
         return new $this->className();
     }
@@ -60,7 +60,7 @@ class LightUserManager
      * @param UserInterface $user
      * @param bool          $flush
      */
-    public function create(UserInterface $user, $flush = true)
+    public function create(UserInterface $user, bool $flush = true)
     {
         $this->updatePassword($user);
         $this->em->persist($user);
@@ -75,7 +75,7 @@ class LightUserManager
      * @param UserInterface $user
      * @param bool          $flush
      */
-    public function update(UserInterface $user, $flush = true)
+    public function update(UserInterface $user, bool $flush = true)
     {
         if (!is_null($user->getPlainPassword())) {
             $this->updatePassword($user);

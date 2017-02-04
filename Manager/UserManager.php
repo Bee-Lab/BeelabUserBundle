@@ -4,6 +4,7 @@ namespace Beelab\UserBundle\Manager;
 
 use Beelab\UserBundle\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,7 +57,7 @@ class UserManager extends LightUserManager
      * @param EventDispatcherInterface      $dispatcher
      */
     public function __construct(
-        $class,
+        string $class,
         ObjectManager $em,
         EncoderFactoryInterface $encoder,
         AuthorizationCheckerInterface $authChecker,
@@ -80,7 +81,7 @@ class UserManager extends LightUserManager
      *
      * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
-    public function getList($page = 1, $limit = 20, $sortBy = 'email')
+    public function getList(int $page = 1, int $limit = 20, string $sortBy = 'email')
     {
         $this->getQueryBuilder();
         $this->queryBuilder->orderBy('u.'.$sortBy);
@@ -98,9 +99,9 @@ class UserManager extends LightUserManager
      *
      * @param string $email
      *
-     * @return UserInterface
+     * @return UserInterface|null
      */
-    public function find($email)
+    public function find(string $email)
     {
         @trigger_error('Retrieving user with find() is deprecated. Use loadUserByUsername() instead.', E_USER_DEPRECATED);
 
@@ -112,9 +113,9 @@ class UserManager extends LightUserManager
      *
      * @param string $email
      *
-     * @return UserInterface
+     * @return UserInterface|null
      */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername(string $email)
     {
         if (is_null($user = $this->repository->findOneByEmail($email))) {
             return;
@@ -133,7 +134,7 @@ class UserManager extends LightUserManager
      *
      * @return UserInterface
      */
-    public function get($id)
+    public function get(int $id): UserInterface
     {
         $user = $this->repository->find($id);
         if (empty($user)) {
@@ -149,7 +150,7 @@ class UserManager extends LightUserManager
      * @param UserInterface $user
      * @param bool          $flush
      */
-    public function delete(UserInterface $user, $flush = true)
+    public function delete(UserInterface $user, bool $flush = true)
     {
         if ($user->hasRole('ROLE_SUPER_ADMIN') && !$this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException('You cannot delete a super admin user.');
@@ -171,7 +172,7 @@ class UserManager extends LightUserManager
      * @param string        $firewall firewall name (see your security.yml config file)
      * @param bool          $logout   wether to logout before login
      */
-    public function authenticate(UserInterface $user, Request $request, $firewall = 'main', $logout = false)
+    public function authenticate(UserInterface $user, Request $request, string $firewall = 'main', bool $logout = false)
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         if ($logout) {
@@ -185,9 +186,9 @@ class UserManager extends LightUserManager
     /**
      * Get QueryBuilder.
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function getQueryBuilder()
+    public function getQueryBuilder(): QueryBuilder
     {
         if (is_null($this->queryBuilder)) {
             $this->queryBuilder = $this->repository->createQueryBuilder('u');

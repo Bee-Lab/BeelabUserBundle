@@ -3,9 +3,9 @@
 namespace Beelab\UserBundle\Tests\DependencyInjection;
 
 use Beelab\UserBundle\DependencyInjection\BeelabUserExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class BeelabUserExtensionTest extends PHPUnit_Framework_TestCase
+class BeelabUserExtensionTest extends TestCase
 {
     public function testLoadFailure()
     {

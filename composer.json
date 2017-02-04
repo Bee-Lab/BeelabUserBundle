@@ -20,7 +20,7 @@
         "twig/twig": ">=1.23"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
+        "phpunit/phpunit": "^6.0",
         "knplabs/knp-paginator-bundle": "^2.5",
         "knplabs/knp-components": ">=1.2.4",
         "lexik/form-filter-bundle": "^5.0"

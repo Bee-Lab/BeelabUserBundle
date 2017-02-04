@@ -3,11 +3,12 @@
 namespace Beelab\UserBundle\Tests\Entity;
 
 use Beelab\UserBundle\Test\UserStub as User;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends TestCase
 {
     public function testGetRoleLabel()
     {

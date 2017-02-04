@@ -3,12 +3,12 @@
 namespace Beelab\UserBundle\Tests\Event;
 
 use Beelab\UserBundle\Event\FormEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class FormEventTest extends PHPUnit_Framework_TestCase
+class FormEventTest extends TestCase
 {
     public function testGetForm()
     {

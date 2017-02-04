@@ -101,7 +101,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->email;
     }
@@ -148,7 +148,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         // we need to make sure to have at least one role
@@ -193,7 +193,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return User
      */
-    public function removeRole($role)
+    public function removeRole(string $role)
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -216,7 +216,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize([$this->id, $this->email]);
     }
@@ -394,7 +394,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
     /**
      * {@inheritdoc}
      */
-    public function isEqualTo(SymfonyUserInterface $user)
+    public function isEqualTo(SymfonyUserInterface $user): bool
     {
         if ($this->email !== $user->getUsername()) {
             return false;
@@ -408,7 +408,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return array
      */
-    public static function getRoleLabels()
+    public static function getRoleLabels(): array
     {
         return static::$roleLabels;
     }
@@ -420,7 +420,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return string
      */
-    public function getRoleLabel($role)
+    public function getRoleLabel($role): string
     {
         return $role == 'ROLE_SUPER_ADMIN' ? 'super admin' : static::$roleLabels[$role];
     }
@@ -432,7 +432,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      *
      * @return string
      */
-    public function getRolesWithLabel($glue = ', ')
+    public function getRolesWithLabel($glue = ', '): string
     {
         $labels = [];
         $roles = $this->getRoles();
