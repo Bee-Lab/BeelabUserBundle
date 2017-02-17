@@ -45,9 +45,12 @@ class UserRepositoryTest extends TestCase
                                 $this->repository->loadUserByUsername('foo'));
     }
 
-    public function testLoadUserByUsernameFound()
+    /**
+     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
+     */
+    public function testLoadUserByUsernameDisabled()
     {
-        $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
@@ -59,6 +62,26 @@ class UserRepositoryTest extends TestCase
         $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
         $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
         $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue($user));
+        $user->expects($this->once())->method('isActive')->will($this->returnValue(false));
+
+        $this->repository->loadUserByUsername('foo');
+    }
+
+    public function testLoadUserByUsernameFound()
+    {
+        $user = $this->createMock('Beelab\UserBundle\Entity\User');
+        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
+            ->disableOriginalConstructor()->getMockForAbstractClass();
+
+        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
+        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
+        $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
+        $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue($user));
+        $user->expects($this->once())->method('isActive')->will($this->returnValue(true));
 
         $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface',
                                 $this->repository->loadUserByUsername('baz'));

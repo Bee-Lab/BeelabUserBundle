@@ -14,7 +14,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 /**
@@ -117,14 +116,7 @@ class UserManager extends LightUserManager
      */
     public function loadUserByUsername(string $email)
     {
-        if (is_null($user = $this->repository->findOneByEmail($email))) {
-            return;
-        }
-        if (!$user->isActive()) {
-            throw new DisabledException('User is not active.');
-        }
-
-        return $user;
+        return $this->repository->loadUserByUsername($email);
     }
 
     /**

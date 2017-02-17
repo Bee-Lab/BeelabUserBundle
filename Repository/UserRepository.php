@@ -5,6 +5,7 @@ namespace Beelab\UserBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +30,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         ;
         if (empty($user)) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+        }
+        if (!$user->isActive()) {
+            throw new DisabledException('User is not active.');
         }
 
         return $user;
