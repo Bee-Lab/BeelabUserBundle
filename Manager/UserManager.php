@@ -92,22 +92,6 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Find user by email.
-     *
-     * @deprecated Use loadUserByUsername() instead
-     *
-     * @param string $email
-     *
-     * @return UserInterface|null
-     */
-    public function find(string $email)
-    {
-        @trigger_error('Retrieving user with find() is deprecated. Use loadUserByUsername() instead.', E_USER_DEPRECATED);
-
-        return $this->loadUserByUsername($email);
-    }
-
-    /**
      * Find user.
      *
      * @param string $email
