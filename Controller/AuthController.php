@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
 /**
@@ -61,7 +61,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      *
-     * @return mixed Exception or array
+     * @return \Exception|array
      */
     protected function getLoginError(Request $request)
     {
@@ -72,7 +72,7 @@ class AuthController extends Controller
             $request->getSession()->remove(Security::AUTHENTICATION_ERROR);
         }
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
-        if ($error instanceof \Exception && !$error instanceof BadCredentialsException) {
+        if ($error instanceof \Exception && !$error instanceof AuthenticationException) {
             $this->get('logger')->log('error', $error->getMessage());
             $error = ['message' => 'Unexpected error.'];
         }

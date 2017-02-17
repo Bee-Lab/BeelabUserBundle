@@ -76,6 +76,7 @@ class UserRepositoryTest extends TestCase
     public function testRefreshUserSupported()
     {
         $user = $this->createMock('Beelab\UserBundle\Test\UserStub');
+        $user->expects($this->once())->method('getId');
         $this->repository->refreshUser($user);
     }
 
