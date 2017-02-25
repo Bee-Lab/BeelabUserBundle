@@ -106,15 +106,15 @@ class UserManager extends LightUserManager
     /**
      * Find user by id.
      *
-     * @param int $id
+     * @param mixed $id
      *
      * @return UserInterface
      */
-    public function get(int $id): UserInterface
+    public function get($id): UserInterface
     {
         $user = $this->repository->find($id);
         if (empty($user)) {
-            throw new NotFoundHttpException(sprintf('Cannot find user with id %u', $id));
+            throw new NotFoundHttpException(sprintf('Cannot find user with id %s', $id));
         }
 
         return $user;
