@@ -3,6 +3,8 @@
 namespace Beelab\UserBundle\Tests\Repository;
 
 use Beelab\UserBundle\Repository\UserRepository;
+use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -29,8 +31,8 @@ class UserRepositoryTest extends TestCase
      */
     public function testLoadUserByUsernameNotFound()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
@@ -51,8 +53,8 @@ class UserRepositoryTest extends TestCase
     public function testLoadUserByUsernameDisabled()
     {
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
-        $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
         $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
@@ -70,7 +72,7 @@ class UserRepositoryTest extends TestCase
     public function testLoadUserByUsernameFound()
     {
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
@@ -115,7 +117,7 @@ class UserRepositoryTest extends TestCase
 
     public function testFilterByRole()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
         $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
         $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
@@ -127,7 +129,7 @@ class UserRepositoryTest extends TestCase
 
     public function testFilterByRoles()
     {
-        $queryBuilder = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
+        $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
         $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
         $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());

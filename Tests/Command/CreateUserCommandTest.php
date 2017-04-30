@@ -3,9 +3,12 @@
 namespace Beelab\UserBundle\Tests\Command;
 
 use Beelab\UserBundle\Command\CreateUserCommand;
+use Beelab\UserBundle\Entity\User;
+use Beelab\UserBundle\Manager\LightUserManager;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\DependencyInjection\Container;
 
 class CreateUserCommandTest extends TestCase
 {
@@ -52,20 +55,20 @@ class CreateUserCommandTest extends TestCase
 
     private function getMockContainer($success = true)
     {
-        $userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\LightUserManager')->disableOriginalConstructor()->getMock();
-        $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')->disableOriginalConstructor()->getMock();
-        $user = $this->createMock('Beelab\UserBundle\Entity\User');
+        $manager = $this->getMockBuilder(LightUserManager::class)->disableOriginalConstructor()->getMock();
+        $container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
+        $user = $this->createMock(User::class);
 
-        $container->expects($this->any())->method('get')->with('beelab_user.light_manager')->will($this->returnValue($userManager));
-        $userManager->expects($this->at(0))->method('getInstance')->will($this->returnValue($user));
+        $container->expects($this->any())->method('get')->with('beelab_user.light_manager')->will($this->returnValue($manager));
+        $manager->expects($this->at(0))->method('getInstance')->will($this->returnValue($user));
         $user->expects($this->at(0))->method('setEmail')->will($this->returnSelf());
         $user->expects($this->at(1))->method('setPlainPassword')->will($this->returnSelf());
         $user->expects($this->at(2))->method('setActive')->will($this->returnSelf());
 
         if ($success) {
-            $userManager->expects($this->at(1))->method('create')->with($user);
+            $manager->expects($this->at(1))->method('create')->with($user);
         } else {
-            $userManager->expects($this->at(1))->method('create')->will($this->throwException(new \Exception('Generic error')));
+            $manager->expects($this->at(1))->method('create')->will($this->throwException(new \Exception('Generic error')));
         }
 
         return $container;
