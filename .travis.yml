@@ -16,6 +16,10 @@ matrix:
           env: COMPOSER_FLAGS="--prefer-lowest" SYMFONY_VERSION=2.8.*
         - php: 7.1
           env: SYMFONY_VERSION=3.2.* SYMFONY_DEPRECATIONS_HELPER=strict
+        - php: 7.2
+          env: SYMFONY_VERSION=3.2.* SYMFONY_DEPRECATIONS_HELPER=strict
+     allow_failures:
+        - php: nightly
 
 env:
     global:
