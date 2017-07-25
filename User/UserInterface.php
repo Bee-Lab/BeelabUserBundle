@@ -27,7 +27,7 @@ interface UserInterface extends AdvancedUserInterface
     public function hasRole($role);
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      */
     public function setLastLogin(\DateTime $date);
 

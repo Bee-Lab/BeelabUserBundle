@@ -14,7 +14,7 @@ class AuthControllerTest extends TestCase
     protected $controller;
     protected $container;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')
             ->disableOriginalConstructor()->getMock();

@@ -11,7 +11,7 @@ class PromoteUserCommandTest extends TestCase
 {
     protected $command;
 
-    public function setUp()
+    protected function setUp()
     {
         $application = new Application();
         $application->add(new PromoteUserCommand());

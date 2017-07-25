@@ -18,7 +18,7 @@ class LightUserManagerTest extends TestCase
     protected $repository;
     protected $encoder;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->em = $this->createMock(ObjectManager::class);
         $this->encoder = $this->createMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');

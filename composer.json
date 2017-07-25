@@ -13,16 +13,16 @@
     ],
     "require": {
         "php": ">=7.0",
-        "symfony/symfony": "~2.8.12|^3.2",
-        "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
+        "doctrine/orm": "^2.5",
         "sensio/framework-extra-bundle": "^3.0",
+        "symfony/symfony": "^2.8.12|^3.2",
         "twig/twig": ">=1.23"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0",
-        "knplabs/knp-paginator-bundle": "^2.5",
         "knplabs/knp-components": ">=1.2.4",
+        "knplabs/knp-paginator-bundle": "^2.5",
         "lexik/form-filter-bundle": "^5.0"
     },
     "suggest": {
@@ -31,6 +31,9 @@
     },
     "autoload": {
         "psr-4": { "Beelab\\UserBundle\\": "" }
+    },
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {

@@ -16,7 +16,7 @@ class LastLoginListenerTest extends TestCase
     protected $listener;
     protected $userManager;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $this->listener = new LastLoginListener($this->userManager);

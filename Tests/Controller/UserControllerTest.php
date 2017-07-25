@@ -3,7 +3,12 @@
 namespace Beelab\UserBundle\Tests\Controller;
 
 use Beelab\UserBundle\Controller\UserController;
+use Beelab\UserBundle\Manager\UserManager;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,14 +22,11 @@ class UserControllerTest extends TestCase
     protected $userManager;
     protected $router;
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')
-            ->disableOriginalConstructor()->getMock();
-        $this->userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\UserManager')
-            ->disableOriginalConstructor()->getMock();
-        $this->formBuilder = $this->getMockBuilder('Symfony\Component\Form\FormBuilder')
-            ->disableOriginalConstructor()->getMock();
+        $this->container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
+        $this->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
+        $this->formBuilder = $this->getMockBuilder(FormBuilder::class)->disableOriginalConstructor()->getMock();
         $this->router = $this->createMock('Symfony\Component\Routing\RouterInterface');
         $this->controller = new UserController();
         $this->controller->setContainer($this->container);
@@ -32,13 +34,10 @@ class UserControllerTest extends TestCase
 
     public function testIndex()
     {
-        $eventDispatcher = $this->getMockBuilder('Symfony\Component\EventDispatcher\EventDispatcherInterface')
-            ->getMock();
+        $eventDispatcher = $this->getMockBuilder(EventDispatcherInterface::class)->getMock();
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
-        $formFactory = $this->getMockBuilder('Symfony\Component\Form\FormFactory')
-            ->disableOriginalConstructor()->getMock();
-        $formFactory->expects($this->once())->method('create')
-            ->will($this->returnValue($form));
+        $formFactory = $this->getMockBuilder(FormFactory::class)->disableOriginalConstructor()->getMock();
+        $formFactory->expects($this->once())->method('create')->will($this->returnValue($form));
         $this->container->expects($this->once())->method('getParameter')->with('beelab_user.filter_form_type')
             ->will($this->returnValue('Beelab\UserBundle\Test\FilterFormStub'));
         $this->container->expects($this->at(1))->method('get')->with('form.factory')
@@ -57,8 +56,7 @@ class UserControllerTest extends TestCase
 
     public function testShow()
     {
-        $formFactory = $this->getMockBuilder('Symfony\Component\Form\FormFactory')->disableOriginalConstructor()
-            ->getMock();
+        $formFactory = $this->getMockBuilder(FormFactory::class)->disableOriginalConstructor()->getMock();
         $formFactory->expects($this->any())->method('createBuilder')->will($this->returnValue($this->formBuilder));
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $form = $this->getMockBuilder('Symfony\Component\Form\Form')->disableOriginalConstructor()->getMock();
