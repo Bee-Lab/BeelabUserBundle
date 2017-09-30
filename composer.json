@@ -16,7 +16,12 @@
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "sensio/framework-extra-bundle": "^3.0",
-        "symfony/symfony": "^2.8.12|^3.2",
+        "symfony/config": "^2.8.12|^3.2",
+        "symfony/console": "^2.8.12|^3.2",
+        "symfony/dependency-injection": "^2.8.12|^3.2",
+        "symfony/form": "^2.8.12|^3.2",
+        "symfony/security": "^2.8.12|^3.2",
+        "symfony/validator": "^2.8.12|^3.2",
         "twig/twig": ">=1.23"
     },
     "require-dev": {
