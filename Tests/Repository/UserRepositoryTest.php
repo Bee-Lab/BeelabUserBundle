@@ -6,6 +6,9 @@ use Beelab\UserBundle\Repository\UserRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 /**
  * @group unit
@@ -26,11 +29,9 @@ class UserRepositoryTest extends TestCase
         $this->repository = new UserRepository($this->em, $this->class);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     */
     public function testLoadUserByUsernameNotFound()
     {
+        $this->expectException(UsernameNotFoundException::class);
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
@@ -47,11 +48,9 @@ class UserRepositoryTest extends TestCase
                                 $this->repository->loadUserByUsername('foo'));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\DisabledException
-     */
     public function testLoadUserByUsernameDisabled()
     {
+        $this->expectException(DisabledException::class);
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
@@ -89,11 +88,9 @@ class UserRepositoryTest extends TestCase
                                 $this->repository->loadUserByUsername('baz'));
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\UnsupportedUserException
-     */
     public function testRefreshUserUnsupported()
     {
+        $this->expectException(UnsupportedUserException::class);
         $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $this->repository->refreshUser($user);
     }

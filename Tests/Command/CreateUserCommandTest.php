@@ -22,11 +22,9 @@ class CreateUserCommandTest extends TestCase
         $this->command = $application->find('beelab:user:create');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidEmailError()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $input = ['email' => 'invalid', 'password' => 'fooBarBaz'];
 
         $tester = new CommandTester($this->command);

@@ -61,19 +61,15 @@ class AuthControllerTest extends TestCase
                             $this->controller->loginAction($request));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testLogout()
     {
+        $this->expectException(\RuntimeException::class);
         $this->controller->logoutAction();
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testLoginCheck()
     {
+        $this->expectException(\RuntimeException::class);
         $this->controller->loginCheckAction();
     }
 }

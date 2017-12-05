@@ -58,7 +58,7 @@ class PromoteUserCommandTest extends TestCase
         $container->expects($this->once())->method('get')->with('beelab_user.manager')->will($this->returnValue($userManager));
         if ($found) {
             $userManager->expects($this->at(0))->method('loadUserByUsername')->will($this->returnValue($user));
-            if ($role == 'ROLE_ADMIN') {
+            if ('ROLE_ADMIN' === $role) {
                 $user->expects($this->at(0))->method('hasRole')->with($role)->will($this->returnValue(false));
                 $user->expects($this->at(1))->method('addRole')->with($role);
                 $userManager->expects($this->at(1))->method('update')->with($user);

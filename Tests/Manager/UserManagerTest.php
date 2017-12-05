@@ -6,6 +6,8 @@ use Beelab\UserBundle\Manager\UserManager;
 use Beelab\UserBundle\Test\UserStub;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @group unit
@@ -81,11 +83,9 @@ class UserManagerTest extends TestCase
         $this->assertEquals($user, $this->manager->get(123));
     }
 
-    /**
-     * @expectedException \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     */
     public function testGetUserNotFound()
     {
+        $this->expectException(NotFoundHttpException::class);
         $this->repository->expects($this->any())->method('find')->will($this->returnValue(null));
 
         $this->manager->get(123);
@@ -96,11 +96,9 @@ class UserManagerTest extends TestCase
         $this->assertInstanceOf('Beelab\UserBundle\User\UserInterface', $this->manager->getInstance());
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
     public function testDeleteAdminUserByNonSuperAdminUser()
     {
+        $this->expectException(AccessDeniedException::class);
         $this->authChecker->expects($this->once())->method('isGranted')->with('ROLE_SUPER_ADMIN')
             ->will($this->returnValue(false));
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
@@ -109,11 +107,9 @@ class UserManagerTest extends TestCase
         $this->manager->delete($user);
     }
 
-    /**
-     * @expectedException \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
     public function testDeleteOwnUser()
     {
+        $this->expectException(AccessDeniedException::class);
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('hasRole')->with('ROLE_SUPER_ADMIN')->will($this->returnValue(false));
         $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');

@@ -26,7 +26,7 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
     {
         $this->layout = $layout;
         $this->route = $route;
-        $this->hasPaginator = !is_null($paginator);
+        $this->hasPaginator = null !== $paginator;
     }
 
     /**

@@ -17,7 +17,7 @@ class UserType extends AbstractType
     {
         $isNew = true;
         if (isset($options['data'])) {
-            if (!is_null($options['data']->getId())) {
+            if (null !== $options['data']->getId()) {
                 $isNew = false;
             }
             $user = $options['data'];
