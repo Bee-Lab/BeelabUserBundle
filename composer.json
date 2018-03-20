@@ -2,8 +2,8 @@
     "name": "beelab/user-bundle",
     "type": "symfony-bundle",
     "description": "Simple user provider for Symfony",
-    "keywords": ["User management"],
-    "homepage": "https://github.com/bee-lab/",
+    "keywords": ["User", "User management"],
+    "homepage": "https://github.com/Bee-Lab",
     "license": "LGPL-3.0-or-later",
     "authors": [
         {
@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": "^7.0",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
         "sensio/framework-extra-bundle": "^3.0|^4.0|^5.0",
@@ -26,10 +26,10 @@
         "twig/twig": ">=1.26"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.2",
         "knplabs/knp-components": ">=1.2.4",
         "knplabs/knp-paginator-bundle": "^2.5",
-        "lexik/form-filter-bundle": "^5.0"
+        "lexik/form-filter-bundle": "^5.0",
+        "phpunit/phpunit": "^6.2|^7.0"
     },
     "suggest": {
         "knplabs/knp-paginator-bundle": "Needed for optional pagination",
