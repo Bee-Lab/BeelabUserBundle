@@ -16,28 +16,19 @@ class LastLoginListener implements EventSubscriberInterface
 {
     protected $userManager;
 
-    /**
-     * @param LightUserManager $userManager
-     */
     public function __construct(LightUserManager $userManager)
     {
         $this->userManager = $userManager;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onSecurityInteractiveLogin',
         ];
     }
 
-    /**
-     * @param InteractiveLoginEvent $event
-     */
-    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
+    public function onSecurityInteractiveLogin(InteractiveLoginEvent $event): void
     {
         $user = $event->getAuthenticationToken()->getUser();
         if ($user instanceof UserInterface) {

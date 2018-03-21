@@ -4,6 +4,7 @@ namespace Beelab\UserBundle\Tests\Controller;
 
 use Beelab\UserBundle\Controller\AuthController;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -47,18 +48,20 @@ class AuthControllerTest extends TestCase
         $request = $this->createMock('Symfony\Component\HttpFoundation\Request');
         $request->attributes = new ParameterBag(['_security.last_username' => 'user']);
         $session = $this->createMock('Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $logger = $this->createMock(LoggerInterface::class);
 
         $this->container->expects($this->at(0))->method('get')->with('security.authorization_checker')
             ->will($this->returnValue($authChecker));
+        $this->container->expects($this->at(1))->method('get')->with('logger')
+            ->will($this->returnValue($logger));
         $authChecker->expects($this->any())->method('isGranted')->with('IS_AUTHENTICATED_FULLY')
             ->will($this->returnValue(false));
         $request->expects($this->any())->method('getSession')->will($this->returnValue($session));
-        $session->expects($this->at(1))->method('get')->with('_security.last_error')->will($this->returnValue('user'));
+        $session->expects($this->at(1))->method('get')->with('_security.last_error')->will($this->returnValue(new \Exception('foo')));
         $session->expects($this->at(0))->method('get')->with('_security.last_username')
             ->will($this->returnValue('user'));
 
-        $this->assertEquals(['last_username' => 'user', 'error' => 'user'],
-                            $this->controller->loginAction($request));
+        $this->assertEquals(['last_username' => 'user', 'error' => new \Exception('Unexpected error.')], $this->controller->loginAction($request));
     }
 
     public function testLogout()

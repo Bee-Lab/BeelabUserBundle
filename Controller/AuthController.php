@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
-/**
- * AuthController.
- */
 class AuthController extends Controller
 {
     /**
@@ -22,7 +19,7 @@ class AuthController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request) 
     {
         if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute($this->getParameter('beelab_user.route'));
@@ -63,7 +60,7 @@ class AuthController extends Controller
      *
      * @return \Exception|array
      */
-    protected function getLoginError(Request $request)
+    protected function getLoginError(Request $request): ?\Exception
     {
         if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
@@ -74,7 +71,7 @@ class AuthController extends Controller
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
         if ($error instanceof \Exception && !$error instanceof AuthenticationException) {
             $this->get('logger')->log('error', $error->getMessage());
-            $error = ['message' => 'Unexpected error.'];
+            $error = new \Exception('Unexpected error.');
         }
 
         return $error;
