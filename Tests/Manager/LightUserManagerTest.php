@@ -18,7 +18,7 @@ class LightUserManagerTest extends TestCase
     protected $repository;
     protected $encoder;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->createMock(ObjectManager::class);
         $this->encoder = $this->createMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
@@ -28,12 +28,12 @@ class LightUserManagerTest extends TestCase
         $this->manager = new LightUserManager(UserStub::class, $this->em, $this->encoder);
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $this->assertInstanceOf('Beelab\UserBundle\User\UserInterface', $this->manager->getInstance());
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('getPlainPassword')->will($this->returnValue('pippo'));
@@ -48,7 +48,7 @@ class LightUserManagerTest extends TestCase
         $this->manager->create($user);
     }
 
-    public function testUpdateNoPasswordChangeAndNoFlush()
+    public function testUpdateNoPasswordChangeAndNoFlush(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->once())->method('getPlainPassword')->will($this->returnValue(null));
@@ -56,7 +56,7 @@ class LightUserManagerTest extends TestCase
         $this->manager->update($user, false);
     }
 
-    public function testUpdateWithPasswordChangeAndFlush()
+    public function testUpdateWithPasswordChangeAndFlush(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $user->expects($this->exactly(2))->method('getPlainPassword')->will($this->returnValue('pippo'));

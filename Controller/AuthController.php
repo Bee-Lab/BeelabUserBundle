@@ -2,33 +2,34 @@
 
 namespace Beelab\UserBundle\Controller;
 
+use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 
-class AuthController extends Controller
+class AuthController extends AbstractController
 {
     /**
      * Login form.
      *
      * @Route("/login", name="login")
      * @Method("GET")
-     * @Template()
      */
-    public function loginAction(Request $request) 
+    public function loginAction(AuthorizationCheckerInterface $checker, LoggerInterface $logger, Request $request): Response
     {
-        if ($this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($checker->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }
 
-        return [
+        return $this->render('BeelabUserBundle:User:login.html.twig', [
             'last_username' => $request->getSession()->get(Security::LAST_USERNAME),
-            'error' => $this->getLoginError($request),
-        ];
+            'error' => $this->getLoginError($logger, $request),
+        ]);
     }
 
     /**
@@ -37,7 +38,7 @@ class AuthController extends Controller
      * @Route("/logout", name="logout")
      * @Method("GET")
      */
-    public function logoutAction()
+    public function logoutAction(): void
     {
         throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
@@ -48,7 +49,7 @@ class AuthController extends Controller
      * @Route("/login_check", name="login_check")
      * @Method("POST")
      */
-    public function loginCheckAction()
+    public function loginCheckAction(): void
     {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
@@ -56,11 +57,12 @@ class AuthController extends Controller
     /**
      * Get possible authentication error.
      *
+     * @param LoggerInterface $logger
      * @param Request $request
      *
-     * @return \Exception|array
+     * @return \Exception|null
      */
-    protected function getLoginError(Request $request): ?\Exception
+    protected function getLoginError(LoggerInterface $logger, Request $request): ?\Exception
     {
         if ($request->attributes->has(Security::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(Security::AUTHENTICATION_ERROR);
@@ -70,7 +72,7 @@ class AuthController extends Controller
         }
         // see https://github.com/symfony/symfony/issues/837#issuecomment-3000155
         if ($error instanceof \Exception && !$error instanceof AuthenticationException) {
-            $this->get('logger')->log('error', $error->getMessage());
+            $logger->log('error', $error->getMessage());
             $error = new \Exception('Unexpected error.');
         }
 

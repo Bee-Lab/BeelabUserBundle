@@ -14,7 +14,7 @@ class CreateUserCommandTest extends TestCase
 {
     protected $command;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $application = new Application();
         $application->add(new CreateUserCommand());
@@ -22,7 +22,7 @@ class CreateUserCommandTest extends TestCase
         $this->command = $application->find('beelab:user:create');
     }
 
-    public function testInvalidEmailError()
+    public function testInvalidEmailError(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $input = ['email' => 'invalid', 'password' => 'fooBarBaz'];
@@ -31,7 +31,7 @@ class CreateUserCommandTest extends TestCase
         $tester->execute(array_merge(['command' => $this->command->getName()], $input));
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
@@ -41,7 +41,7 @@ class CreateUserCommandTest extends TestCase
         $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
     }
 
-    public function testCreateError()
+    public function testCreateError(): void
     {
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
@@ -51,7 +51,7 @@ class CreateUserCommandTest extends TestCase
         $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
     }
 
-    private function getMockContainer($success = true)
+    private function getMockContainer(bool $success = true): Container
     {
         $manager = $this->getMockBuilder(LightUserManager::class)->disableOriginalConstructor()->getMock();
         $container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();

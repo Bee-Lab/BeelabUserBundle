@@ -16,18 +16,18 @@ class LastLoginListenerTest extends TestCase
     protected $listener;
     protected $userManager;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->userManager = $this->getMockBuilder(UserManager::class)->disableOriginalConstructor()->getMock();
         $this->listener = new LastLoginListener($this->userManager);
     }
 
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $this->assertArrayHasKey(SecurityEvents::INTERACTIVE_LOGIN, $this->listener->getSubscribedEvents());
     }
 
-    public function testOnSecurityInteractiveLogin()
+    public function testOnSecurityInteractiveLogin(): void
     {
         $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $event = $this->getMockBuilder(InteractiveLoginEvent::class)->disableOriginalConstructor()->getMock();

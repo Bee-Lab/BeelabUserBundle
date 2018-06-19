@@ -11,7 +11,7 @@ use Beelab\UserBundle\Test\UserStub as User;
  */
 class PasswordTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'plainPassowrd' => [

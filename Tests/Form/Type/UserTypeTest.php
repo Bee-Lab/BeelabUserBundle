@@ -11,7 +11,7 @@ use Beelab\UserBundle\Test\UserStub as User;
  */
 class UserTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'email' => 'test@example.org',
@@ -44,7 +44,7 @@ class UserTypeTest extends TypeTestCase
         }
     }
 
-    public function testIsOld()
+    public function testIsOld(): void
     {
         $formData = [
             'email' => 'test@example.org',

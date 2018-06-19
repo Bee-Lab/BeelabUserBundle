@@ -8,7 +8,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 class ConfigurationTest extends TestCase
 {
-    public function testThatCanGetConfigTreeBuilder()
+    public function testThatCanGetConfigTreeBuilder(): void
     {
         $configuration = new Configuration();
         $this->assertInstanceOf(TreeBuilder::class, $configuration->getConfigTreeBuilder());

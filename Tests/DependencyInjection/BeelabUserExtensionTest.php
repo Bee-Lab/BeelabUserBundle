@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class BeelabUserExtensionTest extends TestCase
 {
-    public function testLoadFailure()
+    public function testLoadFailure(): void
     {
         $container = $this->getMockBuilder(ContainerBuilder::class)->disableOriginalConstructor()->getMock();
         $extension = $this->getMockBuilder(BeelabUserExtension::class)->getMock();
@@ -17,7 +17,7 @@ class BeelabUserExtensionTest extends TestCase
         $extension->load([[]], $container);
     }
 
-    public function testLoadSetParameters()
+    public function testLoadSetParameters(): void
     {
         $container = $this->getMockBuilder(ContainerBuilder::class)->disableOriginalConstructor()->getMock();
         $parameterBag = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();

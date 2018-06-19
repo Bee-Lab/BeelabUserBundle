@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 /**
  * User manager.
  */
-class UserManager extends LightUserManager
+class UserManager extends LightUserManager implements UserManagerInterface
 {
     /**
      * @var AuthorizationCheckerInterface
@@ -98,7 +98,7 @@ class UserManager extends LightUserManager
      *
      * @return UserInterface|null
      */
-    public function loadUserByUsername(string $email)
+    public function loadUserByUsername(string $email): ?UserInterface
     {
         return $this->repository->loadUserByUsername($email);
     }
@@ -113,7 +113,7 @@ class UserManager extends LightUserManager
     public function get($id): UserInterface
     {
         $user = $this->repository->find($id);
-        if (empty($user)) {
+        if (null === $user) {
             throw new NotFoundHttpException(sprintf('Cannot find user with id %s', $id));
         }
 
@@ -126,7 +126,7 @@ class UserManager extends LightUserManager
      * @param UserInterface $user
      * @param bool          $flush
      */
-    public function delete(UserInterface $user, bool $flush = true)
+    public function delete(UserInterface $user, bool $flush = true): void
     {
         if ($user->hasRole('ROLE_SUPER_ADMIN') && !$this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException('You cannot delete a super admin user.');
@@ -148,7 +148,7 @@ class UserManager extends LightUserManager
      * @param string        $firewall firewall name (see your security.yml config file)
      * @param bool          $logout   wether to logout before login
      */
-    public function authenticate(UserInterface $user, Request $request, string $firewall = 'main', bool $logout = false)
+    public function authenticate(UserInterface $user, Request $request, string $firewall = 'main', bool $logout = false): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         if ($logout) {

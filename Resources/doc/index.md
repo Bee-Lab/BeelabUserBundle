@@ -17,19 +17,7 @@ Run from terminal:
 $ composer require beelab/user-bundle
 ```
 
-Enable bundle in the kernel:
-
-```php
-<?php
-// app/AppKernel.php
-public function registerBundles()
-{
-    $bundles = [
-        // ...
-        new Beelab\UserBundle\BeelabUserBundle(),
-    ];
-}
-```
+Bundle should be enabled by Flex.
 
 If you want pagination in users' administration, install also [KnpPaginatorBundle](https://github.com/KnpLabs/KnpPaginatorBundle).
 
@@ -40,8 +28,8 @@ Example:
 
 ```php
 <?php
-// src/AppBundle/Entity
-namespace AppBundle\Entity;
+// src/Entity
+namespace App\Entity;
 
 use Beelab\UserBundle\Entity\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -56,45 +44,44 @@ class User extends BaseUser
 }
 ```
 
-Insert in main configuration:
+Insert in your configuration:
 
 ```yaml
-# app/config/config.yml
+# config/packages/beelab_user_bundle.yaml
 
-# BeelabUser Configuration
 beelab_user:
-    user_class: AppBundle\Entity\User
+    user_class: App\Entity\User
 ```
 
 Add routes:
 
 ```yaml
-# app/config/routing.yml
+# config/routes.yaml
 
 beelab_user:
     resource: "@BeelabUserBundle/Controller/"
-    type:     annotation
+    type: annotation
 ```
 
 Enable security:
 
 ```yaml
-# app/config/security.yml
+# config/package/security.yaml
 
 security:
     encoders:
-        AppBundle\Entity\User:
+        App\Entity\User:
             # See http://symfony.com/doc/current/reference/configuration/security.html#using-the-bcrypt-password-encoder
             algorithm: bcrypt
             # Also, since bcrypt is a bit expensive, you likely want to override it in test env
 
     providers:
         administrators:
-            entity: { class: AppBundle:User }
+            entity: { class: App:User }
 
     firewalls:
         main:
-            pattern:    ^/
+            pattern: ^/
             form_login:
                 use_referer: true
             logout: true
@@ -119,9 +106,7 @@ You can customize templates as explained in
 All template use a default layout. If you want to use your custom layout, you can
 specify it in configuration:
 ```yaml
-# app/config/config.yml
-
-# BeelabUser Configuration
+# config/packages/beelab_user_bundle.yaml
 beelab_user:
     layout: "::myCustomLayout.html.twig"
 ```
@@ -133,26 +118,24 @@ You can customize controllers by extending bundle, like explained in
 
 #### UserManager
 
-You can create you own UserManager, extending the one included in the bundle.
-Then, add to configuration:
+You can create you own UserManager, implementing interface provided by bundle.
+Then, add an alias to your service configuration:
 
 ```yaml
-# app/config/config.yml
+# config/services.yaml
 
-beelab_user:
-    user_manager_class: AppBundle\Manager\UserManager
+Beelab\UserBundle\Manager\UserManagerInterface: '@App\Manager\UserManager' 
 ```
 
 If you need a lighter UserManager, you can use `LightUserManager`, that has less
 dependencies than UserManager. For example, you can use it for Facebook integration with
 [FOSFacebookBundle](https://github.com/FriendsOfSymfony/FOSFacebookBundle).
-You can extend it, and add to configuration:
+You can implement interface, and add to configuration:
 
 ```yaml
-# app/config/config.yml
+# config/services.yaml
 
-beelab_user:
-    light_user_manager_class: AppBundle\Manager\LightUserManager
+Beelab\UserBundle\Manager\LightUserManagerInterface: '@App\Manager\LightUserManager'
 ```
 
 #### Forms
@@ -160,16 +143,16 @@ beelab_user:
 You can extends bundle forms, then add to configuration:
 
 ```yaml
-# app/config/config.yml
+# config/packages/beelab_user_bundle.yaml
 
 beelab_user:
-    password_form_type: AppBundle\Form\Type\PasswordFormType
-    user_form_type:     AppBundle\Form\Type\UserFormType
+    password_form_type: App\Form\Type\PasswordFormType
+    user_form_type: App\Form\Type\UserFormType
 ```
 
 #### Validation
 
-Constraints are in `User` entity, so you can ovverride them in your entity.
+Constraints are in `User` entity, so you can override them in your entity.
 See [Doctrine docs](http://docs.doctrine-project.org/en/latest/tutorials/override-field-association-mappings-in-subclasses.html).
 Controllers use three validations groups: "create", "update", and "password".
 First two groups are for creating and editing a user, the last one is for password change.
@@ -183,9 +166,8 @@ There is a route, with default name "admin", that is used for some redirects (us
 It should point to your backend homepage, and you can customize it in configuration:
 
 ```yaml
-# app/config/config.yml
+# config/packages/beelab_user_bundle.yaml
 
-# BeelabUser Configuration
 beelab_user:
     route: my_backend_route
 ```
@@ -194,17 +176,17 @@ You need to separate authentication routes from administration route, maybe beca
 under an `/admin` path, you can import routes like so:
 
 ```yaml
-# app/config/routing.yml
+# config/routes.yaml
 
 beelab_user_auth:
     resource: "@BeelabUserBundle/Controller/AuthController.php"
-    type:     annotation
-    prefix:   /
+    type: annotation
+    prefix: /
 
 beelab_user_admin:
     resource: "@BeelabUserBundle/Controller/UserController.php"
-    type:     annotation
-    prefix:   /admin/
+    type: annotation
+    prefix: /admin/
 ```
 
 #### Filters

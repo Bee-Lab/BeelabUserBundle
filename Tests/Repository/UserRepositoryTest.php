@@ -19,7 +19,7 @@ class UserRepositoryTest extends TestCase
     protected $em;
     protected $class;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
         $this->class = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()
@@ -29,7 +29,7 @@ class UserRepositoryTest extends TestCase
         $this->repository = new UserRepository($this->em, $this->class);
     }
 
-    public function testLoadUserByUsernameNotFound()
+    public function testLoadUserByUsernameNotFound(): void
     {
         $this->expectException(UsernameNotFoundException::class);
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
@@ -48,7 +48,7 @@ class UserRepositoryTest extends TestCase
                                 $this->repository->loadUserByUsername('foo'));
     }
 
-    public function testLoadUserByUsernameDisabled()
+    public function testLoadUserByUsernameDisabled(): void
     {
         $this->expectException(DisabledException::class);
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
@@ -68,7 +68,7 @@ class UserRepositoryTest extends TestCase
         $this->repository->loadUserByUsername('foo');
     }
 
-    public function testLoadUserByUsernameFound()
+    public function testLoadUserByUsernameFound(): void
     {
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
@@ -88,31 +88,31 @@ class UserRepositoryTest extends TestCase
                                 $this->repository->loadUserByUsername('baz'));
     }
 
-    public function testRefreshUserUnsupported()
+    public function testRefreshUserUnsupported(): void
     {
         $this->expectException(UnsupportedUserException::class);
         $user = $this->createMock('Symfony\Component\Security\Core\User\UserInterface');
         $this->repository->refreshUser($user);
     }
 
-    public function testRefreshUserSupported()
+    public function testRefreshUserSupported(): void
     {
         $user = $this->createMock('Beelab\UserBundle\Test\UserStub');
         $user->expects($this->once())->method('getId');
         $this->repository->refreshUser($user);
     }
 
-    public function testSupportsClass()
+    public function testSupportsClass(): void
     {
         $this->assertTrue($this->repository->supportsClass('Beelab\UserBundle\Test\UserStub'));
     }
 
-    public function testSupportsClassFalse()
+    public function testSupportsClassFalse(): void
     {
         $this->assertFalse($this->repository->supportsClass('Foo'));
     }
 
-    public function testFilterByRole()
+    public function testFilterByRole(): void
     {
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
@@ -124,7 +124,7 @@ class UserRepositoryTest extends TestCase
         $this->assertEquals($queryBuilder, $this->repository->filterByRole('ROLE'));
     }
 
-    public function testFilterByRoles()
+    public function testFilterByRoles(): void
     {
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
         $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());

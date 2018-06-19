@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class FormEventTest extends TestCase
 {
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -18,7 +18,7 @@ class FormEventTest extends TestCase
         $this->assertEquals($form, $formEvent->getForm());
     }
 
-    public function testGetRequest()
+    public function testGetRequest(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -26,7 +26,7 @@ class FormEventTest extends TestCase
         $this->assertEquals($request, $formEvent->getRequest());
     }
 
-    public function testSetResponse()
+    public function testSetResponse(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();

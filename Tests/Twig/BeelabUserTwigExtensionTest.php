@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class BeelabUserTwigExtensionTest extends TestCase
 {
-    public function testGetGlobals()
+    public function testGetGlobals(): void
     {
         $extension = new BeelabUserTwigExtension('fooLayout', 'bazRoute');
         $expected = [
@@ -20,20 +20,20 @@ class BeelabUserTwigExtensionTest extends TestCase
         $this->assertEquals($expected, $extension->getGlobals());
     }
 
-    public function testHasPaginatorTrue()
+    public function testHasPaginatorTrue(): void
     {
         $paginator = $this->createMock('Knp\Component\Pager\PaginatorInterface');
         $extension = new BeelabUserTwigExtension('foo', 'barRoute', $paginator);
         $this->assertTrue($extension->hasPaginator());
     }
 
-    public function testHasPaginatorFalse()
+    public function testHasPaginatorFalse(): void
     {
         $extension = new BeelabUserTwigExtension('foo', 'barRoute');
         $this->assertFalse($extension->hasPaginator());
     }
 
-    public function testGetFunctions()
+    public function testGetFunctions(): void
     {
         $extension = new BeelabUserTwigExtension('foo', 'barRoute');
         $this->assertCount(1, $extension->getFunctions());

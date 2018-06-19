@@ -11,7 +11,7 @@ class PromoteUserCommandTest extends TestCase
 {
     protected $command;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $application = new Application();
         $application->add(new PromoteUserCommand());
@@ -19,7 +19,7 @@ class PromoteUserCommandTest extends TestCase
         $this->command = $application->find('beelab:user:promote');
     }
 
-    public function testPromote()
+    public function testPromote(): void
     {
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_ADMIN'];
 
@@ -29,7 +29,7 @@ class PromoteUserCommandTest extends TestCase
         $this->assertContains('Role '.$input['role'].' has been added to user '.$input['email'], $tester->getDisplay());
     }
 
-    public function testUserNotFound()
+    public function testUserNotFound(): void
     {
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_ADMIN'];
 
@@ -39,7 +39,7 @@ class PromoteUserCommandTest extends TestCase
         $this->assertContains('Error: user '.$input['email'].' not found', $tester->getDisplay());
     }
 
-    public function testHasAlreadyRole()
+    public function testHasAlreadyRole(): void
     {
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_USER'];
 
@@ -49,7 +49,7 @@ class PromoteUserCommandTest extends TestCase
         $this->assertContains('User '.$input['email'].' did already have '.$input['role'].' role', $tester->getDisplay());
     }
 
-    private function getMockContainer($found = true, $role = 'ROLE_ADMIN')
+    private function getMockContainer(bool $found = true, string $role = 'ROLE_ADMIN'): Container
     {
         $userManager = $this->getMockBuilder('Beelab\UserBundle\Manager\UserManager')->disableOriginalConstructor()->getMock();
         $container = $this->getMockBuilder('Symfony\Component\DependencyInjection\Container')->disableOriginalConstructor()->getMock();

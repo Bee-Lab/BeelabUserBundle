@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserEventTest extends TestCase
 {
-    public function testGetUser()
+    public function testGetUser(): void
     {
         $user = new UserStub();
         $userEvent = new UserEvent($user);

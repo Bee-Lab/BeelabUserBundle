@@ -23,7 +23,7 @@ class UserManagerTest extends TestCase
     protected $paginator;
     protected $dispatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->em = $this->createMock('Doctrine\Common\Persistence\ObjectManager');
         $this->encoder = $this->createMock('Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface');
@@ -39,11 +39,11 @@ class UserManagerTest extends TestCase
         $this->manager = new UserManager(UserStub::class, $this->em, $this->encoder, $this->authChecker, $this->tokenStorage, $this->paginator, $this->dispatcher);
     }
 
-    protected function getManager($withPaginator = true)
+    protected function getManager($withPaginator = true): void
     {
     }
 
-    public function testList()
+    public function testList(): void
     {
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $this->repository->expects($this->once())->method('createQueryBuilder')->will($this->returnValue($qb));
@@ -53,7 +53,7 @@ class UserManagerTest extends TestCase
         $this->assertEquals([], $this->manager->getList());
     }
 
-    public function testListWithoutPaginator()
+    public function testListWithoutPaginator(): void
     {
         $manager = new UserManager(UserStub::class, $this->em, $this->encoder, $this->authChecker, $this->tokenStorage, null, $this->dispatcher);
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
@@ -66,7 +66,7 @@ class UserManagerTest extends TestCase
         $this->assertEquals([], $manager->getList());
     }
 
-    public function testLoad()
+    public function testLoad(): void
     {
         $user = $this->createMock('Beelab\UserBundle\Entity\User');
         $this->repository->expects($this->any())->method('__call')->with('loadUserByUsername', ['pippo@example.org'])
@@ -75,7 +75,7 @@ class UserManagerTest extends TestCase
         $this->assertEquals($user, $this->manager->loadUserByUsername('pippo@example.org'));
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $this->repository->expects($this->any())->method('find')->will($this->returnValue($user));
@@ -83,7 +83,7 @@ class UserManagerTest extends TestCase
         $this->assertEquals($user, $this->manager->get(123));
     }
 
-    public function testGetUserNotFound()
+    public function testGetUserNotFound(): void
     {
         $this->expectException(NotFoundHttpException::class);
         $this->repository->expects($this->any())->method('find')->will($this->returnValue(null));
@@ -91,12 +91,12 @@ class UserManagerTest extends TestCase
         $this->manager->get(123);
     }
 
-    public function testGetInstance()
+    public function testGetInstance(): void
     {
         $this->assertInstanceOf('Beelab\UserBundle\User\UserInterface', $this->manager->getInstance());
     }
 
-    public function testDeleteAdminUserByNonSuperAdminUser()
+    public function testDeleteAdminUserByNonSuperAdminUser(): void
     {
         $this->expectException(AccessDeniedException::class);
         $this->authChecker->expects($this->once())->method('isGranted')->with('ROLE_SUPER_ADMIN')
@@ -107,7 +107,7 @@ class UserManagerTest extends TestCase
         $this->manager->delete($user);
     }
 
-    public function testDeleteOwnUser()
+    public function testDeleteOwnUser(): void
     {
         $this->expectException(AccessDeniedException::class);
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
@@ -119,7 +119,7 @@ class UserManagerTest extends TestCase
         $this->manager->delete($user);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $currentUser = $this->createMock('Beelab\UserBundle\User\UserInterface');
@@ -132,7 +132,7 @@ class UserManagerTest extends TestCase
         $this->manager->delete($user);
     }
 
-    public function testAuthenticate()
+    public function testAuthenticate(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
@@ -144,7 +144,7 @@ class UserManagerTest extends TestCase
         $this->manager->authenticate($user, $request);
     }
 
-    public function testAuthenticateLogout()
+    public function testAuthenticateLogout(): void
     {
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
         $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();

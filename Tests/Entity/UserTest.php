@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
  */
 class UserTest extends TestCase
 {
-    public function testGetRoleLabel()
+    public function testGetRoleLabel(): void
     {
         $user = new User();
 
@@ -18,7 +18,7 @@ class UserTest extends TestCase
         $this->assertEquals('user', $user->getRoleLabel('ROLE_USER'));
     }
 
-    public function testGetRolesWithLabel()
+    public function testGetRolesWithLabel(): void
     {
         $user = new User();
         $user->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
@@ -27,14 +27,14 @@ class UserTest extends TestCase
         $this->assertEquals('admin | user', $user->getRolesWithLabel(' | '));
     }
 
-    public function testGetRolesWithLabelForUser()
+    public function testGetRolesWithLabelForUser(): void
     {
         $user = new User();
 
         $this->assertEquals('user', $user->getRolesWithLabel());
     }
 
-    public function testHasRole()
+    public function testHasRole(): void
     {
         $user = new User();
         $user->addRole('ROLE_PIPPO');
@@ -43,7 +43,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->hasRole('ROLE_ADMIN'));
     }
 
-    public function testIsEqualTo()
+    public function testIsEqualTo(): void
     {
         $user1 = new User();
         $user1->setEmail('user1@example.org');
@@ -56,7 +56,7 @@ class UserTest extends TestCase
         $this->assertFalse($user1->isEqualTo($user3));
     }
 
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $user = new User();
         $user->setEmail('user@example.org');
@@ -64,7 +64,7 @@ class UserTest extends TestCase
         $this->assertEquals('a:2:{i:0;i:42;i:1;s:16:"user@example.org";}', $user->serialize());
     }
 
-    public function testUnserialize()
+    public function testUnserialize(): void
     {
         $user = new User();
         $user->unserialize('a:2:{i:0;i:42;i:1;s:16:"user@example.org";}');
@@ -73,7 +73,7 @@ class UserTest extends TestCase
         $this->assertEquals('user@example.org', $user->getEmail());
     }
 
-    public function testRemoveRole()
+    public function testRemoveRole(): void
     {
         $user = new User();
         $user->addRole('ROLE_PIPPO')->addRole('ROLE_PLUTO')->removeRole('ROLE_PIPPO');
@@ -82,7 +82,7 @@ class UserTest extends TestCase
         $this->assertFalse($user->hasRole('ROLE_PIPPO'));
     }
 
-    public function testToString()
+    public function testToString(): void
     {
         $user = new User();
         $user->setEmail('user@example.org');
@@ -90,7 +90,7 @@ class UserTest extends TestCase
         $this->assertEquals('user@example.org', $user->__toString());
     }
 
-    public function testPassword()
+    public function testPassword(): void
     {
         $user = new User();
         $user->setPassword('astring');
@@ -98,7 +98,7 @@ class UserTest extends TestCase
         $this->assertEquals('astring', $user->getPassword());
     }
 
-    public function testLastLogin()
+    public function testLastLogin(): void
     {
         $datetime = new \DateTime();
         $user = new User();
