@@ -10,7 +10,7 @@ BeelabUserBundle
 
 This bundle is a simple implementation of a Symfony user provider.
 
-It provides a ``User`` entity with minimal fields (e.g. no "username", no "canonical" stuff), login funcionality
+It provides a ``User`` entity with minimal fields (e.g. no "username", no "canonical" stuff), login functionality
 and basic CRUD actions. Impersonation and password change are supported. Nothing more (no registration, no lost password).
 
 If you use this bundle and you need a "lost password" functionality, please take a look to [BeelabUserPasswordBundle](https://github.com/Bee-Lab/BeelabUserPasswordBundle).

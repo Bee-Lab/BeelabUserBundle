@@ -3,25 +3,26 @@
 namespace Beelab\UserBundle\Tests\DependencyInjection;
 
 use Beelab\UserBundle\DependencyInjection\BeelabUserExtension;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
-class BeelabUserExtensionTest extends PHPUnit_Framework_TestCase
+class BeelabUserExtensionTest extends TestCase
 {
-    public function testLoadFailure()
+    public function testLoadFailure(): void
     {
-        $container = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ContainerBuilder')->disableOriginalConstructor()->getMock();
-        $extension = $this->getMockBuilder('Beelab\\UserBundle\\DependencyInjection\\BeelabUserExtension')->getMock();
+        $container = $this->getMockBuilder(ContainerBuilder::class)->disableOriginalConstructor()->getMock();
+        $extension = $this->getMockBuilder(BeelabUserExtension::class)->getMock();
 
         $extension->load([[]], $container);
     }
 
-    public function testLoadSetParameters()
+    public function testLoadSetParameters(): void
     {
-        $container = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ContainerBuilder')->disableOriginalConstructor()->getMock();
-        $parameterBag = $this->getMockBuilder('Symfony\Component\DependencyInjection\ParameterBag\\ParameterBag')->disableOriginalConstructor()->getMock();
+        $container = $this->getMockBuilder(ContainerBuilder::class)->disableOriginalConstructor()->getMock();
+        $parameterBag = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();
 
         $parameterBag->expects($this->any())->method('add');
-
         $container->expects($this->any())->method('getParameterBag')->will($this->returnValue($parameterBag));
 
         $extension = new BeelabUserExtension();

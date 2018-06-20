@@ -4,6 +4,7 @@ namespace Beelab\UserBundle\Manager;
 
 use Beelab\UserBundle\User\UserInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 /**
  * User manager.
  */
-class UserManager extends LightUserManager
+class UserManager extends LightUserManager implements UserManagerInterface
 {
     /**
      * @var AuthorizationCheckerInterface
@@ -55,7 +56,7 @@ class UserManager extends LightUserManager
      * @param EventDispatcherInterface      $dispatcher
      */
     public function __construct(
-        $class,
+        string $class,
         ObjectManager $em,
         EncoderFactoryInterface $encoder,
         AuthorizationCheckerInterface $authChecker,
@@ -79,7 +80,7 @@ class UserManager extends LightUserManager
      *
      * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
      */
-    public function getList($page = 1, $limit = 20, $sortBy = 'email')
+    public function getList(int $page = 1, int $limit = 20, string $sortBy = 'email')
     {
         $this->getQueryBuilder();
         $this->queryBuilder->orderBy('u.'.$sortBy);
@@ -91,45 +92,29 @@ class UserManager extends LightUserManager
     }
 
     /**
-     * Find user by email.
-     *
-     * @deprecated Use loadUserByUsername() instead
-     *
-     * @param string $email
-     *
-     * @return UserInterface
-     */
-    public function find($email)
-    {
-        @trigger_error('Retrieving user with find() is deprecated. Use loadUserByUsername() instead.', E_USER_DEPRECATED);
-
-        return $this->loadUserByUsername($email);
-    }
-
-    /**
      * Find user.
      *
      * @param string $email
      *
-     * @return UserInterface
+     * @return UserInterface|null
      */
-    public function loadUserByUsername($email)
+    public function loadUserByUsername(string $email): ?UserInterface
     {
-        return $this->repository->findOneByEmail($email);
+        return $this->repository->loadUserByUsername($email);
     }
 
     /**
      * Find user by id.
      *
-     * @param int $id
+     * @param mixed $id
      *
      * @return UserInterface
      */
-    public function get($id)
+    public function get($id): UserInterface
     {
         $user = $this->repository->find($id);
-        if (empty($user)) {
-            throw new NotFoundHttpException(sprintf('Cannot find user with id %u', $id));
+        if (null === $user) {
+            throw new NotFoundHttpException(sprintf('Cannot find user with id %s', $id));
         }
 
         return $user;
@@ -141,7 +126,7 @@ class UserManager extends LightUserManager
      * @param UserInterface $user
      * @param bool          $flush
      */
-    public function delete(UserInterface $user, $flush = true)
+    public function delete(UserInterface $user, bool $flush = true): void
     {
         if ($user->hasRole('ROLE_SUPER_ADMIN') && !$this->authChecker->isGranted('ROLE_SUPER_ADMIN')) {
             throw new AccessDeniedException('You cannot delete a super admin user.');
@@ -163,7 +148,7 @@ class UserManager extends LightUserManager
      * @param string        $firewall firewall name (see your security.yml config file)
      * @param bool          $logout   wether to logout before login
      */
-    public function authenticate(UserInterface $user, Request $request, $firewall = 'main', $logout = false)
+    public function authenticate(UserInterface $user, Request $request, string $firewall = 'main', bool $logout = false): void
     {
         $token = new UsernamePasswordToken($user, $user->getPassword(), $firewall, $user->getRoles());
         if ($logout) {
@@ -177,9 +162,9 @@ class UserManager extends LightUserManager
     /**
      * Get QueryBuilder.
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function getQueryBuilder()
+    public function getQueryBuilder(): QueryBuilder
     {
         if (is_null($this->queryBuilder)) {
             $this->queryBuilder = $this->repository->createQueryBuilder('u');

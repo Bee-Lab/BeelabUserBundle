@@ -3,14 +3,14 @@
 namespace Beelab\UserBundle\Tests\Event;
 
 use Beelab\UserBundle\Event\FormEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class FormEventTest extends PHPUnit_Framework_TestCase
+class FormEventTest extends TestCase
 {
-    public function testGetForm()
+    public function testGetForm(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -18,7 +18,7 @@ class FormEventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($form, $formEvent->getForm());
     }
 
-    public function testGetRequest()
+    public function testGetRequest(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();
@@ -26,7 +26,7 @@ class FormEventTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($request, $formEvent->getRequest());
     }
 
-    public function testSetResponse()
+    public function testSetResponse(): void
     {
         $form = $this->getMockBuilder('Symfony\Component\Form\FormInterface')->getMock();
         $request = $this->getMockBuilder('Symfony\Component\HttpFoundation\Request')->getMock();

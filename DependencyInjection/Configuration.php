@@ -2,6 +2,8 @@
 
 namespace Beelab\UserBundle\DependencyInjection;
 
+use Beelab\UserBundle\Form\Type\PasswordType;
+use Beelab\UserBundle\Form\Type\UserType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -12,10 +14,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('beelab_user');
@@ -25,21 +24,13 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('user_class')
                     ->isRequired()
                 ->end()
-                ->scalarNode('light_user_manager_class')
-                    ->cannotBeEmpty()
-                    ->defaultValue('Beelab\UserBundle\Manager\LightUserManager')
-                ->end()
-                ->scalarNode('user_manager_class')
-                    ->cannotBeEmpty()
-                    ->defaultValue('Beelab\UserBundle\Manager\UserManager')
-                ->end()
                 ->scalarNode('password_form_type')
                     ->cannotBeEmpty()
-                    ->defaultValue('Beelab\UserBundle\Form\Type\PasswordType')
+                    ->defaultValue(PasswordType::class)
                 ->end()
                 ->scalarNode('user_form_type')
                     ->cannotBeEmpty()
-                    ->defaultValue('Beelab\UserBundle\Form\Type\UserType')
+                    ->defaultValue(UserType::class)
                 ->end()
                 ->scalarNode('filter_form_type')
                     ->defaultNull()

@@ -2,9 +2,9 @@
     "name": "beelab/user-bundle",
     "type": "symfony-bundle",
     "description": "Simple user provider for Symfony",
-    "keywords": ["User management"],
-    "homepage": "https://github.com/bee-lab/",
-    "license": "LGPL-3.0",
+    "keywords": ["User", "User management"],
+    "homepage": "https://github.com/Bee-Lab",
+    "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Massimiliano Arione",
@@ -12,18 +12,24 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
-        "symfony/symfony": "~2.8.12|^3.2",
-        "doctrine/orm": "^2.5",
+        "php": "^7.1",
         "doctrine/doctrine-bundle": "^1.6",
-        "sensio/framework-extra-bundle": "^3.0",
-        "twig/twig": ">=1.23"
+        "doctrine/orm": "^2.5",
+        "sensio/framework-extra-bundle": "^3.0|^4.0|^5.0",
+        "symfony/config": "^3.4|^4.0",
+        "symfony/console": "^3.4|^4.0",
+        "symfony/dependency-injection": "^3.4|^4.0",
+        "symfony/doctrine-bridge": "^3.4|^4.0",
+        "symfony/form": "^3.4|^4.0",
+        "symfony/security": "^3.4|^4.0",
+        "symfony/validator": "^3.4|^4.0",
+        "twig/twig": ">=1.26"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7",
-        "knplabs/knp-paginator-bundle": "^2.5",
-        "knplabs/knp-components": ">=1.2.4",
-        "lexik/form-filter-bundle": "^5.0"
+        "knplabs/knp-components": "^1.3",
+        "knplabs/knp-paginator-bundle": "^2.7",
+        "lexik/form-filter-bundle": "^5.0",
+        "phpunit/phpunit": "^6.5|^7.0"
     },
     "suggest": {
         "knplabs/knp-paginator-bundle": "Needed for optional pagination",
@@ -32,9 +38,12 @@
     "autoload": {
         "psr-4": { "Beelab\\UserBundle\\": "" }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.3.x-dev"
+            "dev-master": "2.5.x-dev"
         }
     }
 }

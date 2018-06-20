@@ -10,21 +10,16 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 /**
  * This is the class that loads and manages your bundle configuration.
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}.
+ * To learn more see {@link http://symfony.com/doc/current/bundles/extension.html}.
  */
 class BeelabUserExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('beelab_user.user_class', $config['user_class']);
-        $container->setParameter('beelab_user.light_user_manager_class', $config['light_user_manager_class']);
-        $container->setParameter('beelab_user.user_manager_class', $config['user_manager_class']);
         $container->setParameter('beelab_user.user_form_type', $config['user_form_type']);
         $container->setParameter('beelab_user.password_form_type', $config['password_form_type']);
         $container->setParameter('beelab_user.filter_form_type', $config['filter_form_type']);

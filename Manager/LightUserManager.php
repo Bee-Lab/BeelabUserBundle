@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 /**
  * Light User manager.
  */
-class LightUserManager
+class LightUserManager implements LightUserManagerInterface
 {
     /**
      * @var string
@@ -31,12 +31,7 @@ class LightUserManager
      */
     protected $encoder;
 
-    /**
-     * @param string                  $class
-     * @param ObjectManager           $em
-     * @param EncoderFactoryInterface $encoder
-     */
-    public function __construct($class, ObjectManager $em, EncoderFactoryInterface $encoder)
+    public function __construct(string $class, ObjectManager $em, EncoderFactoryInterface $encoder)
     {
         $this->className = $class;
         $this->em = $em;
@@ -44,23 +39,12 @@ class LightUserManager
         $this->encoder = $encoder;
     }
 
-    /**
-     * Get new instance of User.
-     *
-     * @return UserInterface
-     */
-    public function getInstance()
+    public function getInstance(): UserInterface
     {
         return new $this->className();
     }
 
-    /**
-     * Create new user.
-     *
-     * @param UserInterface $user
-     * @param bool          $flush
-     */
-    public function create(UserInterface $user, $flush = true)
+    public function create(UserInterface $user, bool $flush = true): void
     {
         $this->updatePassword($user);
         $this->em->persist($user);
@@ -69,15 +53,9 @@ class LightUserManager
         }
     }
 
-    /**
-     * Update existing user.
-     *
-     * @param UserInterface $user
-     * @param bool          $flush
-     */
-    public function update(UserInterface $user, $flush = true)
+    public function update(UserInterface $user, bool $flush = true): void
     {
-        if (!is_null($user->getPlainPassword())) {
+        if (null !== $user->getPlainPassword()) {
             $this->updatePassword($user);
         }
         if ($flush) {
@@ -85,12 +63,7 @@ class LightUserManager
         }
     }
 
-    /**
-     * Password update.
-     *
-     * @param UserInterface $user
-     */
-    protected function updatePassword(UserInterface $user)
+    protected function updatePassword(UserInterface $user): void
     {
         $passwordEncoder = $this->encoder->getEncoder($user);
         $password = $passwordEncoder->encodePassword($user->getPlainPassword(), $user->getSalt());

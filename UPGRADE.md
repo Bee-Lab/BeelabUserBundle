@@ -1,3 +1,15 @@
+Upgrading from v2.4.0 to v3.0.0
+===============================
+
+- If you customized controllers, check new controllers and adapt your ones.
+  Controllers now extend Symfony's AbstractContoller instead of Controller and
+  use `render` method instead of `Template` annotation.
+  
+- If you extended UserManager or LightUserManager, check new type hintings and
+  return types. Also, customization configuration changed, and options to
+  specify classes has been removed. You need to define alias and use autowiring
+  now.   
+
 Upgrading from v1.4.0 to v1.5.0
 ===============================
 

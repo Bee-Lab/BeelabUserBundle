@@ -30,7 +30,7 @@
                             <a class="btn btn-default btn-sm" href="{{ path('user_edit', {id: user.id}) }}">
                                 <i class="fa fa-edit"></i> {{ 'edit'|trans({}, 'admin') }}
                             </a>
-                            {% if is_granted('ROLE_SUPER_ADMIN') and not user.hasRole('ROLE_SUPER_ADMIN') %}
+                            {% if user.active and is_granted('ROLE_ALLOWED_TO_SWITCH') and user != app.user %}
                                 <a class="btn btn-default btn-sm" href="{{ path(beelab_user_route, {_switch_user: user.email}) }}">
                                     <i class="fa fa-exchange"></i> {{ 'impersonate'|trans({}, 'admin') }}
                                 </a>

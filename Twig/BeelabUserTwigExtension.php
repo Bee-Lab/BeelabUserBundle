@@ -22,17 +22,17 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
      * @param string             $route     route used in index.html.twig
      * @param PaginatorInterface $paginator
      */
-    public function __construct($layout, $route, PaginatorInterface $paginator = null)
+    public function __construct(string $layout, string $route, PaginatorInterface $paginator = null)
     {
         $this->layout = $layout;
         $this->route = $route;
-        $this->hasPaginator = !is_null($paginator);
+        $this->hasPaginator = null !== $paginator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'beelab_user_layout' => $this->layout,
@@ -43,7 +43,7 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
     /**
      * {@inheritdoc}
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new Twig_SimpleFunction('has_paginator', [$this, 'hasPaginator']),
@@ -53,7 +53,7 @@ class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_G
     /**
      * @return bool
      */
-    public function hasPaginator()
+    public function hasPaginator(): bool
     {
         return $this->hasPaginator;
     }

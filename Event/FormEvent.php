@@ -24,44 +24,28 @@ class FormEvent extends Event
      */
     private $response;
 
-    /**
-     * @param FormInterface $form
-     * @param Request       $request
-     */
     public function __construct(FormInterface $form, Request $request)
     {
         $this->form = $form;
         $this->request = $request;
     }
 
-    /**
-     * @return FormInterface
-     */
-    public function getForm()
+    public function getForm(): FormInterface
     {
         return $this->form;
     }
 
-    /**
-     * @return Request
-     */
-    public function getRequest()
+    public function getRequest(): Request
     {
         return $this->request;
     }
 
-    /**
-     * @param Response $response
-     */
-    public function setResponse(Response $response)
+    public function setResponse(Response $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return Response
-     */
-    public function getResponse()
+    public function getResponse(): ?Response
     {
         return $this->response;
     }

@@ -2,16 +2,16 @@
 
 namespace Beelab\UserBundle\Tests\Event;
 
-use Beelab\UserBundle\Test\UserStub;
 use Beelab\UserBundle\Event\UserEvent;
-use PHPUnit_Framework_TestCase;
+use Beelab\UserBundle\Test\UserStub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit
  */
-class UserEventTest extends PHPUnit_Framework_TestCase
+class UserEventTest extends TestCase
 {
-    public function testGetUser()
+    public function testGetUser(): void
     {
         $user = new UserStub();
         $userEvent = new UserEvent($user);

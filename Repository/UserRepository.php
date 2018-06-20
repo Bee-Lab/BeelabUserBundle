@@ -3,21 +3,17 @@
 namespace Beelab\UserBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * UserRepository.
- */
 class UserRepository extends EntityRepository implements UserProviderInterface, UserLoaderInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername($username): UserInterface
     {
         $user = $this
             ->createQueryBuilder('u')
@@ -29,14 +25,14 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         if (empty($user)) {
             throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
         }
+        if (!$user->isActive()) {
+            throw new DisabledException('User is not active.');
+        }
 
         return $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): ?UserInterface
     {
         $class = get_class($user);
         if (!$this->supportsClass($class)) {
@@ -46,10 +42,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         return $this->find($user->getId());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $this->getEntityName() === $class || is_subclass_of($class, $this->getEntityName());
     }
@@ -59,9 +52,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      *
      * @param string $role
      *
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return QueryBuilder
      */
-    public function filterByRole($role)
+    public function filterByRole(string $role): QueryBuilder
     {
         $role = $role === 'ROLE_USER' ? '{}' : '"'.$role.'"';
 
@@ -72,12 +65,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
         ;
     }
 
-    /**
-     * @param array $roles
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function filterByRoles(array $roles)
+    public function filterByRoles(array $roles): QueryBuilder
     {
         $qb = $this->createQueryBuilder('u');
         foreach ($roles as $key => $role) {

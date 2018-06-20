@@ -3,15 +3,15 @@
 namespace Beelab\UserBundle\Tests\Form\Type;
 
 use Beelab\UserBundle\Form\Type\UserType;
+use Beelab\UserBundle\Test\TypeTestCase;
 use Beelab\UserBundle\Test\UserStub as User;
-use Symfony\Component\Form\Test\TypeTestCase;
 
 /**
  * @group unit
  */
 class UserTypeTest extends TypeTestCase
 {
-    public function testSubmitValidData()
+    public function testSubmitValidData(): void
     {
         $formData = [
             'email' => 'test@example.org',
@@ -44,7 +44,7 @@ class UserTypeTest extends TypeTestCase
         }
     }
 
-    public function testIsOld()
+    public function testIsOld(): void
     {
         $formData = [
             'email' => 'test@example.org',

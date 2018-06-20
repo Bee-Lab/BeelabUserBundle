@@ -10,14 +10,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isNew = true;
         if (isset($options['data'])) {
-            if (!is_null($options['data']->getId())) {
+            if (null !== $options['data']->getId()) {
                 $isNew = false;
             }
             $user = $options['data'];
@@ -36,17 +33,13 @@ class UserType extends AbstractType
             ])
             ->add('roles', Type\ChoiceType::class, [
                 'choices' => array_flip($roles),
-                'choices_as_values' => true,
                 'multiple' => true,
             ])
             ->add('active', Type\CheckboxType::class, ['required' => false])
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => User::class,
@@ -54,10 +47,7 @@ class UserType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'beelab_user';
     }
