@@ -11,15 +11,18 @@
             <argument type="service" id="knp_paginator" on-invalid="ignore" />
             <tag name="twig.extension" />
         </service>
+        <service id="beelab_user.twig_extension" alias="Beelab\UserBundle\Twig\BeelabUserTwigExtension"/>
         <service id="Beelab\UserBundle\Listener\LastLoginListener" class="Beelab\UserBundle\Listener\LastLoginListener" public="true">
             <tag name="kernel.event_subscriber" />
             <argument type="service" id="beelab_user.manager" />
         </service>
+        <service id="beelab_user.login_listener" alias="Beelab\UserBundle\Listener\LastLoginListener"/>
         <service id="Beelab\UserBundle\Manager\LightUserManager" class="Beelab\UserBundle\Manager\LightUserManager" public="false">
             <argument>%beelab_user.user_class%</argument>
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.encoder_factory" />
         </service>
+        <service id="beelab_user.light_manager" alias="Beelab\UserBundle\Manager\LightUserManager"/>
         <service id="Beelab\UserBundle\Manager\LightUserManagerInterface" alias="Beelab\UserBundle\Manager\LightUserManager" />
         <service id="Beelab\UserBundle\Manager\UserManager" class="Beelab\UserBundle\Manager\UserManager" public="false">
             <argument>%beelab_user.user_class%</argument>
@@ -30,6 +33,7 @@
             <argument type="service" id="knp_paginator" on-invalid="ignore" />
             <argument type="service" id="event_dispatcher" />
         </service>
+        <service id="beelab_user.manager" alias="Beelab\UserBundle\Manager\UserManager"/>
         <service id="Beelab\UserBundle\Manager\UserManagerInterface" alias="Beelab\UserBundle\Manager\UserManager" />
     </services>
 
