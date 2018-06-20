@@ -9,5 +9,12 @@
             <tag name="container.service_subscriber"/>
             <tag name="monolog.logger"/>
         </service>
+
+        <service id="Beelab\UserBundle\Controller\UserController">
+            <tag name="controller.service_arguments"/>
+            <tag name="monolog.logger"/>
+            <tag name="container.service_subscriber"/>
+        </service>
+
     </services>
 </container>

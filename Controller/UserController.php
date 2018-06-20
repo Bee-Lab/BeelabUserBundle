@@ -8,6 +8,7 @@ use Beelab\UserBundle\Manager\UserManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -131,7 +132,7 @@ class UserController extends AbstractController
      * @Route("/password", name="user_password")
      * @Method({"GET", "POST"})
      */
-    public function passwordAction(EventDispatcherInterface $dispatcher, UserManagerInterface $manager, Request $request): Response
+    public function passwordAction(EventDispatcherInterface $dispatcher, UserManagerInterface $manager, Request $request, ParameterBagInterface $bag): Response
     {
         $user = $this->getUser();
         $form = $this->createForm($this->getPasswordFormName(), $user);
@@ -139,7 +140,7 @@ class UserController extends AbstractController
             $manager->update($user);
             $dispatcher->dispatch('beelab_user.change_password', new UserEvent($user));
 
-            return $this->redirectToRoute($this->getParameter('beelab_user.route'));
+            return $this->redirectToRoute($bag->get('beelab_user.route'));
         }
 
         return $this->render('BeelabUserBundle:User:password.html.twig', [

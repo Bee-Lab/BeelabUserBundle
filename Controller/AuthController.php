@@ -6,6 +6,7 @@ use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -26,10 +27,10 @@ class AuthController extends AbstractController
      *
      * @return Response
      */
-    public function loginAction(AuthorizationCheckerInterface $checker, LoggerInterface $logger, Request $request): Response
+    public function loginAction(AuthorizationCheckerInterface $checker, LoggerInterface $logger, Request $request, ParameterBagInterface $bag): Response
     {
         if ($checker->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute($this->getParameter('beelab_user.route'));
+            return $this->redirectToRoute($bag->get('beelab_user.route'));
         }
 
         return $this->render('@BeelabUser\Auth\login.html.twig', [
