@@ -19,6 +19,12 @@ class AuthController extends AbstractController
      *
      * @Route("/login", name="login")
      * @Method("GET")
+     *
+     * @param AuthorizationCheckerInterface $checker
+     * @param LoggerInterface               $logger
+     * @param Request                       $request
+     *
+     * @return Response
      */
     public function loginAction(AuthorizationCheckerInterface $checker, LoggerInterface $logger, Request $request): Response
     {
@@ -26,7 +32,7 @@ class AuthController extends AbstractController
             return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }
 
-        return $this->render('BeelabUserBundle:User:login.html.twig', [
+        return $this->render('@BeelabUser\Auth\login.html.twig', [
             'last_username' => $request->getSession()->get(Security::LAST_USERNAME),
             'error' => $this->getLoginError($logger, $request),
         ]);
