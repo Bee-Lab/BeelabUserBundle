@@ -142,7 +142,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute($this->getParameter('beelab_user.route'));
         }
 
-        return $this->render('BeelabUserBundle:User:index.html.twig',[
+        return $this->render('BeelabUserBundle:User:password.html.twig', [
             'form' => $form->createView(),
         ]);
     }
