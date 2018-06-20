@@ -30,5 +30,6 @@ class BeelabUserExtension extends Extension
         $loader->load('forms.xml');
         $loader->load('services.xml');
         $loader->load('controllers.xml');
+        $loader->load('commands.xml');
     }
 }

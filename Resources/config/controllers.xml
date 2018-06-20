@@ -8,7 +8,6 @@
             <tag name="controller.service_arguments"/>
             <tag name="container.service_subscriber"/>
             <tag name="monolog.logger"/>
-            <bind key="$loginTemplate">%beelab_user.%</bind>
         </service>
     </services>
 </container>
