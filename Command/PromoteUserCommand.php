@@ -21,11 +21,6 @@ class PromoteUserCommand extends Command
      */
     private $manager;
 
-    /**
-     * PromoteUserCommand constructor.
-     *
-     * @param UserManagerInterface $manager
-     */
     public function __construct(UserManagerInterface $manager)
     {
         $this->manager = $manager;
@@ -33,10 +28,7 @@ class PromoteUserCommand extends Command
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         parent::configure();
 
@@ -54,35 +46,34 @@ EOT
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
 
         $user = $this->manager->loadUserByUsername($email);
-        if (empty($user)) {
-            $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
-        } else {
-            if ($user->hasRole($role)) {
-                $output->writeln(sprintf('User <comment>%s</comment> did already have <comment>%s</comment> role.', $email, $role));
-            } else {
-                $user->addRole($role);
-                $this->manager->update($user);
 
-                $output->writeln(sprintf('Role <comment>%s</comment> has been added to user <comment>%s</comment>.', $role, $email));
-            }
+        if (null === $user) {
+            $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
+
+            return 1;
         }
+        if ($user->hasRole($role)) {
+            $output->writeln(sprintf('User <comment>%s</comment> did already have <comment>%s</comment> role.', $email, $role));
+        } else {
+            $user->addRole($role);
+            $this->manager->update($user);
+
+            $output->writeln(sprintf('Role <comment>%s</comment> has been added to user <comment>%s</comment>.', $role, $email));
+        }
+
+        return 0;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @codeCoverageIgnore
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         if (!$input->getArgument('email')) {
             $question = new Question('Please choose an email:');

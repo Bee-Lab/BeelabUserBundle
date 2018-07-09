@@ -22,6 +22,7 @@
         "symfony/doctrine-bridge": "^3.4|^4.0",
         "symfony/form": "^3.4|^4.0",
         "symfony/security": "^3.4|^4.0",
+        "symfony/templating": "^3.4|^4.0",
         "symfony/validator": "^3.4|^4.0",
         "twig/twig": ">=1.26"
     },
