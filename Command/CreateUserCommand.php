@@ -2,7 +2,8 @@
 
 namespace Beelab\UserBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Beelab\UserBundle\Manager\LightUserManagerInterface;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,8 +14,25 @@ use Symfony\Component\Console\Question\Question;
  * Inspired by CreateUserCommand by FOSUserBundle
  * See https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Command/CreateUserCommand.php.
  */
-class CreateUserCommand extends ContainerAwareCommand
+class CreateUserCommand extends Command
 {
+    /**
+     * @var LightUserManagerInterface
+     */
+    private $manager;
+
+    /**
+     * CreateUserCommand constructor.
+     *
+     * @param LightUserManagerInterface $manager
+     */
+    public function __construct(LightUserManagerInterface $manager)
+    {
+        $this->manager = $manager;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -58,15 +76,14 @@ EOT
         }
         $password = $input->getArgument('password');
         $inactive = $input->getOption('inactive');
-        $manager = $this->getContainer()->get('beelab_user.light_manager');
 
-        $user = $manager->getInstance();
+        $user = $this->manager->getInstance();
         $user->setEmail($email);
         $user->setPlainPassword($password);
         $user->setActive(!$inactive);
 
         try {
-            $manager->create($user);
+            $this->manager->create($user);
             $output->writeln(sprintf('Created user <comment>%s</comment>', $email));
         } catch (\Exception $e) {
             $output->writeln(sprintf('<error>Error</error>, user <comment>%s</comment> not created. %s', $email, $e->getMessage()));

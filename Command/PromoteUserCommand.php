@@ -2,22 +2,33 @@
 
 namespace Beelab\UserBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Beelab\UserBundle\Manager\LightUserManagerInterface;
+use Beelab\UserBundle\Manager\UserManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * Inspired by CreateUserCommand by FOSUserBundle
  * See https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/Command/PromoteUserCommand.php.
  */
-class PromoteUserCommand extends ContainerAwareCommand
+class PromoteUserCommand extends Command
 {
     /**
-     * {@inheritdoc}
+     * @var UserManagerInterface
      */
-    protected function configure()
+    private $manager;
+
+    public function __construct(UserManagerInterface $manager)
+    {
+        $this->manager = $manager;
+
+        parent::__construct();
+    }
+
+    protected function configure(): void
     {
         parent::configure();
 
@@ -35,36 +46,34 @@ EOT
             ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $email = $input->getArgument('email');
         $role = $input->getArgument('role');
 
-        $manager = $this->getContainer()->get('beelab_user.manager');
-        $user = $manager->loadUserByUsername($email);
-        if (empty($user)) {
-            $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
-        } else {
-            if ($user->hasRole($role)) {
-                $output->writeln(sprintf('User <comment>%s</comment> did already have <comment>%s</comment> role.', $email, $role));
-            } else {
-                $user->addRole($role);
-                $manager->update($user);
+        $user = $this->manager->loadUserByUsername($email);
 
-                $output->writeln(sprintf('Role <comment>%s</comment> has been added to user <comment>%s</comment>.', $role, $email));
-            }
+        if (null === $user) {
+            $output->writeln(sprintf('<error>Error</error>: user <comment>%s</comment> not found.', $email));
+
+            return 1;
         }
+        if ($user->hasRole($role)) {
+            $output->writeln(sprintf('User <comment>%s</comment> did already have <comment>%s</comment> role.', $email, $role));
+        } else {
+            $user->addRole($role);
+            $this->manager->update($user);
+
+            $output->writeln(sprintf('Role <comment>%s</comment> has been added to user <comment>%s</comment>.', $role, $email));
+        }
+
+        return 0;
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @codeCoverageIgnore
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         if (!$input->getArgument('email')) {
             $question = new Question('Please choose an email:');

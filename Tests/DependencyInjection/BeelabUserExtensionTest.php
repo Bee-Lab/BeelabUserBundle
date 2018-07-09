@@ -28,7 +28,6 @@ class BeelabUserExtensionTest extends TestCase
         $extension = new BeelabUserExtension();
         $configs = [
             ['user_class' => 'foo'],
-            ['user_manager_class' => 'foo'],
             ['user_form_type' => 'foo'],
             ['password_form_type' => 'foo'],
             ['layout' => 'bar'],

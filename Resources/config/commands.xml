@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="Beelab\UserBundle\Command\CreateUserCommand">
+            <tag name="console.command" command="beelab:user:create"/>
+            <argument type="service" id="Beelab\UserBundle\Manager\UserManager"/>
+        </service>
+        <service id="Beelab\UserBundle\Command\PromoteUserCommand">
+            <tag name="console.command" command="beelab:user:promote"/>
+            <argument type="service" id="Beelab\UserBundle\Manager\UserManager"/>
+        </service>
+    </services>
+</container>

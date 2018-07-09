@@ -4,20 +4,28 @@ namespace Beelab\UserBundle\Tests\Command;
 
 use Beelab\UserBundle\Command\CreateUserCommand;
 use Beelab\UserBundle\Entity\User;
-use Beelab\UserBundle\Manager\LightUserManager;
+use Beelab\UserBundle\Manager\LightUserManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\DependencyInjection\Container;
 
 class CreateUserCommandTest extends TestCase
 {
-    protected $command;
+    private $command;
+
+    private $manager;
+
+    private $user;
 
     protected function setUp(): void
     {
+        $this->manager = $this->createMock(LightUserManagerInterface::class);
+        $this->user = $this->createMock(User::class);
+
+        $this->manager->expects($this->any())->method('getInstance')->will($this->returnValue($this->user));
+
         $application = new Application();
-        $application->add(new CreateUserCommand());
+        $application->add(new CreateUserCommand($this->manager));
 
         $this->command = $application->find('beelab:user:create');
     }
@@ -33,9 +41,10 @@ class CreateUserCommandTest extends TestCase
 
     public function testCreate(): void
     {
+        $this->manager->expects($this->once())->method('create')->with($this->user);
+
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
-        $this->command->setContainer($this->getMockContainer());
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
@@ -43,32 +52,12 @@ class CreateUserCommandTest extends TestCase
 
     public function testCreateError(): void
     {
+        $this->manager->expects($this->once())->method('create')->will($this->throwException(new \Exception('Generic error')));
+
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
-        $this->command->setContainer($this->getMockContainer(false));
         $tester = new CommandTester($this->command);
         $tester->execute(array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
-    }
-
-    private function getMockContainer(bool $success = true): Container
-    {
-        $manager = $this->getMockBuilder(LightUserManager::class)->disableOriginalConstructor()->getMock();
-        $container = $this->getMockBuilder(Container::class)->disableOriginalConstructor()->getMock();
-        $user = $this->createMock(User::class);
-
-        $container->expects($this->any())->method('get')->with('beelab_user.light_manager')->will($this->returnValue($manager));
-        $manager->expects($this->at(0))->method('getInstance')->will($this->returnValue($user));
-        $user->expects($this->at(0))->method('setEmail')->will($this->returnSelf());
-        $user->expects($this->at(1))->method('setPlainPassword')->will($this->returnSelf());
-        $user->expects($this->at(2))->method('setActive')->will($this->returnSelf());
-
-        if ($success) {
-            $manager->expects($this->at(1))->method('create')->with($user);
-        } else {
-            $manager->expects($this->at(1))->method('create')->will($this->throwException(new \Exception('Generic error')));
-        }
-
-        return $container;
     }
 }
