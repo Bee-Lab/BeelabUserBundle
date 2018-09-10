@@ -153,7 +153,7 @@ beelab_user:
 #### Validation
 
 Constraints are in `User` entity, so you can override them in your entity.
-See [Doctrine docs](http://docs.doctrine-project.org/en/latest/tutorials/override-field-association-mappings-in-subclasses.html).
+See [Doctrine docs](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/tutorials/override-field-association-mappings-in-subclasses.html).
 Controllers use three validations groups: "create", "update", and "password".
 First two groups are for creating and editing a user, the last one is for password change.
 You can override which group is used in each form just by overriding actions in controllers (see above).
