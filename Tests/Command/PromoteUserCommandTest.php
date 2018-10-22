@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class PromoteUserCommandTest extends TestCase
+final class PromoteUserCommandTest extends TestCase
 {
     private $command;
 
@@ -40,7 +40,7 @@ class PromoteUserCommandTest extends TestCase
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_ADMIN'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Role '.$input['role'].' has been added to user '.$input['email'], $tester->getDisplay());
     }
 
@@ -51,7 +51,7 @@ class PromoteUserCommandTest extends TestCase
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_ADMIN'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Error: user '.$input['email'].' not found', $tester->getDisplay());
     }
 
@@ -63,7 +63,7 @@ class PromoteUserCommandTest extends TestCase
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_USER'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('User '.$input['email'].' did already have '.$input['role'].' role', $tester->getDisplay());
     }
 }

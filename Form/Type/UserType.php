@@ -32,7 +32,7 @@ class UserType extends AbstractType
                 'required' => $isNew,
             ])
             ->add('roles', Type\ChoiceType::class, [
-                'choices' => array_flip($roles),
+                'choices' => \array_flip($roles),
                 'multiple' => true,
             ])
             ->add('active', Type\CheckboxType::class, ['required' => false])

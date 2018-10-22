@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class CreateUserCommandTest extends TestCase
+final class CreateUserCommandTest extends TestCase
 {
     private $command;
 
@@ -36,7 +36,7 @@ class CreateUserCommandTest extends TestCase
         $input = ['email' => 'invalid', 'password' => 'fooBarBaz'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
     }
 
     public function testCreate(): void
@@ -46,7 +46,7 @@ class CreateUserCommandTest extends TestCase
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
     }
 
@@ -57,7 +57,7 @@ class CreateUserCommandTest extends TestCase
         $input = ['email' => 'garak@example.org', 'password' => 'fooBarBaz'];
 
         $tester = new CommandTester($this->command);
-        $tester->execute(array_merge(['command' => $this->command->getName()], $input));
+        $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
         $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
     }
 }

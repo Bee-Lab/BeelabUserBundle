@@ -9,7 +9,7 @@ use Beelab\UserBundle\Test\UserStub as User;
 /**
  * @group unit
  */
-class UserTypeTest extends TypeTestCase
+final class UserTypeTest extends TypeTestCase
 {
     public function testSubmitValidData(): void
     {
@@ -20,8 +20,8 @@ class UserTypeTest extends TypeTestCase
         ];
 
         $type = new UserType();
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $type = get_class($type);
+        if (\method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = \get_class($type);
         }
         $form = $this->factory->create($type, null, ['data_class' => 'Beelab\UserBundle\Test\UserStub']);
 
@@ -39,7 +39,7 @@ class UserTypeTest extends TypeTestCase
         $view = $form->createView();
         $children = $view->children;
 
-        foreach (array_keys($formData) as $key) {
+        foreach (\array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
     }
@@ -53,8 +53,8 @@ class UserTypeTest extends TypeTestCase
         ];
 
         $type = new UserType();
-        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
-            $type = get_class($type);
+        if (\method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = \get_class($type);
         }
 
         $user = new User();
@@ -72,7 +72,7 @@ class UserTypeTest extends TypeTestCase
         $view = $form->createView();
         $children = $view->children;
 
-        foreach (array_keys($formData) as $key) {
+        foreach (\array_keys($formData) as $key) {
             $this->assertArrayHasKey($key, $children);
         }
     }
