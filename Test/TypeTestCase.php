@@ -25,7 +25,7 @@ abstract class TypeTestCase extends TestCase
      */
     protected $dispatcher;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = Forms::createFormFactoryBuilder()
             ->addExtensions($this->getExtensions())

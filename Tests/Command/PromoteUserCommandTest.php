@@ -41,7 +41,7 @@ final class PromoteUserCommandTest extends TestCase
 
         $tester = new CommandTester($this->command);
         $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
-        $this->assertContains('Role '.$input['role'].' has been added to user '.$input['email'], $tester->getDisplay());
+        $this->assertStringContainsString('Role '.$input['role'].' has been added to user '.$input['email'], $tester->getDisplay());
     }
 
     public function testUserNotFound(): void
@@ -52,7 +52,7 @@ final class PromoteUserCommandTest extends TestCase
 
         $tester = new CommandTester($this->command);
         $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
-        $this->assertContains('Error: user '.$input['email'].' not found', $tester->getDisplay());
+        $this->assertStringContainsString('Error: user '.$input['email'].' not found', $tester->getDisplay());
     }
 
     public function testHasAlreadyRole(): void
@@ -64,6 +64,6 @@ final class PromoteUserCommandTest extends TestCase
 
         $tester = new CommandTester($this->command);
         $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
-        $this->assertContains('User '.$input['email'].' did already have '.$input['role'].' role', $tester->getDisplay());
+        $this->assertStringContainsString('User '.$input['email'].' did already have '.$input['role'].' role', $tester->getDisplay());
     }
 }

@@ -20,7 +20,7 @@ interface UserInterface extends AdvancedUserInterface
     public function getSalt();
 
     /**
-     * @param  string
+     * @param string
      *
      * @return bool
      */

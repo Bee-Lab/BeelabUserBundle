@@ -47,7 +47,7 @@ final class CreateUserCommandTest extends TestCase
 
         $tester = new CommandTester($this->command);
         $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
-        $this->assertContains('Created user '.$input['email'], $tester->getDisplay());
+        $this->assertStringContainsString('Created user '.$input['email'], $tester->getDisplay());
     }
 
     public function testCreateError(): void
@@ -58,6 +58,6 @@ final class CreateUserCommandTest extends TestCase
 
         $tester = new CommandTester($this->command);
         $tester->execute(\array_merge(['command' => $this->command->getName()], $input));
-        $this->assertContains('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
+        $this->assertStringContainsString('Error, user '.$input['email'].' not created. Generic error', $tester->getDisplay());
     }
 }
