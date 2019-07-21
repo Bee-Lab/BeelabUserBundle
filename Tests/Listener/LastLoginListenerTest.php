@@ -31,9 +31,9 @@ class LastLoginListenerTest extends TestCase
     {
         $token = $this->createMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
         $event = $this->getMockBuilder(InteractiveLoginEvent::class)->disableOriginalConstructor()->getMock();
-        $event->expects($this->once())->method('getAuthenticationToken')->will($this->returnValue($token));
+        $event->expects($this->once())->method('getAuthenticationToken')->willReturn($token);
         $user = $this->createMock('Beelab\UserBundle\User\UserInterface');
-        $token->expects($this->once())->method('getUser')->will($this->returnValue($user));
+        $token->expects($this->once())->method('getUser')->willReturn($user);
         $user->expects($this->once())->method('setLastLogin');
         $this->userManager->expects($this->once())->method('update')->with($user);
 

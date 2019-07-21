@@ -36,13 +36,13 @@ class UserRepositoryTest extends TestCase
         $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
-        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
-        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
-        $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue(null));
+        $this->em->expects($this->any())->method('createQueryBuilder')->willReturn($queryBuilder);
+        $queryBuilder->expects($this->any())->method('select')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('from')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('where')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('setParameter')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('getQuery')->willReturn($query);
+        $query->expects($this->any())->method('getOneOrNullResult')->willReturn(null);
 
         $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface',
                                 $this->repository->loadUserByUsername('foo'));
@@ -56,14 +56,14 @@ class UserRepositoryTest extends TestCase
         $query = $this->getMockBuilder(AbstractQuery::class)->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
-        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
-        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
-        $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue($user));
-        $user->expects($this->once())->method('isActive')->will($this->returnValue(false));
+        $this->em->expects($this->any())->method('createQueryBuilder')->willReturn($queryBuilder);
+        $queryBuilder->expects($this->any())->method('select')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('from')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('where')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('setParameter')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('getQuery')->willReturn($query);
+        $query->expects($this->any())->method('getOneOrNullResult')->willReturn($user);
+        $user->expects($this->once())->method('isActive')->willReturn(false);
 
         $this->repository->loadUserByUsername('foo');
     }
@@ -75,14 +75,14 @@ class UserRepositoryTest extends TestCase
         $query = $this->getMockBuilder('Doctrine\ORM\AbstractQuery')->setMethods(['getOneOrNullResult'])
             ->disableOriginalConstructor()->getMockForAbstractClass();
 
-        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
-        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('getQuery')->will($this->returnValue($query));
-        $query->expects($this->any())->method('getOneOrNullResult')->will($this->returnValue($user));
-        $user->expects($this->once())->method('isActive')->will($this->returnValue(true));
+        $this->em->expects($this->any())->method('createQueryBuilder')->willReturn($queryBuilder);
+        $queryBuilder->expects($this->any())->method('select')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('from')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('where')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('setParameter')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('getQuery')->willReturn($query);
+        $query->expects($this->any())->method('getOneOrNullResult')->willReturn($user);
+        $user->expects($this->once())->method('isActive')->willReturn(true);
 
         $this->assertInstanceOf('Symfony\Component\Security\Core\User\UserInterface',
                                 $this->repository->loadUserByUsername('baz'));
@@ -115,11 +115,11 @@ class UserRepositoryTest extends TestCase
     public function testFilterByRole(): void
     {
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
-        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
-        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
+        $queryBuilder->expects($this->any())->method('select')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('from')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('where')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('setParameter')->willReturnSelf();
+        $this->em->expects($this->any())->method('createQueryBuilder')->willReturn($queryBuilder);
 
         $this->assertEquals($queryBuilder, $this->repository->filterByRole('ROLE'));
     }
@@ -127,12 +127,12 @@ class UserRepositoryTest extends TestCase
     public function testFilterByRoles(): void
     {
         $queryBuilder = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
-        $queryBuilder->expects($this->any())->method('select')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('from')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('where')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('orWhere')->will($this->returnSelf());
-        $queryBuilder->expects($this->any())->method('setParameter')->will($this->returnSelf());
-        $this->em->expects($this->any())->method('createQueryBuilder')->will($this->returnValue($queryBuilder));
+        $queryBuilder->expects($this->any())->method('select')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('from')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('where')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('orWhere')->willReturnSelf();
+        $queryBuilder->expects($this->any())->method('setParameter')->willReturnSelf();
+        $this->em->expects($this->any())->method('createQueryBuilder')->willReturn($queryBuilder);
 
         $this->assertEquals($queryBuilder, $this->repository->filterByRoles(['ROLE_USER']));
     }

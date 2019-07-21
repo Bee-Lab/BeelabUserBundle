@@ -45,16 +45,16 @@ class UserControllerTest extends TestCase
         $formFactory = $this->getMockBuilder(FormFactory::class)->disableOriginalConstructor()->getMock();
         $twig = $this->createMock(Environment::class);
 
-        $formFactory->expects($this->once())->method('create')->will($this->returnValue($form));
+        $formFactory->expects($this->once())->method('create')->willReturn($form);
         $this->container->expects($this->once())->method('getParameter')->with('beelab_user.filter_form_type')
-            ->will($this->returnValue('Beelab\UserBundle\Test\FilterFormStub'));
+            ->willReturn('Beelab\UserBundle\Test\FilterFormStub');
         $this->container->expects($this->at(1))->method('get')->with('form.factory')
-            ->will($this->returnValue($formFactory));
+            ->willReturn($formFactory);
         $this->userManager->expects($this->once())->method('getList')->with(1, 20)
-            ->will($this->returnValue(['foo', 'bar']));
-        $this->container->expects($this->at(2))->method('has')->with('templating')->will($this->returnValue(false));
-        $this->container->expects($this->at(3))->method('has')->with('twig')->will($this->returnValue(true));
-        $this->container->expects($this->at(4))->method('get')->with('twig')->will($this->returnValue($twig));
+            ->willReturn(['foo', 'bar']);
+        $this->container->expects($this->at(2))->method('has')->with('templating')->willReturn(false);
+        $this->container->expects($this->at(3))->method('has')->with('twig')->willReturn(true);
+        $this->container->expects($this->at(4))->method('get')->with('twig')->willReturn($twig);
 
         $response = $this->controller->indexAction($eventDispatcher, $this->userManager, new Request());
 
@@ -68,21 +68,21 @@ class UserControllerTest extends TestCase
         $form = $this->getMockBuilder(Form::class)->disableOriginalConstructor()->getMock();
         $twig = $this->createMock(Environment::class);
 
-        $formFactory->expects($this->any())->method('createBuilder')->will($this->returnValue($this->formBuilder));
+        $formFactory->expects($this->any())->method('createBuilder')->willReturn($this->formBuilder);
         $this->container->expects($this->at(0))->method('get')->with('form.factory')
-            ->will($this->returnValue($formFactory));
+            ->willReturn($formFactory);
         $this->container->expects($this->at(1))->method('get')->with('router')
-            ->will($this->returnValue($this->router));
-        $this->userManager->expects($this->once())->method('get')->with(42)->will($this->returnValue($user));
-        $user->expects($this->once())->method('getId')->will($this->returnValue(42));
-        $this->formBuilder->expects($this->once())->method('setAction')->will($this->returnSelf());
-        $this->formBuilder->expects($this->once())->method('setMethod')->will($this->returnSelf());
-        $this->formBuilder->expects($this->once())->method('getForm')->will($this->returnValue($form));
-        $this->router->expects($this->once())->method('generate')->will($this->returnValue('foourl'));
+            ->willReturn($this->router);
+        $this->userManager->expects($this->once())->method('get')->with(42)->willReturn($user);
+        $user->expects($this->once())->method('getId')->willReturn(42);
+        $this->formBuilder->expects($this->once())->method('setAction')->willReturnSelf();
+        $this->formBuilder->expects($this->once())->method('setMethod')->willReturnSelf();
+        $this->formBuilder->expects($this->once())->method('getForm')->willReturn($form);
+        $this->router->expects($this->once())->method('generate')->willReturn('foourl');
         $form->expects($this->once())->method('createView');
-        $this->container->expects($this->at(2))->method('has')->with('templating')->will($this->returnValue(false));
-        $this->container->expects($this->at(3))->method('has')->with('twig')->will($this->returnValue(true));
-        $this->container->expects($this->at(4))->method('get')->with('twig')->will($this->returnValue($twig));
+        $this->container->expects($this->at(2))->method('has')->with('templating')->willReturn(false);
+        $this->container->expects($this->at(3))->method('has')->with('twig')->willReturn(true);
+        $this->container->expects($this->at(4))->method('get')->with('twig')->willReturn($twig);
 
         $this->controller->showAction(42, $this->userManager);
     }

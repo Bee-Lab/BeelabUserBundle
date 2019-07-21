@@ -23,7 +23,7 @@ class BeelabUserExtensionTest extends TestCase
         $parameterBag = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();
 
         $parameterBag->expects($this->any())->method('add');
-        $container->expects($this->any())->method('getParameterBag')->will($this->returnValue($parameterBag));
+        $container->expects($this->any())->method('getParameterBag')->willReturn($parameterBag);
 
         $extension = new BeelabUserExtension();
         $configs = [

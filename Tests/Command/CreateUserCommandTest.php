@@ -22,7 +22,7 @@ final class CreateUserCommandTest extends TestCase
         $this->manager = $this->createMock(LightUserManagerInterface::class);
         $this->user = $this->createMock(User::class);
 
-        $this->manager->expects($this->any())->method('getInstance')->will($this->returnValue($this->user));
+        $this->manager->expects($this->any())->method('getInstance')->willReturn($this->user);
 
         $application = new Application();
         $application->add(new CreateUserCommand($this->manager));

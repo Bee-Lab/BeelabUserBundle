@@ -22,7 +22,7 @@ final class PromoteUserCommandTest extends TestCase
         $this->manager = $this->createMock(UserManagerInterface::class);
         $this->user = $this->createMock(User::class);
 
-        $this->manager->expects($this->any())->method('getInstance')->will($this->returnValue($this->user));
+        $this->manager->expects($this->any())->method('getInstance')->willReturn($this->user);
 
         $application = new Application();
         $application->add(new PromoteUserCommand($this->manager));
@@ -32,8 +32,8 @@ final class PromoteUserCommandTest extends TestCase
 
     public function testPromote(): void
     {
-        $this->manager->expects($this->once())->method('loadUserByUsername')->will($this->returnValue($this->user));
-        $this->user->expects($this->once())->method('hasRole')->will($this->returnValue(false));
+        $this->manager->expects($this->once())->method('loadUserByUsername')->willReturn($this->user);
+        $this->user->expects($this->once())->method('hasRole')->willReturn(false);
         $this->user->expects($this->once())->method('addRole');
         $this->manager->expects($this->once())->method('update')->with($this->user);
 
@@ -46,7 +46,7 @@ final class PromoteUserCommandTest extends TestCase
 
     public function testUserNotFound(): void
     {
-        $this->manager->expects($this->once())->method('loadUserByUsername')->will($this->returnValue(null));
+        $this->manager->expects($this->once())->method('loadUserByUsername')->willReturn(null);
 
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_ADMIN'];
 
@@ -57,8 +57,8 @@ final class PromoteUserCommandTest extends TestCase
 
     public function testHasAlreadyRole(): void
     {
-        $this->manager->expects($this->once())->method('loadUserByUsername')->will($this->returnValue($this->user));
-        $this->user->expects($this->once())->method('hasRole')->will($this->returnValue(true));
+        $this->manager->expects($this->once())->method('loadUserByUsername')->willReturn($this->user);
+        $this->user->expects($this->once())->method('hasRole')->willReturn(true);
 
         $input = ['email' => 'garak@example.org', 'role' => 'ROLE_USER'];
 
