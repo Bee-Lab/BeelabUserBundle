@@ -14,8 +14,11 @@ use PHPUnit\Framework\TestCase;
 class LightUserManagerTest extends TestCase
 {
     protected $manager;
+
     protected $em;
+
     protected $repository;
+
     protected $encoder;
 
     protected function setUp(): void

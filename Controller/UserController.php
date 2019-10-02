@@ -79,7 +79,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_show', ['id' => $user->getId()]);
         }
 
-        return $this->render('BeelabUserBundle:User:new.html.twig',[
+        return $this->render('BeelabUserBundle:User:new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
@@ -102,7 +102,7 @@ class UserController extends AbstractController
         }
         $deleteForm = $this->createDeleteForm($user->getId());
 
-        return $this->render('BeelabUserBundle:User:edit.html.twig',[
+        return $this->render('BeelabUserBundle:User:edit.html.twig', [
             'user' => $user,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

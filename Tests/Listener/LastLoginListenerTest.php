@@ -14,6 +14,7 @@ use Symfony\Component\Security\Http\SecurityEvents;
 class LastLoginListenerTest extends TestCase
 {
     protected $listener;
+
     protected $userManager;
 
     protected function setUp(): void

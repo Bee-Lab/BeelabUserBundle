@@ -15,12 +15,19 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class UserManagerTest extends TestCase
 {
     protected $manager;
+
     protected $em;
+
     protected $repository;
+
     protected $encoder;
+
     protected $authChecker;
+
     protected $tokenStorage;
+
     protected $paginator;
+
     protected $dispatcher;
 
     protected function setUp(): void

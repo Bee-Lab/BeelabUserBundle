@@ -56,7 +56,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
      */
     public function filterByRole(string $role): QueryBuilder
     {
-        $role = $role === 'ROLE_USER' ? '{}' : '"'.$role.'"';
+        $role = 'ROLE_USER' === $role ? '{}' : '"'.$role.'"';
 
         return $this
             ->createQueryBuilder('u')
@@ -69,7 +69,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface, 
     {
         $qb = $this->createQueryBuilder('u');
         foreach ($roles as $key => $role) {
-            $role = $role === 'ROLE_USER' ? '{}' : '"'.$role.'"';
+            $role = 'ROLE_USER' === $role ? '{}' : '"'.$role.'"';
             $qb->orWhere('u.roles LIKE :role'.$key)->setParameter('role'.$key, '%'.$role.'%');
         }
 

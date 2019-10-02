@@ -2,7 +2,6 @@
 
 namespace Beelab\UserBundle\Command;
 
-use Beelab\UserBundle\Manager\LightUserManagerInterface;
 use Beelab\UserBundle\Manager\UserManagerInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

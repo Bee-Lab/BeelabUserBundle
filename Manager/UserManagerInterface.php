@@ -8,15 +8,15 @@ use Symfony\Component\HttpFoundation\Request;
 
 interface UserManagerInterface extends LightUserManagerInterface
 {
-   /**
-    * List of users (can be paginated).
-    *
-    * @param int    $page
-    * @param int    $limit
-    * @param string $sortBy
-    *
-    * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
-    */
+    /**
+     * List of users (can be paginated).
+     *
+     * @param int    $page
+     * @param int    $limit
+     * @param string $sortBy
+     *
+     * @return mixed \Knp\Component\Pager\Pagination\PaginationInterface or array
+     */
     public function getList(int $page = 1, int $limit = 20, string $sortBy = 'email');
 
     /**
