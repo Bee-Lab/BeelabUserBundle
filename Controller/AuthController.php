@@ -65,7 +65,7 @@ class AuthController extends AbstractController
      * Get possible authentication error.
      *
      * @param LoggerInterface $logger
-     * @param Request $request
+     * @param Request         $request
      *
      * @return \Exception|null
      */

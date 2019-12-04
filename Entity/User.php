@@ -422,7 +422,7 @@ abstract class User implements UserInterface, EquatableInterface, \Serializable
      */
     public function getRoleLabel($role): string
     {
-        return $role == 'ROLE_SUPER_ADMIN' ? 'super admin' : static::$roleLabels[$role];
+        return 'ROLE_SUPER_ADMIN' == $role ? 'super admin' : static::$roleLabels[$role];
     }
 
     /**

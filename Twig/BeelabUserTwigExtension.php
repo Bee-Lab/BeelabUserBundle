@@ -14,7 +14,9 @@ use Twig_SimpleFunction;
 class BeelabUserTwigExtension extends Twig_Extension implements Twig_Extension_GlobalsInterface
 {
     protected $layout;
+
     protected $route;
+
     protected $hasPaginator = false;
 
     /**

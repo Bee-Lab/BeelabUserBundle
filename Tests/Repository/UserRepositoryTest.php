@@ -16,7 +16,9 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 class UserRepositoryTest extends TestCase
 {
     protected $repository;
+
     protected $em;
+
     protected $class;
 
     protected function setUp(): void

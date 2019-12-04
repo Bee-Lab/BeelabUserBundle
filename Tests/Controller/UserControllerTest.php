@@ -23,9 +23,13 @@ use Twig\Environment;
 class UserControllerTest extends TestCase
 {
     protected $controller;
+
     protected $container;
+
     protected $formBuilder;
+
     protected $userManager;
+
     protected $router;
 
     protected function setUp(): void
