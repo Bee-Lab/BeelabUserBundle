@@ -12,12 +12,17 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * To learn more see {@link http://symfony.com/doc/current/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('beelab_user');
+        $treeBuilder = new TreeBuilder('beelab_user');
+        // Keep compatibility with symfony/config < 4.2
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('beelab_user');
+        }
 
         $rootNode
             ->children()
