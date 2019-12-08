@@ -35,6 +35,5 @@ before_script:
       if [ "$SYMFONY_VERSION" != "" ]; then
            sed -ri 's/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'$SYMFONY_VERSION'"/' composer.json;
       fi;
-    - if [ "
 
 install: composer update $COMPOSER_FLAGS --no-interaction
