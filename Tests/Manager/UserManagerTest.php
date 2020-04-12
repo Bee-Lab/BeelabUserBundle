@@ -4,6 +4,7 @@ namespace Beelab\UserBundle\Tests\Manager;
 
 use Beelab\UserBundle\Manager\UserManager;
 use Beelab\UserBundle\Test\UserStub;
+use Knp\Component\Pager\Pagination\PaginationInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -52,12 +53,13 @@ class UserManagerTest extends TestCase
 
     public function testList(): void
     {
+        $pagination = $this->createMock(PaginationInterface::class);
         $qb = $this->getMockBuilder('Doctrine\ORM\QueryBuilder')->disableOriginalConstructor()->getMock();
         $this->repository->expects($this->once())->method('createQueryBuilder')->willReturn($qb);
         $this->paginator->expects($this->once())->method('paginate')->with($qb, 1, 20)
-            ->willReturn([]);
+            ->willReturn($pagination);
 
-        $this->assertEquals([], $this->manager->getList());
+        $this->assertInstanceOf(PaginationInterface::class, $this->manager->getList());
     }
 
     public function testListWithoutPaginator(): void
