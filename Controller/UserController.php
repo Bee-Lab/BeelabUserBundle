@@ -167,7 +167,7 @@ class UserController extends AbstractController
         return $this->container->getParameter('beelab_user.password_form_type');
     }
 
-    protected function getFilterFormName(): string
+    protected function getFilterFormName(): ?string
     {
         return $this->container->getParameter('beelab_user.filter_form_type');
     }
