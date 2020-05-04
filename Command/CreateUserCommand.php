@@ -46,7 +46,8 @@ class CreateUserCommand extends Command
                 new InputArgument('password', InputArgument::REQUIRED, 'The password'),
                 new InputOption('inactive', null, InputOption::VALUE_NONE, 'Set the user as inactive'),
             ])
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>%command.name%</info> command creates a user:
 
   <info>%command.full_name%</info>

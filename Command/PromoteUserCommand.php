@@ -34,7 +34,8 @@ class PromoteUserCommand extends Command
         $this
             ->setName('beelab:user:promote')
             ->setDescription('Promotes a user by adding a role')
-            ->setHelp(<<<'EOT'
+            ->setHelp(
+                <<<'EOT'
 The <info>%command.name%</info> command promotes a user by adding a role
 
   <info>%command.full_name% garak@example.com ROLE_CUSTOM</info>
