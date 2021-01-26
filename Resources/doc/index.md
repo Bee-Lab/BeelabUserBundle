@@ -96,6 +96,9 @@ It's important here to use the name of your entity in `encoders` and `providers`
 > firewall. See [security reference](http://symfony.com/doc/current/reference/configuration/security.html#the-login-form-and-process) for more details.
 >
 
+> **Note**: if you're using Symfony 3, you'll need to define class `Symfony\Component\DependencyInjection\ParameterBag\ParameterBag`
+> as a service.
+
 ### 3. Customizations
 
 #### Templates
